@@ -1,3 +1,2 @@
 # VnuaVaccine
-using ASP.NET Framework 4.6
-Entity Framework
+using ASP.NET Entity Framework 4.6
