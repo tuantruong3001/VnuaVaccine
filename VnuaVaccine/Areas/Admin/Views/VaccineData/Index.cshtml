@@ -1,0 +1,139 @@
+﻿@model IEnumerable<DAL.EF.Vaccine>
+
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section sidebar{
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <hr class="sidebar-divider my-0">
+
+        <li class="nav-item active">
+            <a class="nav-link" href="/Home/Index">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Home</span>
+            </a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider  my-0">
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item active">
+            <a class="nav-link" href="/Admin/ListUser/Index">
+                <i class="fas fa-fw fa-user"></i>
+                <span>List User</span>
+            </a>
+        </li>
+        <!-- Nav Item - Utilities Collapse Menu -->
+        <hr class="sidebar-divider  my-0">
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item active">
+            <a class="nav-link" href="#">
+                <i class="fas fa-fw fa-comment"></i>
+                <span>List Review</span>
+            </a>
+        </li>
+        <!-- Divider -->
+        <hr class="sidebar-divider  my-0">
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item active">
+            <a class="nav-link" href="/Admin/VaccineData/Index">
+                <i class="fas fa-fw fa-folder"></i>
+                <span>List Vaccine</span>
+            </a>
+        </li>
+
+        <!-- Nav Item - Charts -->
+        <hr class="sidebar-divider  my-0">
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item active">
+            <a class="nav-link" href="/Admin/HomeAdmin">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>My Profile</span>
+            </a>
+        </li>
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+
+    </ul>
+}
+<div class="row">
+    <div class="col-lg-12">
+
+        <div class="panel panel-default">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h2 class="m-0 font-weight-bold text-primary" style="text-align:center;">Danh sách Vaccines</h2>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm("Index", "VaccineData", FormMethod.Get))
+                    {
+                        <div class="form-group">
+                            @Html.Label("Search:", new { @class = "control-label" })
+                            @Html.TextBox("searchString", null, new { @class = "form-control", @autofocus = "autofocus", @placeholder = "Search for..." })
+                        </div>
+
+                        <button type="submit" class="btn btn-primary"><i class="bi-funnel-fill"></i> Tìm kiếm</button>
+                        <hr>
+                    }
+                    <div class="table-responsive">
+                        <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                            <table style="text-align:center" class="table table-striped table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+
+                                        <th>Tên Vaccine</th>
+                                        <th>Cơ sở sản xuất</th>
+                                        <th>Số lượng</th>
+                                        <th>Mô tả</th>
+                                        <th>Ngày nhập</th>
+                                        <th>Ngày hết hạn</th>
+                                        <th>Ảnh</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr id="row_@item.ID">
+                                            <td>@item.NameVaccine</td>
+                                            <td>@item.Munafacturer</td>
+                                            <td>@item.QuantityStock</td>
+                                            <td>@item.Description</td>
+                                            <td>@(item.ProductionDate == null ? "" : item.ProductionDate.Value.ToString("dd/MM/yyyy"))</td>
+                                            <td>@(item.ExpirationData == null ? "" : item.ExpirationData.Value.ToString("dd/MM/yyyy"))</td>
+                                            <td></td>
+                                            <td>
+                                                <a class="btn btn-success" style="text-decoration:none; " href="/Admin/Product/Edit/@item.ID"><i class="fa fa-edit"></i> Edit</a>
+                                                <a style="text-decoration: none;" href="@Url.Action("Delete", "VaccineData", new { id = item.ID })" class="btn btn-danger" onclick="return confirm('Xác nhận xoá?')"><i class="fas fa-trash"></i> Delete</a>
+
+                                            </td>
+                                        </tr>
+
+                                    }
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                        <div class="input-group-append">
+                            <a class="btn btn-primary" href="/Admin/VaccineData/Index"><i class="bi-basket"></i> Add Product</a>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
