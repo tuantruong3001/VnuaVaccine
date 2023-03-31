@@ -32,12 +32,20 @@
         .container-fluid {
             padding: 0;
         }
+        .login {
+            color: black !important;
+            font-style:italic;
+        }
+        
     </style>
 </head>
 <body>
     <div class="back-to-top"></div>
     <header>
+        @{
+            var session = (VnuaVaccine.Common.UserLogin)Session[VnuaVaccine.Common.SessionConstants.USER_SESSION];
 
+        }
         <div class="topbar">
             <div class="container">
                 <div class="row">
@@ -80,22 +88,30 @@
                 <div class="collapse navbar-collapse" id="navbarSupport">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="">Trang chủ</a>
+                            <a class="nav-link" href="#">Trang chủ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="HTML" asp-action="About">Về chúng tôi</a>
+                            <a class="nav-link" href="#">Về chúng tôi</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="">Bác sĩ</a>
+                            <a class="nav-link" href="#">Bác sĩ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="">Tin tức</a>
+                            <a class="nav-link" href="#">Tin tức</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#section-form">Liên hệ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/Admin/Login/Index">Đăng nhập</a>
+                            @if (session == null)
+                            {
+                                <a class="nav-link" href="/Admin/Login/Index">Đăng nhập</a>
+                            }
+                            else
+                            {
+                                <a class="nav-link login" href="@Url.Action("Index", "HomeAdmin", new { area = "Admin" })">Hello! @session.Email</a>
+
+                            }
                         </li>
                     </ul>
                 </div> <!-- .navbar-collapse -->
@@ -108,7 +124,7 @@
             <div class="container text-center wow zoomIn">
                 <span class="subhead">Hệ thống thông tin tiêm chủng</span>
                 <h1 class="display-4">VNUA-Vaccine</h1>
-                <a href="#" class="btn btn-primary">Đăng ký ngay</a>
+                <a href="/Admin/Register" class="btn btn-primary">Đăng ký ngay</a>
             </div>
         </div>
     </div>
