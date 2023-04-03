@@ -100,7 +100,6 @@
                                 </thead>
                                 <tbody>
 
-
                                     @foreach (var item in Model)
                                     {
                                         <tr id="row_@item.ID">
@@ -114,10 +113,8 @@
                                             <td>
                                                 <a class="btn btn-success" style="text-decoration:none; " href="/Admin/Product/Edit/@item.ID"><i class="fa fa-edit"></i> Edit</a>
                                                 <a style="text-decoration: none;" href="@Url.Action("Delete", "VaccineData", new { id = item.ID })" class="btn btn-danger" onclick="return confirm('Xác nhận xoá?')"><i class="fas fa-trash"></i> Delete</a>
-
                                             </td>
                                         </tr>
-
                                     }
 
                                 </tbody>

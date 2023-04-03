@@ -9,22 +9,26 @@ namespace DAL.Dao
 {
     public class UserDAO
     {
-        VaccineDbContext db = null;
+        private readonly VaccineDbContext db = null;
         public UserDAO()
         {
             db = new VaccineDbContext();
         }
         // Add user
-        public int Insert(User user)
-        {
-            db.Users.Add(user);
+        public int Insert(User newUser)
+        {         
+            db.Users.Add(newUser);
             db.SaveChanges();
-            return user.ID;
+            return newUser.ID;
         }
         public User GetById(int id)
         {
             return db.Users.Find(id);
         }
+       /* public Patient GetByIdUserName(int id, int idUserName)
+        {
+            return db.Patients.FirstOrDefault(p => p.ID == id && p.IdUserName == idUserName);
+        }*/
         public bool CheckUserName(string userName)
         {
             var name = db.Users.SingleOrDefault(x => x.UserName == userName);
@@ -46,7 +50,6 @@ namespace DAL.Dao
         // Check Register account
         public int RegisterCheck(string email, string user)
         {
-
             var emailExists = db.Users.SingleOrDefault(x => x.Email == email);
             var usernameExists = db.Users.SingleOrDefault(x => x.UserName == user);
             if (emailExists == null && usernameExists == null)
@@ -71,14 +74,18 @@ namespace DAL.Dao
                 {
                     userUpdate.UserName = user.UserName;
                     userUpdate.Password = user.Password;
-                    userUpdate.Email = user.Email;
-                   
+                    userUpdate.Email = user.Email;                  
                     db.SaveChanges();
                     return true;
                 }
                 else { return false; }
             }
             catch (Exception) { return false; }
+        }
+
+        public object GetByIdUserName(int idUserName)
+        {
+            throw new NotImplementedException();
         }
     }
 }

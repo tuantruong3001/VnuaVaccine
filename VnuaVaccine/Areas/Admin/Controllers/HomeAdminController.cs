@@ -19,6 +19,10 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                 var userDao = new UserDAO();
                 var userLogin = (UserLogin)Session[SessionConstants.USER_SESSION];
                 var user = userDao.GetById(userLogin.UserID);
+
+                var patientDao = new PatientDAO();
+                var patient = patientDao.GetByUserName(user.UserName);
+
                 var profileModel = new ProfileModel
                 {
                     ID = user.ID,
@@ -26,7 +30,8 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                     Email = user.Email,
                     Password = user.Password,
                     Role = user.Role,
-                   
+                    Age = patient.Age,
+                    Address = patient.Address
                 };
 
                 return View(profileModel);

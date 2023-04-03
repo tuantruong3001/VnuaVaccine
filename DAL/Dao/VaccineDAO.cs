@@ -1,22 +1,20 @@
 ﻿using DAL.EF;
 using PagedList;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL.Dao
 {
-    public class ProductDAO
+    public class VaccineDAO
     {
-        VaccineDbContext db = null;
-        public ProductDAO()
+        private readonly VaccineDbContext db = null;
+        public VaccineDAO()
         {
             db = new VaccineDbContext();
         }
         public IEnumerable<Vaccine> ListAllPaging(string searchString,  int page, int pageSize)
         {
+
             IQueryable<Vaccine> model = db.Vaccines;
             if (!string.IsNullOrEmpty(searchString))
             {

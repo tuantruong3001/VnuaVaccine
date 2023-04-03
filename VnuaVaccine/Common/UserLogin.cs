@@ -11,6 +11,6 @@ namespace VnuaVaccine.Common
         public int UserID { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
-
+        public int IdUserName { get; set; }
     }
 }

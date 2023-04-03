@@ -18,6 +18,10 @@ namespace VnuaVaccine.Areas.Admin.Controllers
             var userDao = new UserDAO();
             var model = (UserLogin)Session[SessionConstants.USER_SESSION];
             var user = userDao.GetById(model.UserID);
+
+            var patientDao = new PatientDAO();
+            var patient = patientDao.GetByUserName(user.UserName);
+
             var profileModel = new ProfileModel
             {
                 ID = user.ID,
@@ -25,11 +29,13 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                 Email = user.Email,
                 Password = user.Password,
                 Role = user.Role,
-               
+                Age = patient.Age,
+                Address = patient.Address
             };
 
             return View(profileModel);
         }
+
         [HttpPost]
         public ActionResult Index(ProfileModel model)
         {
@@ -38,7 +44,8 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                 if (ModelState.IsValid)
                 {
                     var userDao = new UserDAO();
-                    var userByEmail = userDao.GetByEmail(model.Email);
+                    var patientDao = new PatientDAO();
+                    var userByEmail = userDao.GetByEmail(model.Email);                  
                     model.ID = userByEmail.ID;
                     bool isUserNameAvailable;
 
@@ -65,10 +72,19 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                             ID = model.ID,
                             Email = model.Email,
                             UserName = model.UserName,
-                            Password = model.Password,
+                            Password = model.Password,                          
                             Role = model.Role
                         };
                         userDao.Update(user);
+                       
+                        var patient = new Patient
+                        {
+                            IdUserName = user.ID,
+                            Age = model.Age,
+                            Address = model.Address
+                        };
+                        patientDao.Update(patient);
+
                         TempData["EditUserMessage"] = "Sửa thông tin thành công";
                         return RedirectToAction("Index", "HomeUser");
                     }

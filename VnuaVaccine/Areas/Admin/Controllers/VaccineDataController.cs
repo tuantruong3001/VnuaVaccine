@@ -12,7 +12,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
     public class VaccineDataController : BaseController
     {
         // GET: Admin/VaccineData
-        private readonly ProductDAO _productDao = new ProductDAO();
+        private readonly VaccineDAO _productDao = new VaccineDAO();
 
         public ActionResult Index(string searchString, int page = 1, int pageSize = 15)
         {

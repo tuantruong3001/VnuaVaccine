@@ -59,7 +59,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dao\ProductDAO.cs" />
+    <Compile Include="Dao\PatientDAO.cs" />
+    <Compile Include="Dao\VaccineDAO.cs" />
     <Compile Include="Dao\UserDAO.cs" />
     <Compile Include="EF\Appointment.cs" />
     <Compile Include="EF\MedicalStaff.cs" />
