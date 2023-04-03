@@ -50,7 +50,7 @@ namespace DAL.EF
             modelBuilder.Entity<User>()
                 .Property(e => e.Email)
                 .IsUnicode(false);
-
+         
             modelBuilder.Entity<User>()
                 .Property(e => e.Password)
                 .IsUnicode(false);

@@ -2,6 +2,7 @@
 using DAL.EF;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -24,9 +25,9 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                 return View("Index");
             }
 
-            var dao = new UserDAO();
-            var result = dao.RegisterCheck(registerModel.Email, registerModel.UserName);
-
+            var userDao = new UserDAO();
+            var result = userDao.RegisterCheck(registerModel.Email, registerModel.UserName);
+           
             if (registerModel.ConfirmPassword != registerModel.Password)
             {
                 ModelState.AddModelError("", "ConfirmPassword phải trùng với Password");
@@ -42,15 +43,15 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                     ModelState.AddModelError("", "Email đã tồn tại!");
                     break;
                 case 1:
-                    var user = new User
+                    var newUser = new User
                     {
                         UserName = registerModel.UserName,
                         Email = registerModel.Email,
                         Password = registerModel.Password,
-                        Role = 0,
+                        Role = 1,
                         Status = 1,
                     };
-                    dao.Insert(user);
+                    userDao.Insert(newUser);
                     TempData["SuccessMessage"] = "Đăng ký thành công";
                     return RedirectToAction("Index", "Login");
             }

@@ -16,7 +16,7 @@ namespace DAL.EF
             Patients = new HashSet<Patient>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        //[DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ID { get; set; }
 
         [StringLength(50)]
@@ -38,6 +38,7 @@ namespace DAL.EF
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Patient> Patients { get; set; }
 
-        public virtual Role Role1 { get; set; }
+        public virtual Role Role1 { get; set; }            
+        
     }
 }

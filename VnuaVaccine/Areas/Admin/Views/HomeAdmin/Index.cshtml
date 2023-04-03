@@ -71,9 +71,12 @@
                 @if (TempData["EditUserMessage"] != null)
                 {
                     <div class="alert alert-success alert-dismissible" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        </button> <h5><i class="icon fas fa-check"></i> @TempData["EditUserMessage"]</h5>
+                        <button type="button" class="close" style="color:red" data-dismiss="alert" aria-label="Close" aria-hidden="true">
+                            <span style="font-size:28px;" aria-hidden="true">&times;</span>
+                        </button>
+                        <h5><i class="icon fas fa-check"></i> @TempData["EditUserMessage"]</h5>
                     </div>
+
                 }
 
                 @Html.AntiForgeryToken()
@@ -81,7 +84,7 @@
                     <div class="card shadow mb-4">
                         <div class="p-5">
                             <div class="card-header py-3">
-                                <h2 class="m-0 font-weight-bold text-primary" style="text-align:center;">My profile</h2>
+                                <h2 class="m-0 font-weight-bold text-primary" style="text-align:center;">Thông tin cá nhân</h2>
                             </div>
                             @using (Html.BeginForm("Index", "HomeAdmin", FormMethod.Post))
                             {
@@ -111,7 +114,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Type</label>
-                                    <input type="text" class="form-control form-control-user" readonly="readonly" value="@(Model.Role == 0 ? "Admin" : "User") " />
+                                    <input type="text" class="form-control form-control-user" readonly="readonly" value="@(Model.Role == 0 ? "MedicalStaffs" : "Patient") " />
                                     @Html.HiddenFor(model => model.Role) <!-- Thêm hidden field để giữ giá trị của trường Role -->
                                 </div>
                                 <a>
