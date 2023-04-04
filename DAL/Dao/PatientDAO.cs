@@ -40,6 +40,10 @@ namespace DAL.Dao
                 var patientUpdate = db.Patients.FirstOrDefault(getPatient => getPatient.ID == patient.IdUserName);
                 if (patientUpdate != null)
                 {
+                    patientUpdate.Sex = patient.Sex;
+                    patientUpdate.PhoneNumber = patient.PhoneNumber;
+                    patientUpdate.Name = patient.Name;
+                    patientUpdate.Birthday = patient.Birthday;
                     patientUpdate.Address = patient.Address;
                     patientUpdate.Age = patient.Age;                   
                     db.SaveChanges();

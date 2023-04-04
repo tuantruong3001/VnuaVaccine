@@ -25,15 +25,15 @@ namespace VnuaVaccine.Areas.Admin.Models
         public string ConfirmPassword { get; set; }
         public int ID { get; set; }
         public int? Role { get; set; }
-   /*     public string Name { get; set; }
-        public string Sex { get; set; }*/
+        public string Name { get; set; }
+        public int? Sex { get; set; }
         public string Address { get; set; }
-       /* public int PhoneNumber { get; set; }*/
+        public int? PhoneNumber { get; set; }
         public int IdUserName { get; set; }
         public int? Age { get; set; }
 
-        /*[DataType(DataType.Date)]
+        [DataType(DataType.Date)]
         public DateTime? Birthday { get; set; }
-*/
+
     }
 }
