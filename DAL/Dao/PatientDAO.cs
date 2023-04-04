@@ -16,23 +16,7 @@ namespace DAL.Dao
         {
             db = new VaccineDbContext();
         }
-        public Patient GetByUserName(int id)
-        {
-            try
-            {
-                var user = db.Users.FirstOrDefault(u => u.ID == id);
-                if (user != null)
-                {
-                    var patient = db.Patients.FirstOrDefault(p => p.IdUserName == user.ID);
-                    return patient;
-                }
-                return null;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
+       
         public bool Update(Patient patient)
         {
             try

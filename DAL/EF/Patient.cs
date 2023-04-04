@@ -22,6 +22,7 @@ namespace DAL.EF
         [StringLength(50)]
         public string Name { get; set; }
         [DataType(DataType.Date)]
+
         public DateTime? Birthday { get; set; }
 
         public int? Sex { get; set; }

@@ -33,6 +33,7 @@ namespace VnuaVaccine.Areas.Admin.Models
         public int? Age { get; set; }
 
         [DataType(DataType.Date)]
+        //[DisplayFormat(DataFormatString = "{{0:dd/MM/yyyy}")]
         public DateTime? Birthday { get; set; }
 
     }
