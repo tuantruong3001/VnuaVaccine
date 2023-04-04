@@ -16,11 +16,11 @@ namespace DAL.Dao
         {
             db = new VaccineDbContext();
         }
-        public Patient GetByUserName(string userName)
+        public Patient GetByUserName(int id)
         {
             try
             {
-                var user = db.Users.FirstOrDefault(u => u.UserName == userName);
+                var user = db.Users.FirstOrDefault(u => u.ID == id);
                 if (user != null)
                 {
                     var patient = db.Patients.FirstOrDefault(p => p.IdUserName == user.ID);
@@ -37,11 +37,11 @@ namespace DAL.Dao
         {
             try
             {
-                var patientUpdate = db.Patients.FirstOrDefault(p => p.IdUserName == patient.IdUserName);
+                var patientUpdate = db.Patients.FirstOrDefault(getPatient => getPatient.ID == patient.IdUserName);
                 if (patientUpdate != null)
                 {
                     patientUpdate.Address = patient.Address;
-                    patientUpdate.Age = patient.Age;
+                    patientUpdate.Age = patient.Age;                   
                     db.SaveChanges();
                     return true;
                 }

@@ -22,18 +22,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
         {
             return View();
         }
-        /*public Login checkCookies()
-        {
-            Login login = null;
-            string username = string.Empty, password = string.Empty;
-            if (Response.Cookies["username"] != null)
-                username = Response.Cookies["username"].Value;
-            if (Response.Cookies["password"] != null)
-                password = Response.Cookies["password"].Value;
-            if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
-                login = new Login { UserName = username };
-            return login;
-        }*/
+        
         [HttpPost]
         public ActionResult Login(LoginModel loginModel)
         {
@@ -43,7 +32,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                 {
                     return View("Index");
                 }
-                // Login login = checkCookies();
+
                 var userDao = new UserDAO();
                 var loginResult = userDao.Login(loginModel.Password, loginModel.Email);
 
@@ -58,7 +47,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                             UserID = user.ID
                         };
                         Session[SessionConstants.USER_SESSION] = userSession;
-
+                        // redict by role
                         if (user.Role == 0)
                         {
                             return RedirectToAction("Index", "HomeAdmin");

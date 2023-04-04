@@ -19,19 +19,20 @@ namespace VnuaVaccine.Areas.Admin.Controllers
             var model = (UserLogin)Session[SessionConstants.USER_SESSION];
             var user = userDao.GetById(model.UserID);
 
-            var patientDao = new PatientDAO();
-            var patient = patientDao.GetByUserName(user.UserName);
-
-            var profileModel = new ProfileModel
-            {
-                ID = user.ID,
-                UserName = user.UserName,
-                Email = user.Email,
-                Password = user.Password,
-                Role = user.Role,
-                Age = patient.Age,
-                Address = patient.Address
-            };
+            var db = new VaccineDbContext(); 
+            var profileModel = db.Users
+                .Where(getUser => getUser.ID == user.ID)
+                .Join(db.Patients, getUser => getUser.ID, getPatient => getPatient.IdUserName, (getUser, getPatient) => new ProfileModel
+                {
+                    ID = getUser.ID,
+                    UserName = getUser.UserName,
+                    Email = getUser.Email,
+                    Password = getUser.Password,
+                    Role = getUser.Role,
+                    Age = getPatient.Age ?? null,
+                    Address = getPatient.Address ?? ""
+                })
+                .SingleOrDefault();
 
             return View(profileModel);
         }

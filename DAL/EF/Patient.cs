@@ -24,8 +24,7 @@ namespace DAL.EF
 
         public DateTime? Birthday { get; set; }
 
-        [StringLength(10)]
-        public string Sex { get; set; }
+        public int Sex { get; set; }
 
         [StringLength(150)]
         public string Address { get; set; }
