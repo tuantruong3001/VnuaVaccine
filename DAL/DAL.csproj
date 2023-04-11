@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dao\PatientDAO.cs" />
+    <Compile Include="Dao\StaffDAO.cs" />
     <Compile Include="Dao\VaccineDAO.cs" />
     <Compile Include="Dao\UserDAO.cs" />
     <Compile Include="EF\Appointment.cs" />

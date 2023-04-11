@@ -152,6 +152,7 @@
     <Compile Include="Common\SessionConstants.cs" />
     <Compile Include="Common\UserLogin.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ListVaccineController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2708,6 +2709,7 @@
     <Content Include="Assets\css\style.css" />
     <Content Include="Assets\images\bg-doctor3.jpg" />
     <Content Include="Assets\images\bg_image_2.jpg" />
+    <Content Include="Assets\images\filzer.jpg" />
     <Content Include="Assets\js\bootstrap.bundle.js" />
     <Content Include="Assets\js\bootstrap.bundle.min.js" />
     <Content Include="Assets\js\bootstrap.js" />
@@ -3091,6 +3093,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\ListVaccine\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

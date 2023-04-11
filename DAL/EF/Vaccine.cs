@@ -24,6 +24,8 @@ namespace DAL.EF
         [StringLength(50)]
         public string Munafacturer { get; set; }
 
+        [StringLength(150)]
+        public string Path { get; set; }
         public DateTime? ProductionDate { get; set; }
 
         public DateTime? ExpirationData { get; set; }

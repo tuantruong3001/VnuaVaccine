@@ -19,21 +19,30 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                 var userDao = new UserDAO();
                 var userLogin = (UserLogin)Session[SessionConstants.USER_SESSION];
                 var user = userDao.GetById(userLogin.UserID);
+                //list infor staff
+                var db = new VaccineDbContext();
+                var profileModel = db.Users
+                    .Where(getUser => getUser.ID == user.ID)
+                    .Join(db.MedicalStaffs, getUser => getUser.ID, getStaff => getStaff.IdUserName, (getUser, getStaff) => new ProfileModel
+                    {
+                        ID = getUser.ID,
+                        UserName = getUser.UserName,
+                        Email = getUser.Email,
+                        Password = getUser.Password,
+                        Role = getUser.Role,
 
-                /*var patientDao = new PatientDAO();
-                var patient = patientDao.GetByUserName(user.UserName);*/
-
-                var profileModel = new ProfileModel
-                {
-                    ID = user.ID,
-                    UserName = user.UserName,
-                    Email = user.Email,
-                    Password = user.Password,
-                    Role = user.Role,
-                    /*Age = patient.Age,
-                    Address = patient.Address*/
-                };
-
+                        Age = getStaff.Age ?? null,
+                        Sex = getStaff.Sex,
+                        Address = getStaff.Address ?? "",
+                        Name = getStaff.Name,
+                        PhoneNumber = getStaff.PhoneNumber
+                    })
+                    .SingleOrDefault();
+                ViewBag.SexOptions = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "1", Text = "Nam", Selected = profileModel?.Sex == 1 },
+                new SelectListItem { Value = "0", Text = "Nữ", Selected = profileModel?.Sex == 0 },
+            };
                 return View(profileModel);
             }
             catch (Exception)
@@ -49,15 +58,10 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                 if (ModelState.IsValid)
                 {
                     var userDao = new UserDAO();
+                    var staffDao = new StaffDAO();
                     var userByEmail = userDao.GetByEmail(model.Email);
                     model.ID = userByEmail.ID;
                     bool isUserNameAvailable;
-
-                    if (model.ConfirmPassword != model.Password)
-                    {
-                        ModelState.AddModelError("", "ConfirmPassword và Password không khớp");
-                        return View("Index");
-                    }
 
                     var userOld = userDao.GetById(model.ID);
                     if (model.UserName == userOld.UserName)
@@ -71,6 +75,11 @@ namespace VnuaVaccine.Areas.Admin.Controllers
 
                     if (isUserNameAvailable)
                     {
+                        ViewBag.SexOptions = new List<SelectListItem>
+                        {
+                            new SelectListItem { Value = "1", Text = "Nam", Selected = model.Sex == 1 },
+                            new SelectListItem { Value = "0", Text = "Nữ", Selected = model.Sex == 0 },
+                        };
                         var user = new User
                         {
                             ID = model.ID,
@@ -80,6 +89,18 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                             Role = model.Role
                         };
                         userDao.Update(user);
+
+                        var staff = new MedicalStaff
+                        {
+                            IdUserName = user.ID,
+                            Age = model.Age,
+                            Sex = model.Sex,
+                            Name = model.Name,
+                            PhoneNumber = model.PhoneNumber,
+                            Address = model.Address
+                        };
+                        staffDao.Update(staff);
+
                         TempData["EditUserMessage"] = "Sửa thông tin thành công";
                         return RedirectToAction("Index", "HomeAdmin");
                     }

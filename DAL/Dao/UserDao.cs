@@ -38,7 +38,7 @@ namespace DAL.Dao
         public User GetByEmail(string email)
         {
             return db.Users.SingleOrDefault(x => x.Email == email);
-        }
+        }      
         public int Login(string passWord, string email)
         {
             var result = db.Users.SingleOrDefault(x => x.Email == email);
@@ -73,7 +73,6 @@ namespace DAL.Dao
                 if (user != null)
                 {
                     userUpdate.UserName = user.UserName;
-                    userUpdate.Password = user.Password;
                     userUpdate.Email = user.Email;                  
                     db.SaveChanges();
                     return true;

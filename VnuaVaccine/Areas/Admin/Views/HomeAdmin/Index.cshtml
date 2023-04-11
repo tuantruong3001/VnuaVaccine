@@ -10,7 +10,7 @@
         <li class="nav-item active">
             <a class="nav-link" href="/Home/Index">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Home</span>
+                <span>HomePage</span>
             </a>
         </li>
 
@@ -29,7 +29,7 @@
         <li class="nav-item active">
             <a class="nav-link" href="#">
                 <i class="fas fa-fw fa-comment"></i>
-                <span>List Review</span>
+                <span>List Schedule</span>
             </a>
         </li>
         <!-- Divider -->
@@ -97,15 +97,42 @@
                                 </div>
                                 <div class="form-group">
 
-                                    @Html.LabelFor(model => model.Password, new { htmlAttribute = new { @class = "form-control form-control-user" } })
-                                    @Html.PasswordFor(model => model.Password, new { @class = "form-control form-control-user", @placeholder = "Type your password" })
+                                    @Html.LabelFor(model => model.Name, new { htmlAttribute = new { @class = "form-control form-control-user" } })
+                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control form-control-user", @placeholder = "Type your Name" })
 
                                 </div>
                                 <div class="form-group">
 
-                                    @Html.LabelFor(model => model.ConfirmPassword, new { htmlAttribute = new { @class = "form-control form-control-user" } })
-                                    @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control form-control-user", @placeholder = "Type your confirm password" })
+                                    @Html.LabelFor(model => model.Age, new { htmlAttribute = new { @class = "form-control form-control-user" } })
+                                    @Html.TextBoxFor(model => model.Age, new { @class = "form-control form-control-user", @placeholder = "Type your Age" })
 
+                                </div>
+                                <div class="form-group">
+
+                                    @Html.LabelFor(model => model.Address, new { htmlAttribute = new { @class = "form-control form-control-user" } })
+                                    @Html.TextBoxFor(model => model.Address, new { @class = "form-control form-control-user", @placeholder = "Type your Address" })
+
+                                </div>
+                                <div class="form-group">
+
+                                    @Html.LabelFor(model => model.PhoneNumber, new { htmlAttribute = new { @class = "form-control form-control-user" } })
+                                    @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control form-control-user", @placeholder = "Type your Phone" })
+
+                                </div>
+                                <style>
+                                    .Sex:hover {
+                                        cursor: pointer;
+                                    }
+                                </style>
+
+                                <div class="form-group">
+                                    <label for="Sex">Sex</label>
+                                    <select class="form-control Sex" name="Sex">
+                                        @foreach (var option in ViewBag.SexOptions)
+                                        {
+                                            <option value="@option.Value" @(option.Selected ? "selected" : "")>@option.Text</option>
+                                        }
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Email</label>
@@ -122,7 +149,7 @@
                                 </a>
                                 <hr>
                             }
-                            <a style="background-color:#e74a3b;" class="btn btn-primary btn-user btn-block" @Html.ActionLink("Logout", "Logout", "Login")></a>
+                        <a style="background-color:#e74a3b;" class="btn btn-primary btn-user btn-block" @Html.ActionLink("Logout", "Logout", "Login")</a>
                         </div>
                     </div>
                 </div>

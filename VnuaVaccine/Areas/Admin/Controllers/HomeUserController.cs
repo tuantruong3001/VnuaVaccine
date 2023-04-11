@@ -59,12 +59,6 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                     model.ID = userByEmail.ID;
                     bool isUserNameAvailable;
 
-                    if (model.ConfirmPassword != model.Password)
-                    {
-                        ModelState.AddModelError("", "ConfirmPassword và Password không khớp");
-                        return View("Index");
-                    }
-
                     var userOld = userDao.GetById(model.ID);
                     if (model.UserName == userOld.UserName)
                     {
@@ -97,7 +91,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                             IdUserName = user.ID,
                             Age = model.Age,
                             Sex = model.Sex,
-                            Name = model.UserName,
+                            Name = model.Name,
                             PhoneNumber = model.PhoneNumber,
                             Birthday = model.Birthday,
                             Address = model.Address
@@ -110,10 +104,8 @@ namespace VnuaVaccine.Areas.Admin.Controllers
 
                     ModelState.AddModelError("", "UserName đã tồn tại");
                 }
-
                 return View(model);
             }
-
             catch (Exception ex)
             {
                 ModelState.AddModelError("", $"Đã có lỗi xảy ra, vui lòng thử lại sau: {ex.Message}");

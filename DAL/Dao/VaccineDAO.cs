@@ -26,5 +26,9 @@ namespace DAL.Dao
             }       
             return model.OrderBy(x => x.ID).ToPagedList(page, pageSize);
         }
+        public Vaccine ViewDetail(int id)
+        {
+            return db.Vaccines.Find(id);
+        }
     }
 }

@@ -1,5 +1,4 @@
-﻿@model IEnumerable<DAL.EF.Vaccine>
-
+﻿@model PagedList.IPagedList<DAL.EF.Vaccine>
 @using PagedList.Mvc;
 @{
     ViewBag.Title = "Index";
@@ -31,7 +30,7 @@
         <li class="nav-item active">
             <a class="nav-link" href="#">
                 <i class="fas fa-fw fa-comment"></i>
-                <span>List Review</span>
+                <span>List Schedule</span>
             </a>
         </li>
         <!-- Divider -->
@@ -87,44 +86,53 @@
                             <table style="text-align:center" class="table table-striped table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-
                                         <th>Tên Vaccine</th>
                                         <th>Cơ sở sản xuất</th>
                                         <th>Số lượng</th>
                                         <th>Mô tả</th>
+                                        <th>Ảnh</th>
                                         <th>Ngày nhập</th>
                                         <th>Ngày hết hạn</th>
-                                        <th>Ảnh</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-
-                                    @foreach (var item in Model)
+                                    @if (Model.Count == 0)
                                     {
-                                        <tr id="row_@item.ID">
-                                            <td>@item.NameVaccine</td>
-                                            <td>@item.Munafacturer</td>
-                                            <td>@item.QuantityStock</td>
-                                            <td>@item.Description</td>
-                                            <td>@(item.ProductionDate == null ? "" : item.ProductionDate.Value.ToString("dd/MM/yyyy"))</td>
-                                            <td>@(item.ExpirationData == null ? "" : item.ExpirationData.Value.ToString("dd/MM/yyyy"))</td>
-                                            <td></td>
-                                            <td>
-                                                <a class="btn btn-success" style="text-decoration:none; " href="/Admin/Product/Edit/@item.ID"><i class="fa fa-edit"></i> Edit</a>
-                                                <a style="text-decoration: none;" href="@Url.Action("Delete", "VaccineData", new { id = item.ID })" class="btn btn-danger" onclick="return confirm('Xác nhận xoá?')"><i class="fas fa-trash"></i> Delete</a>
-                                            </td>
+
+                                        <tr>
+                                            <td colspan="9" class="text-center">Không có dữ liệu</td>
                                         </tr>
                                     }
-
+                                    @if (Model.Count != 0)
+                                    {
+                                        foreach (var item in Model)
+                                        {
+                                            <tr id="row_@item.ID">
+                                                <td>@item.NameVaccine</td>
+                                                <td>@item.Munafacturer</td>
+                                                <td>@item.QuantityStock</td>
+                                                <td>@item.Description</td>
+                                                <td><img style="width: 30%; height: auto;" src="@item.Path"></td>
+                                                <td>@(item.ProductionDate == null ? "" : item.ProductionDate.Value.ToString("dd/MM/yyyy"))</td>
+                                                <td>@(item.ExpirationData == null ? "" : item.ExpirationData.Value.ToString("dd/MM/yyyy"))</td>
+                                                <td></td>
+                                                <td>
+                                                    <a class="btn btn-success" style="text-decoration:none; " href="/Admin/Product/Edit/@item.ID"><i class="fa fa-edit"></i> Edit</a>
+                                                    <a style="text-decoration: none;" href="@Url.Action("Delete", "VaccineData", new { id = item.ID })" class="btn btn-danger" onclick="return confirm('Xác nhận xoá?')"><i class="fas fa-trash"></i> Delete</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
                                 </tbody>
 
                             </table>
+                            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchString = ViewBag.SearchString }))
 
                         </div>
 
                         <div class="input-group-append">
-                            <a class="btn btn-primary" href="/Admin/VaccineData/Index"><i class="bi-basket"></i> Add Product</a>
+                            <a class="btn btn-primary" href="/Admin/VaccineData/Index"><i class="bi-plus-circle"></i> Add Vaccine</a>
                         </div>
                     </div>
 
@@ -134,3 +142,4 @@
             </div>
         </div>
     </div>
+</div>

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="~/Assets/Admin/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/CRUDDemo.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Assets/Admin/css/maicons.css">
-
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/Assets/Admin/css/bootstrap.css">
 
     <link rel="stylesheet" href="~/Assets/Admin/vendor/owl-carousel/css/owl.carousel.css">
@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="~/Assets/Admin/vendor/animate/animate.css">
 
     <link rel="stylesheet" href="~/Assets/Admin/css/theme.css">
+    @RenderSection("head", required: false);
     <style>
         .bg-light2 {
             background-color: #F5F9F6 !important;
@@ -32,14 +33,14 @@
         .container-fluid {
             padding: 0;
         }
+
         .login {
             color: black !important;
-            font-style:italic;
+            font-style: italic;
         }
-        
     </style>
 </head>
-<body>
+<body onload="changeColor(document.querySelector('.nav-link.active'))">
     <div class="back-to-top"></div>
     <header>
         @{
@@ -70,7 +71,7 @@
 
         <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="#"><span class="text-primary">VNUA</span>-Vaccine</a>
+                <a class="navbar-brand" href="~/Home/Index"><span class="text-primary">VNUA</span>-Vaccine</a>
 
                 <form action="#">
                     <div class="input-group input-navbar">
@@ -87,21 +88,8 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupport">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#">Trang chủ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Về chúng tôi</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Bác sĩ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Tin tức</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#section-form">Liên hệ</a>
-                        </li>
+                       
+                        @RenderSection("navlink", required: false)
                         <li class="nav-item">
                             @if (session == null)
                             {
@@ -119,150 +107,7 @@
         </nav>
     </header>
 
-    <div class="page-hero bg-image overlay-dark" style="background-image: url(/Assets/images/bg_image_2.jpg); background-size: cover; ">
-        <div class="hero-section">
-            <div class="container text-center wow zoomIn">
-                <span class="subhead">Hệ thống thông tin tiêm chủng</span>
-                <h1 class="display-4">VNUA-Vaccine</h1>
-                <a href="/Admin/Register" class="btn btn-primary">Đăng ký ngay</a>
-            </div>
-        </div>
-    </div>
-    <div class="bg-light">
-        <div class="page-section py-3 mt-md-n5 custom-index">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-md-4 py-3 py-md-0">
-                        <div class="card-service wow fadeInUp">
-                            <div class="circle-shape bg-secondary text-white">
-                                <span class="mai-chatbubbles-outline"></span>
-                            </div>
-                            <p><span>Hỏi đáp</span> cùng bác sĩ </p>
-                        </div>
-                    </div>
-                    <div class="col-md-4 py-3 py-md-0">
-                        <div class="card-service wow fadeInUp">
-                            <div class="circle-shape bg-primary text-white">
-                                <span class="mai-shield-checkmark"></span>
-                            </div>
-                            <p><span>Bảo</span> vệ sức khoẻ bản thân và gia đình</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4 py-3 py-md-0">
-                        <div class="card-service wow fadeInUp">
-                            <div class="circle-shape bg-accent text-white">
-                                <span class="mai-basket"></span>
-                            </div>
-                            <p><span>Nhận</span> lịch nhắc tiêm</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> <!-- .page-section -->
-
-        <div class="page-section pb-0">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-6 py-3 wow fadeInUp">
-                        <h1>Chào mừng bạn đến với <br> VNUA Vaccine</h1>
-                        <p class="text-grey mb-4">Phần mềm cung cấp thông tin về các loại vaccine và lịch tiêm chủng tốt nhất cho từng trường hợp cụ thể, giúp cho bạn lựa chọn đúng loại vaccine phù hợp với sức khỏe và nhu cầu của mỗi cá nhân. Bạn cũng có thể xem lịch tiêm chủng trực quan dưới dạng biểu đồ hoặc bảng, giúp bạn dễ dàng theo dõi và phân tích sự thay đổi của lịch tiêm chủng.</p>
-                        <a href="about.html" class="btn btn-primary">Đọc thêm</a>
-                    </div>
-                    <div class="col-lg-6 wow fadeInRight" data-wow-delay="400ms">
-                        <div class="img-place custom-img-1">
-                            <img src="~/Assets/images/bg-doctor3.jpg" alt="">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> <!-- .bg-light -->
-    </div> <!-- .bg-light -->
-    <!-- Tin tuc-->
-    <div class="page-section">
-        <div class="container">
-            <h1 class="text-center wow fadeInUp">Tin Tức Mới Nhất</h1>
-            <div class="row mt-5">
-                <div class="col-lg-4 py-2 wow zoomIn">
-                    <div class="card-blog">
-                        <div class="header">
-                            <div class="post-category">
-                                <a href="#">2023</a>
-                            </div>
-                            <a href="blog-details.html" class="post-thumb">
-                                <img src="~/Assets/Admin/img/blog/blog_3.jpg" alt="">
-                            </a>
-                        </div>
-                        <div class="body">
-                            <h5 class="post-title"><a href="blog-details.html">Tin tức mới nhất 2023</a></h5>
-                            <div class="site-info">
-                                <div class="avatar mr-2">
-                                    <div class="avatar-img">
-                                        <img src="~/Assets/Admin/img/person/person_1.jpg" alt="">
-                                    </div>
-                                    <span>Admin</span>
-                                </div>
-                                <span class="mai-time"></span> 2 ngày trước
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 py-2 wow zoomIn">
-                    <div class="card-blog">
-                        <div class="header">
-                            <div class="post-category">
-                                <a href="#">2023</a>
-                            </div>
-                            <a href="blog-details.html" class="post-thumb">
-                                <img src="~/Assets/Admin/img/blog/blog_3.jpg" alt="">
-                            </a>
-                        </div>
-                        <div class="body">
-                            <h5 class="post-title"><a href="blog-details.html">Tin tức mới nhất 2023</a></h5>
-                            <div class="site-info">
-                                <div class="avatar mr-2">
-                                    <div class="avatar-img">
-                                        <img src="~/Assets/Admin/img/person/person_1.jpg" alt="">
-                                    </div>
-                                    <span>Admin</span>
-                                </div>
-                                <span class="mai-time"></span> 1 weeks ago
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 py-2 wow zoomIn">
-                    <div class="card-blog">
-                        <div class="header">
-                            <div class="post-category">
-                                <a href="#">2023</a>
-                            </div>
-                            <a href="blog-details.html" class="post-thumb">
-                                <img src="~/Assets/Admin/img/blog/blog_3.jpg" alt="">
-                            </a>
-                        </div>
-                        <div class="body">
-                            <h5 class="post-title"><a href="blog-details.html">Tin tức mới nhất 2023</a></h5>
-                            <div class="site-info">
-                                <div class="avatar mr-2">
-                                    <div class="avatar-img">
-                                        <img src="~/Assets/Admin/img/person/person_1.jpg" alt="">
-                                    </div>
-                                    <span>Admin</span>
-                                </div>
-                                <span class="mai-time"></span> 2 months ago
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 text-center mt-4 wow zoomIn">
-                    <a href="blog.html" class="btn btn-primary">Xem thêm</a>
-                </div>
-
-            </div>
-        </div>
-    </div> <!-- .page-section -->
-
+    @RenderSection("body", required: false);
     <div class="page-section bg-light2" id="section-form">
         <div class="container">
             <h1 class="text-center wow fadeInUp">Để Lại Lời Nhắn Cho Bác Sĩ</h1>
@@ -298,6 +143,7 @@
             </form>
         </div>
     </div> <!-- .page-section -->
+    <!-- .page-footer -->
     <footer class="page-footer">
         <div class="container">
             <div class="row px-md-3">
@@ -349,8 +195,10 @@
 
             <hr>
 
-            <p id="copyright">Copyright ©
-            <script>document.write(new Date().getFullYear());</script> All rights reserved | This website is made with ♥ by <a href="#" target="_blank">TvT</a></p>
+            <p id="copyright">
+                Copyright ©
+                <script>document.write(new Date().getFullYear());</script> All rights reserved | This website is made with ♥ by <a href="#" target="_blank">TvT</a>
+            </p>
         </div>
     </footer>
 
@@ -362,7 +210,8 @@
 
     <script src="~/Assets/Admin/vendor/wow/wow.min.js"></script>
 
-    <script src="~/Assets/Admin/js/theme.js"></script>
+    <script src="~/Assets/Admin/js/theme.js"></script>   
+
     @RenderBody();
 </body>
 </html>
