@@ -44,7 +44,8 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                         {
                             UserName = user.UserName,
                             Email = user.Email,
-                            UserID = user.ID
+                            UserID = user.ID,
+                            RoleId = user.Role
                         };
                         Session[SessionConstants.USER_SESSION] = userSession;
                         // redict by role

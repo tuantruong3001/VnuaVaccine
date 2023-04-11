@@ -88,18 +88,22 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupport">
                     <ul class="navbar-nav ml-auto">
-                       
+
                         @RenderSection("navlink", required: false)
                         <li class="nav-item">
                             @if (session == null)
                             {
                                 <a class="nav-link" href="/Admin/Login/Index">Đăng nhập</a>
                             }
-                            else
+                            else if (session.RoleId == 0)
                             {
                                 <a class="nav-link login" href="@Url.Action("Index", "HomeAdmin", new { area = "Admin" })">Hello! @session.Email</a>
 
                             }
+                            else if (session.RoleId == 1)
+                            {                                
+                                <a class="nav-link login" href="@Url.Action("Index", "HomeUser", new { area = "Admin" })">Hello! @session.Email</a>
+                            }                           
                         </li>
                     </ul>
                 </div> <!-- .navbar-collapse -->
@@ -210,7 +214,7 @@
 
     <script src="~/Assets/Admin/vendor/wow/wow.min.js"></script>
 
-    <script src="~/Assets/Admin/js/theme.js"></script>   
+    <script src="~/Assets/Admin/js/theme.js"></script>
 
     @RenderBody();
 </body>
