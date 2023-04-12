@@ -6,7 +6,7 @@
     <title>Hệ Thống Thông Tin Tiêm Chủng</title>
     <link rel="stylesheet" href="~/Assets/Admin/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/Assets/Admin/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/CRUDDemo.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/VnuaVaccine.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Assets/Admin/css/maicons.css">
     <link href="~/Content/PagedList.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/Assets/Admin/css/bootstrap.css">
@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="~/Assets/Admin/vendor/animate/animate.css">
 
     <link rel="stylesheet" href="~/Assets/Admin/css/theme.css">
-    @RenderSection("head", required: false);
+    @RenderSection("head", required: false)
     <style>
         .bg-light2 {
             background-color: #F5F9F6 !important;
@@ -37,6 +37,11 @@
         .login {
             color: black !important;
             font-style: italic;
+        }
+
+        #icon-addon1 {
+            border-top-right-radius: 0.25rem; /* bo góc phải trên */
+            border-bottom-right-radius: 0.25rem; /* bo góc phải dưới */
         }
     </style>
 </head>
@@ -65,20 +70,20 @@
                             <a href="#"><span class="mai-logo-instagram"></span></a>
                         </div>
                     </div>
-                </div> <!-- .row -->
-            </div> <!-- .container -->
-        </div> <!-- .topbar -->
-
+                </div>
+            </div>
+        </div>
         <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="~/Home/Index"><span class="text-primary">VNUA</span>-Vaccine</a>
 
                 <form action="#">
                     <div class="input-group input-navbar">
+
+                        <input type="text" class="form-control" placeholder="Nhập từ khoá..." aria-label="Username" aria-describedby="icon-addon1" id="search-input">
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="icon-addon1"><span class="mai-search"></span></span>
+                            <button class="btn btn-primary" id="icon-addon1" onclick="search()"><span class="mai-search"></span></button>
                         </div>
-                        <input type="text" class="form-control" placeholder="Nhập từ khoá..." aria-label="Username" aria-describedby="icon-addon1">
                     </div>
                 </form>
 
@@ -101,17 +106,17 @@
 
                             }
                             else if (session.RoleId == 1)
-                            {                                
+                            {
                                 <a class="nav-link login" href="@Url.Action("Index", "HomeUser", new { area = "Admin" })">Hello! @session.Email</a>
-                            }                           
+                            }
                         </li>
                     </ul>
-                </div> <!-- .navbar-collapse -->
-            </div> <!-- .container -->
+                </div>
+            </div>
         </nav>
     </header>
-
-    @RenderSection("body", required: false);
+    
+    @RenderSection("body", required: false)
     <div class="page-section bg-light2" id="section-form">
         <div class="container">
             <h1 class="text-center wow fadeInUp">Để Lại Lời Nhắn Cho Bác Sĩ</h1>
@@ -146,8 +151,7 @@
                 <button type="submit" class="btn btn-primary mt-3 wow zoomIn">Gửi yêu cầu</button>
             </form>
         </div>
-    </div> <!-- .page-section -->
-    <!-- .page-footer -->
+    </div>
     <footer class="page-footer">
         <div class="container">
             <div class="row px-md-3">
@@ -216,6 +220,7 @@
 
     <script src="~/Assets/Admin/js/theme.js"></script>
 
-    @RenderBody();
+    @RenderBody()
+
 </body>
 </html>
