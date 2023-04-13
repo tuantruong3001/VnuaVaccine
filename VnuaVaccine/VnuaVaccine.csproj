@@ -3095,6 +3095,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\ListVaccine\Index.cshtml" />
     <Content Include="Views\ListVaccine\Detail.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

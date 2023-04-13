@@ -8,7 +8,7 @@
         <a class="nav-link active" href="~/Home/Index" onclick="changeColor(this)">Trang chủ</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#" onclick="changeColor(this)">Về chúng tôi</a>
+        <a class="nav-link" href="~/Home/About" onclick="changeColor(this)">Về chúng tôi</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="~/ListVaccine/Index" onclick="changeColor(this)">Vaccine</a>
@@ -33,12 +33,27 @@
     </script>
 }
 @section body{
+    @{
+        var session = (VnuaVaccine.Common.UserLogin)Session[VnuaVaccine.Common.SessionConstants.USER_SESSION];
+    }
     <div class="page-hero bg-image overlay-dark" style="background-image: url(/Assets/images/bg_image_2.jpg); background-size: cover; ">
         <div class="hero-section">
             <div class="container text-center wow zoomIn">
                 <span class="subhead">Hệ thống thông tin tiêm chủng</span>
                 <h1 class="display-4">VNUA-Vaccine</h1>
-                <a href="/Admin/Register" class="btn btn-primary">Đăng ký ngay</a>
+                @if (session == null)
+                {
+                    <a href="/Admin/Register" class="btn btn-primary">Đăng ký ngay</a>
+                }
+                else if (session.RoleId == 0)
+                {
+                    <a class="btn btn-primary" href="@Url.Action("Index", "HomeAdmin", new { area = "Admin" })">My Profile</a>
+
+                }
+                else if (session.RoleId == 1)
+                {
+                    <a class="btn btn-primary" href="@Url.Action("Index", "HomeUser", new { area = "Admin" })">My Profile</a>
+                }
             </div>
         </div>
     </div>

@@ -3,6 +3,35 @@
     ViewBag.Title = "Detail";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section navlink {
+    <li class="nav-item">
+        <a class="nav-link " href="~/Home/Index" onclick="changeColor(this)">Trang chủ</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="~/Home/About" onclick="changeColor(this)">Về chúng tôi</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link active" href="~/ListVaccine/Index" onclick="changeColor(this)">Vaccine</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#" onclick="changeColor(this)">Tin tức</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#section-form" onclick="changeColor(this)">Liên hệ</a>
+    </li>
+    <script>
+        function changeColor(link) {
+
+            var links = document.querySelectorAll('.nav-link');
+            // Loại bỏ class active
+            links.forEach(function (link) {
+                link.classList.remove('active');
+            });
+            // Thêm class active vào phần tử được chọn
+            link.classList.add('active');
+        }
+    </script>
+}
 @section body{
     <main role="main">
         <a href="/san-pham/@Model.ID"></a>
@@ -12,17 +41,14 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-
             <div class="card">
                 <div class="container-fluid">
-
                     <form name="frmsanphamchitiet" id="frmsanphamchitiet" method="post"
                           action="/php/twig/frontend/giohang/themvaogiohang">
                         <input type="hidden" name="sp_ma" id="sp_ma" value="@Model.Munafacturer">
                         <input type="hidden" name="sp_ten" id="sp_ten" value="@Model.NameVaccine">
                         <input type="hidden" name="sp_gia" id="sp_gia" value="">
                         <input type="hidden" name="hinhdaidien" id="hinhdaidien" value="samsung-galaxy-tab-10.jpg">
-
                         <div class="container-fluid">
                             <h3>Thông tin vaccine</h3>
                             <div class="row">
@@ -31,21 +57,18 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="wrapper row">
                             <div class="preview col-md-6">
                                 <div class="preview-pic tab-content">
                                     <div class="tab-pane" id="pic-1">
                                         <img src="@Model.Path">
                                     </div>
-
                                     <ul class="preview-thumbnail nav nav-tabs">
                                         <li class="active">
                                             <a href="#" data-target="#pic-1" data-toggle="tab" class="">
                                                 <img src="@Model.Path">
                                             </a>
                                         </li>
-
                                     </ul>
                                 </div>
                                 <div class="details col-md-6">
@@ -63,13 +86,12 @@
                                     <p class="product-description">@Model.Description</p>
                                     <h4 class="price">Giá hiện tại: <span></span></h4>
                                     <p class="vote">
-                                         <strong>Chứng chỉ IOS</strong>
+                                        <strong>Chứng chỉ IOS</strong>
                                         !
                                     </p>
                                     <div class="form-group">
                                         <label for="soluong">Số lượng đặt mua:</label>
                                         <input type="number" class="form-control" id="soluong" name="soluong">
-
                                     </div>
                                     <div class="action">
                                         <button type="button" class="btn btn-outline-danger">
@@ -81,17 +103,11 @@
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
                     </form>
-
                 </div>
             </div>
-
-
         </div>
-
     </main>
 }
 
