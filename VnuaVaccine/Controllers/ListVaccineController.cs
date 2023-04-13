@@ -16,28 +16,30 @@ namespace VnuaVaccine.Controllers
             {
                 var productDao = new VaccineDAO();
                 var model = productDao.ListAllPaging(searchString, page, pageSize);
-                
+
                 ViewBag.SearchString = searchString;
                 return View(model);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         public ActionResult Detail(int id)
         {
             try
             {
-                var dao = new VaccineDAO();
-                var product = dao.ViewDetail(id);
-                return View(product);
+                var vaccineDAO = new VaccineDAO();
+                var vaccine = vaccineDAO.ViewDetail(id);
+                if (vaccine == null)
+                {
+                    return RedirectToAction("Index");
+                }
+                return View(vaccine);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                throw;
+                throw new Exception(ex.Message);
             }
         }
     }

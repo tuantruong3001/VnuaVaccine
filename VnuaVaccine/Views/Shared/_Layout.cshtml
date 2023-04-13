@@ -50,7 +50,6 @@
     <header>
         @{
             var session = (VnuaVaccine.Common.UserLogin)Session[VnuaVaccine.Common.SessionConstants.USER_SESSION];
-
         }
         <div class="topbar">
             <div class="container">
@@ -77,15 +76,15 @@
             <div class="container">
                 <a class="navbar-brand" href="~/Home/Index"><span class="text-primary">VNUA</span>-Vaccine</a>
 
-                <form action="#">
+                @using (Html.BeginForm("Index", "ListVaccine", FormMethod.Get))
+                {
                     <div class="input-group input-navbar">
-
-                        <input type="text" class="form-control" placeholder="Nhập từ khoá..." aria-label="Username" aria-describedby="icon-addon1" id="search-input">
+                        @Html.TextBox("searchString", null, new { @class = "form-control", @placeholder = "Search for..." })
                         <div class="input-group-prepend">
-                            <button class="btn btn-primary" id="icon-addon1" onclick="search()"><span class="mai-search"></span></button>
+                            <button class="btn btn-primary" id="icon-addon1" type="submit"><span class="mai-search"></span></button>
                         </div>
                     </div>
-                </form>
+                }
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupport" aria-controls="navbarSupport" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -115,7 +114,7 @@
             </div>
         </nav>
     </header>
-    
+
     @RenderSection("body", required: false)
     <div class="page-section bg-light2" id="section-form">
         <div class="container">

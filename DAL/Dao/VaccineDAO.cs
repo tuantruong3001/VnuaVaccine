@@ -18,7 +18,7 @@ namespace DAL.Dao
             IQueryable<Vaccine> model = db.Vaccines;
             if (!string.IsNullOrEmpty(searchString))
             {
-                model = model.Where(x => x.NameVaccine.Contains(searchString) || x.Description.Contains(searchString));
+                model = model.Where(x => x.NameVaccine.Contains(searchString) || x.Description.Contains(searchString) || x.Munafacturer.Contains(searchString));
                 if (model == null)
                 {
                     return null;
