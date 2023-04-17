@@ -1,0 +1,161 @@
+﻿@model VnuaVaccine.Areas.Admin.Models.VaccineModel
+@{
+    ViewBag.Title = "Add Vaccine";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section jsFooter{
+
+    <script>
+        $('#btnSelectImage').on('click', function (e) {
+            e.preventDefault();
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (url) {
+                $('#txtImage').val(url);
+            };
+            finder.popup();
+        })
+    </script>
+}
+@section sidebar{
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <hr class="sidebar-divider my-0">
+
+        <li class="nav-item active">
+            <a class="nav-link" href="/Home/Index">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>HomePage</span>
+            </a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider  my-0">
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item active">
+            <a class="nav-link" href="/Admin/ListUser/Index">
+                <i class="fas fa-fw fa-user"></i>
+                <span>List User</span>
+            </a>
+        </li>
+        <!-- Nav Item - Utilities Collapse Menu -->
+        <hr class="sidebar-divider  my-0">
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item active">
+            <a class="nav-link" href="#">
+                <i class="fas fa-fw fa-comment"></i>
+                <span>List Schedule</span>
+            </a>
+        </li>
+        <!-- Divider -->
+        <hr class="sidebar-divider  my-0">
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item active">
+            <a class="nav-link" href="/Admin/VaccineData/Index">
+                <i class="fas fa-fw fa-folder"></i>
+                <span>List Vaccine</span>
+            </a>
+        </li>
+
+        <!-- Nav Item - Charts -->
+        <hr class="sidebar-divider  my-0">
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item active">
+            <a class="nav-link" href="/Admin/HomeAdmin">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>My Profile</span>
+            </a>
+        </li>
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+
+    </ul>
+}
+@section bodymain{
+
+    <div class="card-body p-0">
+        <!-- Nested Row within Card Body -->
+        <div class="row">
+            @Html.AntiForgeryToken()
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="card shadow mb-4">
+                        <div class="p-5">
+                            <div class="card-header py-3">
+                                <h2 class="m-0 font-weight-bold text-primary" style="text-align:center;">Add Vaccine</h2>
+                            </div>
+                            @using (Html.BeginForm("Create", "VaccineData", FormMethod.Post))
+                            {
+                                @Html.ValidationSummary(false, "", new { @class = "text-danger" });
+                                <div class="form-group">
+                                    NameVaccine
+                                    @Html.TextBoxFor(model => model.NameVaccine, new { @class = "form-control form-control-user", @autofocus = "autofocus", @placeholder = "Type NameVaccine" })
+
+                                </div>
+                                <div class="form-group">
+                                    Munafacturer
+                                    @Html.TextBoxFor(model => model.Munafacturer, new { @class = "form-control form-control-user", @placeholder = "Type Munafacturer" })
+
+                                </div>
+                                <div class="form-group">
+                                    Description
+                                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-user", @placeholder = "Type Description" })
+
+                                </div>
+                                <div class="form-group">
+                                    QuantityStock
+                                    @Html.TextBoxFor(model => model.QuantityStock, new { @class = "form-control form-control-user", @placeholder = "Type QuantityStock" })
+
+                                </div>
+                                <div class="form-group">
+                                    Note
+                                    @Html.TextBoxFor(model => model.Note, new { @class = "form-control form-control-user", @placeholder = "Type Note" })
+
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ProductionDate, new { htmlAttribute = new { @class = "form-control form-control-user" } })
+                                    @Html.TextBoxFor(model => model.ProductionDate, "{0:dd/MM/yyyy}", new { @type = "date", @class = "form-control form-control-user" })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ExpirationData, new { htmlAttribute = new { @class = "form-control form-control-user" } })
+                                    @Html.TextBoxFor(model => model.ExpirationData, "{0:dd/MM/yyyy}", new { @type = "date", @class = "form-control form-control-user" })
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-10">
+                                        Image
+                                        <div class="col-md-10">
+                                            @Html.TextBoxFor(model => model.Path, new { htmlAttributes = new { @class = "form-control" }, id = "txtImage" })
+                                            <a id="btnSelectImage" href="#">Choose Image </a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <a>
+                                    <input style="background-color: #36b9cc" type="submit" value="Add Vaccine" class="btn btn-primary btn-user btn-block" />
+                                </a>
+                            }
+                            <hr>
+                            <a href="/Admin/VaccineData/Index" class="btn btn-primary btn-user btn-block icon">
+                                <i class="fas fa-arrow-left"></i>
+                                Back to list
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script>
+    var loadFile = function (event) {
+        var image = document.getElementById('output');
+        image.src = URL.createObjectURL(event.target.files[0]);
+    };
+</script>
+
+

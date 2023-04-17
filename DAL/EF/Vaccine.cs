@@ -15,7 +15,7 @@ namespace DAL.EF
             VaccinationSchedules = new HashSet<VaccinationSchedule>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        //[DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ID { get; set; }
 
         [StringLength(50)]
@@ -34,6 +34,8 @@ namespace DAL.EF
 
         [StringLength(150)]
         public string Description { get; set; }
+        [StringLength(150)]
+        public string Note { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VaccinationSchedule> VaccinationSchedules { get; set; }

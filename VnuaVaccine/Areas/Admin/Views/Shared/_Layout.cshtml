@@ -43,6 +43,10 @@
     <link href="~/Content/PagedList.css" rel="stylesheet" />
     <!-- Custom styles for this template-->
     <link href="~/Assets/admin/css/sb-admin-2.min.css" rel="stylesheet">
+    <style>
+        .accordionSidebar {
+        }
+    </style>
 
 </head>
 
@@ -52,7 +56,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <div class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <div class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion accordionSidebar" id="accordionSidebar">
             @{
                 var session = (VnuaVaccine.Common.UserLogin)Session[VnuaVaccine.Common.SessionConstants.USER_SESSION];
 
@@ -109,7 +113,6 @@
                                 </form>
                             </div>
                         </li>
-
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
@@ -119,24 +122,19 @@
                                      src="/Assets/admin/img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
-
                         </li>
                     </ul>
-
                 </nav>
                 <!-- End of Topbar -->
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">@RenderSection("header", required: false)</h1>
                     <div>
                         @RenderSection("bodymain", required: false)
                         @RenderBody()
                     </div>
                 </div>
                 <!-- /.container-fluid -->
-
             </div>
             <!-- End of Main Content -->
             <!-- Footer -->
@@ -148,17 +146,14 @@
                 </div>
             </footer>
             <!-- End of Footer -->
-
         </div>
         <!-- End of Content Wrapper -->
-
     </div>
     <!-- End of Page Wrapper -->
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
@@ -179,7 +174,7 @@
         </div>
     </div>
     <!-- Alert -->
-    
+
     <script src="~/Assets/admin/js/jquery.min.js"></script>
     <script src="~/Assets/admin/js/popper.min.js"></script>
     <script src="~/Assets/admin/js/bootstrap.bundle.min.js"></script>

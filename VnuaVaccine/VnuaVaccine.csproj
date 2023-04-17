@@ -3068,6 +3068,8 @@
     <Content Include="Areas\Admin\Views\HomeUser\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Register\Index.cshtml" />
     <Content Include="Areas\Admin\Views\VaccineData\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\VaccineData\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\VaccineData\Create.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

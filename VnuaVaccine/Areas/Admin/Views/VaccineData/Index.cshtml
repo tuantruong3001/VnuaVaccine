@@ -11,7 +11,7 @@
         <li class="nav-item active">
             <a class="nav-link" href="/Home/Index">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Home</span>
+                <span>HomePage</span>
             </a>
         </li>
 
@@ -64,7 +64,27 @@
 }
 <div class="row">
     <div class="col-lg-12">
-
+        @if (TempData["UserMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                </button> <h5><i class="icon fas fa-check"></i> @TempData["UserMessage"]</h5>
+            </div>
+        }
+        @if (TempData["EditUserMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                </button> <h5><i class="icon fas fa-check"></i> @TempData["EditUserMessage"]</h5>
+            </div>
+        }
+        @if (TempData["DeleteUserMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                </button> <h5><i class="icon fas fa-check"></i> @TempData["DeleteUserMessage"]</h5>
+            </div>
+        }
         <div class="panel panel-default">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
@@ -93,7 +113,7 @@
                                         <th>Ảnh</th>
                                         <th>Ngày nhập</th>
                                         <th>Ngày hết hạn</th>
-                                        <th></th>
+                                        <th>Ghi chú</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -108,17 +128,17 @@
                                     {
                                         foreach (var item in Model)
                                         {
-                                            <tr id="row_@item.ID">
+                                            <tr id="row_@item.ID" >
                                                 <td>@item.NameVaccine</td>
                                                 <td>@item.Munafacturer</td>
                                                 <td>@item.QuantityStock</td>
                                                 <td>@item.Description</td>
-                                                <td><img style="width: 30%; height: auto;" src="@item.Path"></td>
+                                                <td><img style="width: 100px; height: auto;" src="@item.Path"></td>
                                                 <td>@(item.ProductionDate == null ? "" : item.ProductionDate.Value.ToString("dd/MM/yyyy"))</td>
                                                 <td>@(item.ExpirationData == null ? "" : item.ExpirationData.Value.ToString("dd/MM/yyyy"))</td>
-                                                <td></td>
+                                                <td>@item.Note</td>
                                                 <td>
-                                                    <a class="btn btn-success" style="text-decoration:none; " href="/Admin/Product/Edit/@item.ID"><i class="fa fa-edit"></i> Edit</a>
+                                                    <a class="btn btn-success" style="text-decoration:none; " href="/Admin/VaccineData/Edit/@item.ID"><i class="fa fa-edit"></i> Edit</a>
                                                     <a style="text-decoration: none;" href="@Url.Action("Delete", "VaccineData", new { id = item.ID })" class="btn btn-danger" onclick="return confirm('Xác nhận xoá?')"><i class="fas fa-trash"></i> Delete</a>
                                                 </td>
                                             </tr>
@@ -132,7 +152,7 @@
                         </div>
 
                         <div class="input-group-append">
-                            <a class="btn btn-primary" href="/Admin/VaccineData/Index"><i class="bi-plus-circle"></i> Add Vaccine</a>
+                            <a class="btn btn-primary" href="/Admin/VaccineData/Create"><i class="bi-plus-circle"></i> Add Vaccine</a>
                         </div>
                     </div>
 

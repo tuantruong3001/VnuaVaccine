@@ -12,9 +12,11 @@ namespace VnuaVaccine.Areas.Admin.Models
         public string NameVaccine { get; set; }
         public string Munafacturer { get; set; }
         public string Description { get; set; }
-        public int QuantityStock { get; set; }
+        public int? QuantityStock { get; set; }
         [DataType(DataType.Date)]
         public DateTime? ProductionDate { get; set; }
         public DateTime? ExpirationData { get; set; }
+        public string Path { get; set; }
+        public string Note { get; set; }
     }
 }
