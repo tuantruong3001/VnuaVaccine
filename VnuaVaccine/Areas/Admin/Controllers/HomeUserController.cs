@@ -30,7 +30,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                     Password = getUser.Password,
                     Role = getUser.Role,
 
-                    Age = getPatient.Age ?? null,
+                    Age = getPatient.Age,
                     Sex = getPatient.Sex,
                     Address = getPatient.Address ?? "",
                     Name = getPatient.Name,

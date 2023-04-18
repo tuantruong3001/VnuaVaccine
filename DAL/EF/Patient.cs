@@ -16,7 +16,7 @@ namespace DAL.EF
             VaccinationSchedules = new HashSet<VaccinationSchedule>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        //[DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ID { get; set; }
 
         [StringLength(50)]
@@ -24,8 +24,9 @@ namespace DAL.EF
         [DataType(DataType.Date)]
 
         public DateTime? Birthday { get; set; }
+        public DateTime? CreateAt { get; set; }
 
-        public int? Sex { get; set; }
+        public int Sex { get; set; }
 
         [StringLength(150)]
         public string Address { get; set; }
@@ -34,7 +35,7 @@ namespace DAL.EF
 
         public int? IdUserName { get; set; }
 
-        public int? Age { get; set; }
+        public int Age { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Appointment> Appointments { get; set; }

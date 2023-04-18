@@ -1,9 +1,11 @@
-﻿@model PagedList.IPagedList<DAL.EF.Vaccine>
+﻿
+@model PagedList.IPagedList<DAL.EF.Patient>
 @using PagedList.Mvc;
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+
 @section sidebar{
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
         <hr class="sidebar-divider my-0">
@@ -96,10 +98,10 @@
         <div class="panel panel-default">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h2 class="m-0 font-weight-bold text-primary" style="text-align:center;">Danh sách Vaccines</h2>
+                    <h2 class="m-0 font-weight-bold text-primary" style="text-align:center;">Danh sách Bệnh nhân</h2>
                 </div>
                 <div class="card-body">
-                    @using (Html.BeginForm("Index", "VaccineData", FormMethod.Get))
+                    @using (Html.BeginForm("Index", "PatientData", FormMethod.Get))
                     {
                         <div class="form-group">
                             @Html.Label("Search:", new { @class = "control-label" })
@@ -114,14 +116,14 @@
                             <table style="text-align:center" class="table table-striped table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th>Tên Vaccine</th>
-                                        <th>Cơ sở sản xuất</th>
-                                        <th>Số lượng</th>
-                                        <th>Mô tả</th>
-                                        <th>Ảnh</th>
-                                        <th>Ngày nhập</th>
-                                        <th>Ngày hết hạn</th>
-                                        <th>Ghi chú</th>
+                                        <th>Tên bệnh nhân</th>
+                                        <th>Giới tính</th>
+                                        <th>Địa chỉ</th>
+                                        <th>Số điện thoại</th>
+                                        <th>Tuổi</th>
+                                        <th>Sinh nhật</th>
+                                        <th>Ngày tạo tài khoản</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -136,15 +138,14 @@
                                     {
                                         foreach (var item in Model)
                                         {
-                                            <tr id="row_@item.ID" >
-                                                <td>@item.NameVaccine</td>
-                                                <td>@item.Munafacturer</td>
-                                                <td>@item.QuantityStock</td>
-                                                <td>@item.Description</td>
-                                                <td><img style="width: 100px; height: auto;" src="@item.Path"></td>
-                                                <td>@(item.ProductionDate == null ? "" : item.ProductionDate.Value.ToString("dd/MM/yyyy"))</td>
-                                                <td>@(item.ExpirationData == null ? "" : item.ExpirationData.Value.ToString("dd/MM/yyyy"))</td>
-                                                <td>@item.Note</td>
+                                            <tr id="row_@item.ID">
+                                                <td>@item.Name</td>
+                                                <td><a style="text-decoration:none" data-id="@item.ID">@(item.Sex == 1 ? "Nam" : "Nữ")</a></td>
+                                                <td>@item.Address</td>
+                                                <td>@item.PhoneNumber</td>
+                                                <td>@item.Age</td>
+                                                <td>@(item.Birthday == null ? "" : item.Birthday.Value.ToString("dd/MM/yyyy"))</td>
+                                                <td>@(item.CreateAt == null ? "" : item.CreateAt.Value.ToString("dd/MM/yyyy"))</td>
                                                 <td>
                                                     <a class="btn btn-success" style="text-decoration:none; " href="/Admin/VaccineData/Edit/@item.ID"><i class="fa fa-edit"></i> Edit</a>
                                                     <a style="text-decoration: none;" href="@Url.Action("Delete", "VaccineData", new { id = item.ID })" class="btn btn-danger" onclick="return confirm('Xác nhận xoá?')"><i class="fas fa-trash"></i> Delete</a>
@@ -160,7 +161,7 @@
                         </div>
 
                         <div class="input-group-append">
-                            <a class="btn btn-primary" href="/Admin/VaccineData/Create"><i class="bi-plus-circle"></i> Add Vaccine</a>
+                            <a class="btn btn-primary" href="/Admin/VaccineData/Create"><i class="bi-plus-circle"></i> Add Patient</a>
                         </div>
                     </div>
 
@@ -171,3 +172,5 @@
         </div>
     </div>
 </div>
+
+

@@ -31,9 +31,9 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                         Password = getUser.Password,
                         Role = getUser.Role,
 
-                        Age = getStaff.Age ?? null,
+                        Age = getStaff.Age,
                         Sex = getStaff.Sex,
-                        Address = getStaff.Address ?? "",
+                        Address = getStaff.Address,
                         Name = getStaff.Name,
                         PhoneNumber = getStaff.PhoneNumber
                     })
@@ -96,7 +96,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                             Age = model.Age,
                             Sex = model.Sex,
                             Name = model.Name,
-                            PhoneNumber = model.PhoneNumber,
+                            PhoneNumber = (int)model.PhoneNumber,
                             Address = model.Address
                         };
                         staffDao.Update(staff);

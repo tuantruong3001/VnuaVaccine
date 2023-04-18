@@ -1,4 +1,5 @@
 ﻿using DAL.EF;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -16,7 +17,7 @@ namespace DAL.Dao
         {
             db = new VaccineDbContext();
         }
-       
+
         public bool Update(Patient patient)
         {
             try
@@ -29,7 +30,7 @@ namespace DAL.Dao
                     patientUpdate.Name = patient.Name;
                     patientUpdate.Birthday = patient.Birthday;
                     patientUpdate.Address = patient.Address;
-                    patientUpdate.Age = patient.Age;                   
+                    patientUpdate.Age = patient.Age;
                     db.SaveChanges();
                     return true;
                 }
@@ -40,6 +41,19 @@ namespace DAL.Dao
                 return false;
             }
         }
+        public IEnumerable<Patient> ListAllPaging(string searchString, int page, int pageSize)
+        {
 
+            IQueryable<Patient> model = db.Patients;
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                model = model.Where(x => x.Name.Contains(searchString) || x.Address.Contains(searchString));
+                if (model == null)
+                {
+                    return null;
+                }
+            }
+            return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
+        }
     }
 }
