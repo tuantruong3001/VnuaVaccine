@@ -144,9 +144,11 @@
     <Compile Include="Areas\Admin\Controllers\HomeAdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeUserController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PatientDataController.cs" />
     <Compile Include="Areas\Admin\Controllers\RegisterController.cs" />
     <Compile Include="Areas\Admin\Controllers\VaccineDataController.cs" />
     <Compile Include="Areas\Admin\Models\LoginModel.cs" />
+    <Compile Include="Areas\Admin\Models\PatientModel.cs" />
     <Compile Include="Areas\Admin\Models\ProfileModel.cs" />
     <Compile Include="Areas\Admin\Models\VaccineModel.cs" />
     <Compile Include="Common\SessionConstants.cs" />
@@ -3070,6 +3072,9 @@
     <Content Include="Areas\Admin\Views\VaccineData\Index.cshtml" />
     <Content Include="Areas\Admin\Views\VaccineData\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\VaccineData\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\PatientData\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\PatientData\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\PatientData\Edit.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

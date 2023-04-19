@@ -31,18 +31,18 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                         Password = getUser.Password,
                         Role = getUser.Role,
 
-                        Age = getStaff.Age ?? null,
+                        Age = getStaff.Age,
                         Sex = getStaff.Sex,
-                        Address = getStaff.Address ?? "",
+                        Address = getStaff.Address,
                         Name = getStaff.Name,
                         PhoneNumber = getStaff.PhoneNumber
                     })
                     .SingleOrDefault();
                 ViewBag.SexOptions = new List<SelectListItem>
-            {
-                new SelectListItem { Value = "1", Text = "Nam", Selected = profileModel?.Sex == 1 },
-                new SelectListItem { Value = "0", Text = "Nữ", Selected = profileModel?.Sex == 0 },
-            };
+                {
+                    new SelectListItem { Value = "1", Text = "Nam", Selected = profileModel?.Sex == 1 },
+                    new SelectListItem { Value = "0", Text = "Nữ", Selected = profileModel?.Sex == 0 },
+                };
                 return View(profileModel);
             }
             catch (Exception)
@@ -96,7 +96,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                             Age = model.Age,
                             Sex = model.Sex,
                             Name = model.Name,
-                            PhoneNumber = model.PhoneNumber,
+                            PhoneNumber = (int)model.PhoneNumber,
                             Address = model.Address
                         };
                         staffDao.Update(staff);

@@ -30,8 +30,8 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                     Password = getUser.Password,
                     Role = getUser.Role,
 
-                    Age = getPatient.Age ?? null,
-                    Sex = getPatient.Sex,
+                    Age = getPatient.Age,
+                    Sex = getPatient.Sex ?? 1,
                     Address = getPatient.Address ?? "",
                     Name = getPatient.Name,
                     Birthday = getPatient.Birthday,
@@ -96,7 +96,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                             Birthday = model.Birthday,
                             Address = model.Address
                         };
-                        patientDao.Update(patient);
+                        patientDao.UpdateProfile(patient);
 
                         TempData["EditUserMessage"] = "Sửa thông tin thành công";
                         return RedirectToAction("Index", "HomeUser");

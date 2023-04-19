@@ -21,14 +21,14 @@ namespace DAL.EF
         [StringLength(50)]
         public string Name { get; set; }
 
-        public int? Age { get; set; }
+        public int Age { get; set; }
 
-        public int? Sex { get; set; }
+        public int Sex { get; set; }
 
         [StringLength(150)]
         public string Address { get; set; }
 
-        public int? PhoneNumber { get; set; }
+        public int PhoneNumber { get; set; }
 
         public int? IdUserName { get; set; }
 

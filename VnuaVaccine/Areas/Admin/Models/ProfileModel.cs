@@ -26,11 +26,11 @@ namespace VnuaVaccine.Areas.Admin.Models
         public int ID { get; set; }
         public int? Role { get; set; }
         public string Name { get; set; }
-        public int? Sex { get; set; }
+        public int Sex { get; set; }
         public string Address { get; set; }
         public int? PhoneNumber { get; set; }
         public int IdUserName { get; set; }
-        public int? Age { get; set; }
+        public int Age { get; set; }
 
         [DataType(DataType.Date)]
         //[DisplayFormat(DataFormatString = "{{0:dd/MM/yyyy}")]
