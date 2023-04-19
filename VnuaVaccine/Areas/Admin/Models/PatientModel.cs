@@ -8,6 +8,7 @@ namespace VnuaVaccine.Areas.Admin.Models
 {
     public class PatientModel
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         [DataType(DataType.Date)]
 
@@ -21,6 +22,6 @@ namespace VnuaVaccine.Areas.Admin.Models
 
         public int? IdUserName { get; set; }
 
-        public int? Age { get; set; }
+        public int Age { get; set; }
     }
 }

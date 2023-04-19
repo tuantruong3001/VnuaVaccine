@@ -52,6 +52,15 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                         Status = 1,
                     };
                     userDao.Insert(newUser);
+
+                    var patientDao = new PatientDAO();
+                    var newPatient = new Patient
+                    {
+                        IdUserName = newUser.ID,
+                        CreateAt = DateTime.Now,
+                    };
+                    patientDao.Insert(newPatient);
+
                     TempData["SuccessMessage"] = "Đăng ký thành công";
                     return RedirectToAction("Index", "Login");
             }

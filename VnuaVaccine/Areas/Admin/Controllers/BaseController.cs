@@ -11,7 +11,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
     public class BaseController : Controller
     {
        
-        // trỏ các trang về trang admin login 
+        // trỏ các trang về trang admin login khi chưa login 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var session = (UserLogin)Session[SessionConstants.USER_SESSION];

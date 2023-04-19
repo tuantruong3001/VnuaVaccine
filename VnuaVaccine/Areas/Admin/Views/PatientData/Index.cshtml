@@ -120,7 +120,6 @@
                                         <th>Giới tính</th>
                                         <th>Địa chỉ</th>
                                         <th>Số điện thoại</th>
-                                        <th>Tuổi</th>
                                         <th>Sinh nhật</th>
                                         <th>Ngày tạo tài khoản</th>
                                         <th></th>
@@ -129,7 +128,6 @@
                                 <tbody>
                                     @if (Model.Count == 0)
                                     {
-
                                         <tr>
                                             <td colspan="9" class="text-center">Không có dữ liệu</td>
                                         </tr>
@@ -143,31 +141,24 @@
                                                 <td><a style="text-decoration:none" data-id="@item.ID">@(item.Sex == 1 ? "Nam" : "Nữ")</a></td>
                                                 <td>@item.Address</td>
                                                 <td>@item.PhoneNumber</td>
-                                                <td>@item.Age</td>
                                                 <td>@(item.Birthday == null ? "" : item.Birthday.Value.ToString("dd/MM/yyyy"))</td>
                                                 <td>@(item.CreateAt == null ? "" : item.CreateAt.Value.ToString("dd/MM/yyyy"))</td>
                                                 <td>
-                                                    <a class="btn btn-success" style="text-decoration:none; " href="/Admin/VaccineData/Edit/@item.ID"><i class="fa fa-edit"></i> Edit</a>
-                                                    <a style="text-decoration: none;" href="@Url.Action("Delete", "VaccineData", new { id = item.ID })" class="btn btn-danger" onclick="return confirm('Xác nhận xoá?')"><i class="fas fa-trash"></i> Delete</a>
+                                                    <a class="btn btn-success" style="text-decoration:none; " href="/Admin/PatientData/Edit/@item.ID"><i class="fa fa-edit"></i> Edit</a>
                                                 </td>
                                             </tr>
                                         }
                                     }
                                 </tbody>
-
                             </table>
                             @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchString = ViewBag.SearchString }))
 
                         </div>
-
                         <div class="input-group-append">
-                            <a class="btn btn-primary" href="/Admin/VaccineData/Create"><i class="bi-plus-circle"></i> Add Patient</a>
+                            <a class="btn btn-primary" href="/Admin/PatientData/Create"><i class="bi-plus-circle"></i> Add Patient</a>
                         </div>
                     </div>
-
                 </div>
-
-
             </div>
         </div>
     </div>

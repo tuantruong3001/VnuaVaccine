@@ -17,8 +17,13 @@ namespace DAL.Dao
         {
             db = new VaccineDbContext();
         }
-
-        public bool Update(Patient patient)
+        public int Insert(Patient newPatient)
+        {
+            db.Patients.Add(newPatient);
+            db.SaveChanges();
+            return newPatient.ID;
+        }
+        public bool UpdateProfile(Patient patient)
         {
             try
             {
@@ -40,6 +45,33 @@ namespace DAL.Dao
             {
                 return false;
             }
+        }
+        public bool Update(Patient patient)
+        {
+            try
+            {
+                var patientUpdate = db.Patients.Find(patient.ID);
+                if (patientUpdate != null)
+                {
+                    patientUpdate.Sex = patient.Sex;
+                    patientUpdate.PhoneNumber = patient.PhoneNumber;
+                    patientUpdate.Name = patient.Name;
+                    patientUpdate.Birthday = patient.Birthday;
+                    patientUpdate.Address = patient.Address;
+                    patientUpdate.Age = patient.Age;
+                    db.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public Patient GetByID(int id)
+        {
+            return db.Patients.Find(id);
         }
         public IEnumerable<Patient> ListAllPaging(string searchString, int page, int pageSize)
         {

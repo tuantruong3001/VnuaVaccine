@@ -39,10 +39,10 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                     })
                     .SingleOrDefault();
                 ViewBag.SexOptions = new List<SelectListItem>
-            {
-                new SelectListItem { Value = "1", Text = "Nam", Selected = profileModel?.Sex == 1 },
-                new SelectListItem { Value = "0", Text = "Nữ", Selected = profileModel?.Sex == 0 },
-            };
+                {
+                    new SelectListItem { Value = "1", Text = "Nam", Selected = profileModel?.Sex == 1 },
+                    new SelectListItem { Value = "0", Text = "Nữ", Selected = profileModel?.Sex == 0 },
+                };
                 return View(profileModel);
             }
             catch (Exception)
