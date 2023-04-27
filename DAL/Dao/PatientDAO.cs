@@ -73,6 +73,27 @@ namespace DAL.Dao
         {
             return db.Patients.Find(id);
         }
+        public bool DeleteByUserId(int userId)
+        {
+            try
+            {
+                // Lấy danh sách bệnh nhân có IdUser là userId
+                List<Patient> patients = db.Patients.Where(p => p.IdUserName == userId).ToList();
+
+                // Xoá các bệnh nhân tương ứng
+                db.Patients.RemoveRange(patients);
+
+                // Lưu thay đổi vào cơ sở dữ liệu
+                db.SaveChanges();
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         public IEnumerable<Patient> ListAllPaging(string searchString, int page, int pageSize)
         {
 

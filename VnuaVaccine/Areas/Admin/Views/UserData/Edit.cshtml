@@ -1,15 +1,9 @@
-﻿@model VnuaVaccine.Areas.Admin.Models.PatientModel
+﻿@model VnuaVaccine.Areas.Admin.Models.ProfileModel
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Create";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-@{
-    var session = (VnuaVaccine.Common.UserLogin)Session[VnuaVaccine.Common.SessionConstants.USER_SESSION];
-    if (session == null || session.RoleId == 1)
-    {
-        Response.Redirect("~/Home/Index");
-    }
-}
+
 @section sidebar{
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
         <hr class="sidebar-divider my-0">
@@ -84,6 +78,13 @@
 
     </ul>
 }
+@{
+    var session = (VnuaVaccine.Common.UserLogin)Session[VnuaVaccine.Common.SessionConstants.USER_SESSION];
+    if (session == null || session.RoleId == 1)
+    {
+        Response.Redirect("~/Home/Index");
+    }
+}
 @section bodymain{
 
     <div class="card-body p-0">
@@ -95,55 +96,33 @@
                     <div class="card shadow mb-4">
                         <div class="p-5">
                             <div class="card-header py-3">
-                                <h2 class="m-0 font-weight-bold text-primary" style="text-align:center;">Update Patient</h2>
+                                <h2 class="m-0 font-weight-bold text-primary" style="text-align:center;">Cập nhật thông tin User</h2>
                             </div>
-                            @using (Html.BeginForm("Edit", "PatientData", FormMethod.Post))
+                            @using (Html.BeginForm("Edit", "UserData", FormMethod.Post))
                             {
                                 @Html.ValidationSummary(false, "", new { @class = "text-danger" });
                                 <div class="form-group">
-                                    Name
-                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control form-control-user", @autofocus = "autofocus", @placeholder = "Type Name" })
+                                    UserName
+                                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control form-control-user", @autofocus = "autofocus", @placeholder = "Type UserName" })
+
+                                </div>
+
+                                <div class="form-group">
+                                    Email
+                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control form-control-user", @placeholder = "Type Email" })
 
                                 </div>
                                 <div class="form-group">
-                                    <label for="Sex">Sex</label>
-                                    <select class="form-control Sex" name="Sex">
-                                        @foreach (var option in ViewBag.SexOptions)
-                                        {
-                                            <option value="@option.Value" @(option.Selected ? "selected" : "")>@option.Text</option>
-                                        }
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    Address
-                                    @Html.TextBoxFor(model => model.Address, new { @class = "form-control form-control-user", @placeholder = "Type Address" })
+                                    Password
+                                    @Html.PasswordFor(model => model.Password, new { @class = "form-control form-control-user", @placeholder = "Type Password" })
 
                                 </div>
-                                <div class="form-group">
-                                    PhoneNumber
-                                    @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control form-control-user", @placeholder = "Type PhoneNumber" })
-
-                                </div>
-                                if (Model.Birthday == null)
-                                {
-                                    <div class="form-group">
-                                        @Html.LabelFor(model => model.Birthday, new { htmlAttribute = new { @class = "form-control form-control-user" } })
-                                        @Html.TextBoxFor(model => model.Birthday, "{0:dd/MM/yyyy}", new { @type = "date", @class = "form-control form-control-user" })
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="form-group">
-                                        @Html.LabelFor(model => model.Birthday, new { htmlAttribute = new { @class = "form-control form-control-user" } })
-                                        @Html.TextBoxFor(model => model.Birthday, "{0:dd/MM/yyyy}", new { @type = "datetime", @class = "form-control form-control-user" })
-                                    </div>
-                                }
                                 <a>
-                                    <input style="background-color: #36b9cc" type="submit" value="Update" class="btn btn-primary btn-user btn-block" />
+                                    <input style="background-color: #36b9cc" type="submit" value="Update User" class="btn btn-primary btn-user btn-block" />
                                 </a>
                             }
                             <hr>
-                            <a href="/Admin/PatientData/Index" class="btn btn-primary btn-user btn-block icon">
+                            <a href="/Admin/UserData/Index" class="btn btn-primary btn-user btn-block icon">
                                 Back to list
                             </a>
                         </div>

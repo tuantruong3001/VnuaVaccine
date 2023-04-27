@@ -5,7 +5,13 @@
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-
+@{
+    var session = (VnuaVaccine.Common.UserLogin)Session[VnuaVaccine.Common.SessionConstants.USER_SESSION];
+    if (session == null || session.RoleId == 1)
+    {
+        Response.Redirect("~/Home/Index");
+    }
+}
 @section sidebar{
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
         <hr class="sidebar-divider my-0">
@@ -24,6 +30,14 @@
             <a class="nav-link" href="/Admin/PatientData/Index">
                 <i class="fas fa-fw fa-user"></i>
                 <span>List Patient</span>
+            </a>
+        </li>
+        <hr class="sidebar-divider  my-0">
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item active">
+            <a class="nav-link" href="/Admin/UserData/Index">
+                <i class="fas fa-fw fa-user"></i>
+                <span>List User</span>
             </a>
         </li>
         <hr class="sidebar-divider  my-0">
@@ -121,7 +135,7 @@
                                         <th>Địa chỉ</th>
                                         <th>Số điện thoại</th>
                                         <th>Sinh nhật</th>
-                                        <th>Ngày tạo tài khoản</th>
+                                        <th>Ngày tạo hồ sơ</th>
                                         <th></th>
                                     </tr>
                                 </thead>

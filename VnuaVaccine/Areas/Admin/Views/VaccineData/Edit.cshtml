@@ -39,6 +39,14 @@
         <hr class="sidebar-divider  my-0">
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item active">
+            <a class="nav-link" href="/Admin/UserData/Index">
+                <i class="fas fa-fw fa-user"></i>
+                <span>List User</span>
+            </a>
+        </li>
+        <hr class="sidebar-divider  my-0">
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item active">
             <a class="nav-link" href="/Admin/StaffData/Index">
                 <i class="fas fa-fw fa-user"></i>
                 <span>List Staff</span>
@@ -81,6 +89,13 @@
         </div>
 
     </ul>
+}
+@{
+    var session = (VnuaVaccine.Common.UserLogin)Session[VnuaVaccine.Common.SessionConstants.USER_SESSION];
+    if (session == null || session.RoleId == 1)
+    {
+        Response.Redirect("~/Home/Index");
+    }
 }
 @section bodymain{
 

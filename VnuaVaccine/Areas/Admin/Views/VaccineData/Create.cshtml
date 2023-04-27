@@ -16,6 +16,13 @@
         })
     </script>
 }
+@{
+    var session = (VnuaVaccine.Common.UserLogin)Session[VnuaVaccine.Common.SessionConstants.USER_SESSION];
+    if (session == null || session.RoleId == 1)
+    {
+        Response.Redirect("~/Home/Index");
+    }
+}
 @section sidebar{
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
         <hr class="sidebar-divider my-0">
@@ -34,6 +41,14 @@
             <a class="nav-link" href="/Admin/PatientData/Index">
                 <i class="fas fa-fw fa-user"></i>
                 <span>List Patient</span>
+            </a>
+        </li>
+        <hr class="sidebar-divider  my-0">
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item active">
+            <a class="nav-link" href="/Admin/UserData/Index">
+                <i class="fas fa-fw fa-user"></i>
+                <span>List User</span>
             </a>
         </li>
         <hr class="sidebar-divider  my-0">
@@ -144,12 +159,12 @@
                                     </div>
                                 </div>
                                 <a>
-                                    <input style="background-color: #36b9cc" type="submit" value="Add Vaccine" class="btn btn-primary btn-user btn-block" />
+                                    <input type="submit" value="Add Vaccine" class="btn btn-info btn-user btn-block" />
                                 </a>
                             }
                             <hr>
-                            <a href="/Admin/VaccineData/Index" class="btn btn-primary btn-user btn-block icon">                               
-                                Back to list 
+                            <a href="/Admin/VaccineData/Index" class="btn btn-primary btn-user btn-block icon">
+                                Back to list
                             </a>
                         </div>
                     </div>

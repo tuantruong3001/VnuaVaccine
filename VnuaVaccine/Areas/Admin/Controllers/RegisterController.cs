@@ -48,6 +48,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                         UserName = registerModel.UserName,
                         Email = registerModel.Email,
                         Password = registerModel.Password,
+                        CreateAt = DateTime.Now,
                         Role = 1,
                         Status = 1,
                     };

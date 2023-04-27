@@ -25,6 +25,10 @@ namespace DAL.EF
         [StringLength(50)]
         public string Email { get; set; }
 
+        [DataType(DataType.Date)]
+     
+        public DateTime? CreateAt { get; set; }
+        public DateTime? UpdateAt { get; set; }
         public int? Role { get; set; }
 
         [StringLength(50)]

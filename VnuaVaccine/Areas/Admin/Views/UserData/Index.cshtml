@@ -1,9 +1,10 @@
-﻿@model PagedList.IPagedList<DAL.EF.Vaccine>
+﻿@model PagedList.IPagedList<DAL.EF.User>
 @using PagedList.Mvc;
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+
 @section sidebar{
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
         <hr class="sidebar-divider my-0">
@@ -82,7 +83,7 @@
     var session = (VnuaVaccine.Common.UserLogin)Session[VnuaVaccine.Common.SessionConstants.USER_SESSION];
     if (session == null || session.RoleId == 1)
     {
-        Response.Redirect("~/Home/Index");
+        Response.Redirect("~/Home/Index"); 
     }
 }
 <div class="row">
@@ -111,10 +112,10 @@
         <div class="panel panel-default">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h2 class="m-0 font-weight-bold text-primary" style="text-align:center;">Danh sách Vaccines</h2>
+                    <h2 class="m-0 font-weight-bold text-primary" style="text-align:center;">Danh sách Tài khoản </h2>
                 </div>
                 <div class="card-body">
-                    @using (Html.BeginForm("Index", "VaccineData", FormMethod.Get))
+                    @using (Html.BeginForm("Index", "UserData", FormMethod.Get))
                     {
                         <div class="form-group">
                             @Html.Label("Search:", new { @class = "control-label" })
@@ -129,20 +130,16 @@
                             <table style="text-align:center" class="table table-striped table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th>Tên Vaccine</th>
-                                        <th>Cơ sở sản xuất</th>
-                                        <th>Số lượng</th>
-                                        <th>Mô tả</th>
-                                        <th>Ảnh</th>
-                                        <th>Ngày nhập</th>
-                                        <th>Ngày hết hạn</th>
-                                        <th>Ghi chú</th>
+                                        <th>Tên tài khoản</th>
+                                        <th>Email</th>
+                                        <th>Ngày tạo tài khoản</th>
+                                        <th>Ngày cập nhật</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @if (Model.Count == 0)
                                     {
-
                                         <tr>
                                             <td colspan="9" class="text-center">Không có dữ liệu</td>
                                         </tr>
@@ -152,37 +149,42 @@
                                         foreach (var item in Model)
                                         {
                                             <tr id="row_@item.ID">
-                                                <td>@item.NameVaccine</td>
-                                                <td>@item.Munafacturer</td>
-                                                <td>@item.QuantityStock</td>
-                                                <td>@item.Description</td>
-                                                <td><img style="width: 100px; height: auto;" src="@item.Path"></td>
-                                                <td>@(item.ProductionDate == null ? "" : item.ProductionDate.Value.ToString("dd/MM/yyyy"))</td>
-                                                <td>@(item.ExpirationData == null ? "" : item.ExpirationData.Value.ToString("dd/MM/yyyy"))</td>
-                                                <td>@item.Note</td>
+                                                <td>@item.UserName</td>
+                                                <td>@item.Email</td>
+                                                <td>@(item.CreateAt == null ? "" : item.CreateAt.Value.ToString("dd/MM/yyyy"))</td>
+                                                <td>@(item.UpdateAt == null ? "" : item.UpdateAt.Value.ToString("dd/MM/yyyy"))</td>
                                                 <td>
-                                                    <a class="btn btn-success" style="text-decoration:none; " href="/Admin/VaccineData/Edit/@item.ID"><i class="fa fa-edit"></i> Edit</a>
-                                                    <a style="text-decoration: none;" href="@Url.Action("Delete", "VaccineData", new { id = item.ID })" class="btn btn-danger" onclick="return confirm('Xác nhận xoá?')"><i class="fas fa-trash"></i> Delete</a>
+                                                    <a class="btn btn-success" style="text-decoration:none; " href="/Admin/UserData/Edit/@item.ID"><i class="fa fa-edit"></i> Edit</a>
+                                                    @if (session != null && session.UserID == item.ID)
+                                                    {
+                                                        <span class="btn btn-secondary" disabled><i class="fas fa-trash"></i> Delete</span>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <a style="text-decoration: none;" href="@Url.Action("Delete", "UserData",
+                                                                                               new { id = item.ID })" class="btn btn-danger" onclick="return confirm('Xác nhận xoá?')" @(session.UserID == item.ID ? "disabled" : "")>
+                                                            <i class="fas fa-trash"></i> Delete
+                                                        </a>
+                                                    }
+
                                                 </td>
                                             </tr>
                                         }
                                     }
                                 </tbody>
-
                             </table>
                             @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchString = ViewBag.SearchString }))
 
                         </div>
-
                         <div class="input-group-append">
-                            <a class="btn btn-primary" href="/Admin/VaccineData/Create"><i class="bi-plus-circle"></i> Add Vaccine</a>
+                            <a class="btn btn-primary" href="/Admin/UserData/Create"><i class="bi-plus-circle"></i> Add User</a>
                         </div>
                     </div>
-
                 </div>
-
-
             </div>
         </div>
     </div>
 </div>
+
+

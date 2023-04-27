@@ -10,7 +10,7 @@ using VnuaVaccine.Areas.Admin.Models;
 
 namespace VnuaVaccine.Areas.Admin.Controllers
 {
-    public class PatientDataController : Controller
+    public class PatientDataController : BaseController
     {
         private readonly PatientDAO _patientDao = new PatientDAO();
 
