@@ -72,7 +72,25 @@ namespace DAL.Dao
                 {
                     userUpdate.UserName = user.UserName;
                     userUpdate.Email = user.Email;
+                    userUpdate.Role = user.Role;
                     userUpdate.Password = user.Password;
+                    userUpdate.UpdateAt = DateTime.Now;
+                    db.SaveChanges();
+                    return true;
+                }
+                else { return false; }
+            }
+            catch (Exception) { return false; }
+        }
+        public bool UpdateProfile(User user)
+        {
+            try
+            {
+                var userUpdate = db.Users.Find(user.ID);
+                if (user != null)
+                {
+                    userUpdate.UserName = user.UserName;
+                    userUpdate.Email = user.Email;
                     userUpdate.UpdateAt = DateTime.Now;
                     db.SaveChanges();
                     return true;

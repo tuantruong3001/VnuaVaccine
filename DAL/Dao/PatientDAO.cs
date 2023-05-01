@@ -59,6 +59,7 @@ namespace DAL.Dao
                     patientUpdate.Birthday = patient.Birthday;
                     patientUpdate.Address = patient.Address;
                     patientUpdate.Age = patient.Age;
+                    patientUpdate.UpdateAt = patient.UpdateAt;
                     db.SaveChanges();
                     return true;
                 }
@@ -94,7 +95,7 @@ namespace DAL.Dao
             }
         }
 
-        public IEnumerable<Patient> ListAllPaging(string searchString, int page, int pageSize)
+        public IEnumerable<Patient> ListPatientPaging(string searchString, int page, int pageSize)
         {
 
             IQueryable<Patient> model = db.Patients;

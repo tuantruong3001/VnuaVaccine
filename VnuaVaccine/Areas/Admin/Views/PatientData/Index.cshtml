@@ -136,6 +136,7 @@
                                         <th>Số điện thoại</th>
                                         <th>Sinh nhật</th>
                                         <th>Ngày tạo hồ sơ</th>
+                                        <th>Ngày cập nhật hồ sơ</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -157,8 +158,10 @@
                                                 <td>@item.PhoneNumber</td>
                                                 <td>@(item.Birthday == null ? "" : item.Birthday.Value.ToString("dd/MM/yyyy"))</td>
                                                 <td>@(item.CreateAt == null ? "" : item.CreateAt.Value.ToString("dd/MM/yyyy"))</td>
+                                                <td>@(item.UpdateAt == null ? "" : item.UpdateAt.Value.ToString("dd/MM/yyyy"))</td>
                                                 <td>
                                                     <a class="btn btn-success" style="text-decoration:none; " href="/Admin/PatientData/Edit/@item.ID"><i class="fa fa-edit"></i> Edit</a>
+                                                    <a class="btn btn-info" style="text-decoration:none; " href="/Admin/PatientData/Detail/@item.ID"><i class="bi bi-info-circle"></i> Detail</a>
                                                 </td>
                                             </tr>
                                         }

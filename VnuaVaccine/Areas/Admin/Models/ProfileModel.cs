@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace VnuaVaccine.Areas.Admin.Models
 {
@@ -26,16 +27,20 @@ namespace VnuaVaccine.Areas.Admin.Models
         public int ID { get; set; }
         public int? Role { get; set; }
         public string Name { get; set; }
-        public int Sex { get; set; }
+        public int? Sex { get; set; }
         public string Address { get; set; }
+
+        [RegularExpression(@"^[0-9]+$", ErrorMessage = "{0} chỉ được phép chứa các kí tự số")]
         public int? PhoneNumber { get; set; }
         public int IdUserName { get; set; }
-        public int Age { get; set; }
+        [RegularExpression(@"^[0-9]+$", ErrorMessage = "{0} chỉ được phép chứa các kí tự số")]
+        [Range(0, int.MaxValue, ErrorMessage = "{0} phải là một số không âm")]
+        public int? Age { get; set; }
 
+        //[RegularExpression(@"^(0[1-9]|1[0-9]|2[0-9]|3[0-1])/(0[1-9]|1[0-2])/\d{4}$", ErrorMessage = "{0} phải có định dạng dd/MM/yyyy")]
         [DataType(DataType.Date)]
-        //[DisplayFormat(DataFormatString = "{{0:dd/MM/yyyy}")]
         public DateTime? Birthday { get; set; }
         public DateTime? UpdateAt { get; set; }
-
+        public List<SelectListItem> RoleOptions { get; set; }
     }
 }

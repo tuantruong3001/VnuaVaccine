@@ -3078,6 +3078,7 @@
     <Content Include="Areas\Admin\Views\PatientData\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\UserData\Index.cshtml" />
     <Content Include="Areas\Admin\Views\UserData\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\PatientData\Detail.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

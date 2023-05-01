@@ -85,12 +85,12 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                             Password = model.Password,
                             Role = model.Role
                         };
-                        userDao.Update(user);
+                        userDao.UpdateProfile(user);
 
                         var patient = new Patient
                         {
                             IdUserName = user.ID,
-                            Age = model.Age,
+                            Age = (int)model.Age,
                             Sex = model.Sex,
                             Name = model.Name,
                             PhoneNumber = model.PhoneNumber,

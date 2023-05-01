@@ -17,7 +17,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
         // GET: Admin/PatientData
         public ActionResult Index(string searchString, int page = 1, int pageSize = 10)
         {
-            var model = _patientDao.ListAllPaging(searchString, page, pageSize);
+            var model = _patientDao.ListPatientPaging(searchString, page, pageSize);
             ViewBag.SearchString = searchString;
             return View(model);
         }
@@ -92,6 +92,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                         Address = patientModel.Address,
                         PhoneNumber = patientModel.PhoneNumber,
                         Birthday = patientModel.Birthday,
+                        UpdateAt = DateTime.Now,
                     };
                     ViewBag.SexOptions = new List<SelectListItem>
                     {
@@ -109,6 +110,21 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                     return View(patientModel);
                 }
             }
+            return View(patientModel);
+        }
+        [HttpGet]
+        public ActionResult Detail(int id)
+        {
+            var patientDao = new PatientDAO();
+            var patient = patientDao.GetByID(id);
+            var patientModel = new PatientModel
+            {
+                Name = patient.Name,
+                Sex = patient.Sex,
+                Address = patient.Address,
+                PhoneNumber = patient.PhoneNumber,
+                Birthday = patient.Birthday,
+            };
             return View(patientModel);
         }
     }

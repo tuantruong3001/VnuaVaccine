@@ -25,6 +25,7 @@ namespace DAL.EF
 
         public DateTime? Birthday { get; set; }
         public DateTime? CreateAt { get; set; }
+        public DateTime? UpdateAt { get; set; }
 
         public int? Sex { get; set; }
 

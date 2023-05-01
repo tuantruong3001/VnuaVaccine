@@ -85,7 +85,7 @@
         Response.Redirect("~/Home/Index");
     }
 }
-@section bodymain{
+@section bodymain{   
 
     <div class="card-body p-0">
         <!-- Nested Row within Card Body -->
@@ -98,29 +98,30 @@
                             <div class="card-header py-3">
                                 <h2 class="m-0 font-weight-bold text-primary" style="text-align:center;">Cập nhật thông tin User</h2>
                             </div>
-                            @using (Html.BeginForm("Edit", "UserData", FormMethod.Post))
+                            @using (Html.BeginForm("Edit", "UserData", FormMethod.Post, new { id = "editForm" }))
                             {
                                 @Html.ValidationSummary(false, "", new { @class = "text-danger" });
                                 <div class="form-group">
                                     UserName
                                     @Html.TextBoxFor(model => model.UserName, new { @class = "form-control form-control-user", @autofocus = "autofocus", @placeholder = "Type UserName" })
-
                                 </div>
 
                                 <div class="form-group">
                                     Email
                                     @Html.TextBoxFor(model => model.Email, new { @class = "form-control form-control-user", @placeholder = "Type Email" })
-
                                 </div>
                                 <div class="form-group">
                                     Password
-                                    @Html.PasswordFor(model => model.Password, new { @class = "form-control form-control-user", @placeholder = "Type Password" })
-
+                                    @Html.PasswordFor(model => model.Password, new { @class = "form-control form-control-user", @placeholder = "Type Password", id = "passwordInput" })
                                 </div>
-                                <a>
-                                    <input style="background-color: #36b9cc" type="submit" value="Update User" class="btn btn-primary btn-user btn-block" />
-                                </a>
+                                <div class="form-group">
+                                    <label class="control-label">Role</label>
+                                    <input type="text" class="form-control form-control-user" readonly="readonly" value="@(Model.Role == 0 ? "MedicalStaffs" : "Patient") " />
+                                    @Html.HiddenFor(model => model.Role)
+                                </div>
+                                <input style="background-color: #36b9cc" type="submit" value="Update User" class="btn btn-primary btn-user btn-block" />
                             }
+
                             <hr>
                             <a href="/Admin/UserData/Index" class="btn btn-primary btn-user btn-block icon">
                                 Back to list
@@ -132,6 +133,15 @@
         </div>
     </div>
 }
+<script>
+    document.getElementById('editForm').addEventListener('submit', function (event) {
+        var passwordInput = document.getElementById('passwordInput');
+        if (passwordInput.value === '') {
+            event.preventDefault();
+            alert('Password không được để trống');
+        }
+    });
+</script>
 
 
 

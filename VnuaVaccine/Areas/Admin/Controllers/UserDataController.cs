@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Profile;
 using VnuaVaccine.Areas.Admin.Models;
 using VnuaVaccine.Common;
 
@@ -32,7 +33,8 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                 UserName = user.UserName,
                 Email = user.Email,
                 Password = user.Password,
-            };
+                Role = user.Role,
+            };            
             return View(userModel);
         }
 
@@ -43,12 +45,13 @@ namespace VnuaVaccine.Areas.Admin.Controllers
             {
                 try
                 {
-                    var userDao = new UserDAO();
+                    var userDao = new UserDAO();                   
                     var user = new User
                     {
                         ID = userModel.ID,
                         UserName = userModel.UserName,
                         Email = userModel.Email,
+                        Role = userModel.Role,
                         Password = userModel.Password,
                         UpdateAt = DateTime.Now,
                     };
@@ -64,6 +67,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
             }
             return View(userModel);
         }
+
         public ActionResult Delete(int id)
         {
             try

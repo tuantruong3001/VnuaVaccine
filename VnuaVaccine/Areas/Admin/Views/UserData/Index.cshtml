@@ -132,6 +132,7 @@
                                     <tr>
                                         <th>Tên tài khoản</th>
                                         <th>Email</th>
+                                        <th>Vai trò</th>
                                         <th>Ngày tạo tài khoản</th>
                                         <th>Ngày cập nhật</th>
                                         <th></th>
@@ -151,6 +152,7 @@
                                             <tr id="row_@item.ID">
                                                 <td>@item.UserName</td>
                                                 <td>@item.Email</td>
+                                                <td><a style="text-decoration:none" data-id="@item.ID">@(item.Role == 1 ? "Patient" : "MedicalStaff")</a></td>
                                                 <td>@(item.CreateAt == null ? "" : item.CreateAt.Value.ToString("dd/MM/yyyy"))</td>
                                                 <td>@(item.UpdateAt == null ? "" : item.UpdateAt.Value.ToString("dd/MM/yyyy"))</td>
                                                 <td>

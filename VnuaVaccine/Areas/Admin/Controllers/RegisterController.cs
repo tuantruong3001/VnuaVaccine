@@ -58,6 +58,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                     var newPatient = new Patient
                     {
                         IdUserName = newUser.ID,
+                        Name = newUser.UserName,
                         CreateAt = DateTime.Now,
                     };
                     patientDao.Insert(newPatient);
