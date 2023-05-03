@@ -1,6 +1,7 @@
 ﻿using DAL.EF;
 using PagedList;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -35,7 +36,7 @@ namespace DAL.Dao
                     patientUpdate.Name = patient.Name;
                     patientUpdate.Birthday = patient.Birthday;
                     patientUpdate.Address = patient.Address;
-                    patientUpdate.Age = patient.Age;
+                    patientUpdate.Age = CalculateAge((DateTime)patient.Birthday);
                     db.SaveChanges();
                     return true;
                 }
@@ -45,7 +46,7 @@ namespace DAL.Dao
             {
                 return false;
             }
-        }
+        }      
         public bool Update(Patient patient)
         {
             try
@@ -58,7 +59,7 @@ namespace DAL.Dao
                     patientUpdate.Name = patient.Name;
                     patientUpdate.Birthday = patient.Birthday;
                     patientUpdate.Address = patient.Address;
-                    patientUpdate.Age = patient.Age;
+                    patientUpdate.Age = CalculateAge((DateTime)patient.Birthday); // Calculate the age based on the provided birthday
                     patientUpdate.UpdateAt = patient.UpdateAt;
                     db.SaveChanges();
                     return true;
@@ -70,6 +71,18 @@ namespace DAL.Dao
                 return false;
             }
         }
+        
+        private int CalculateAge(DateTime birthday)
+        {
+            var today = DateTime.Today;
+            var age = today.Year - birthday.Year;
+            if (birthday > today.AddYears(-age))
+            {
+                age--;
+            }
+            return age;
+        }
+
         public Patient GetByID(int id)
         {
             return db.Patients.Find(id);
@@ -108,6 +121,10 @@ namespace DAL.Dao
                 }
             }
             return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
+        }
+        public Patient ViewDetail(int id)
+        {
+            return db.Patients.Find(id);
         }
     }
 }

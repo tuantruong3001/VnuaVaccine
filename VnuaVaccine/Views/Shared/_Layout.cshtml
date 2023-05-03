@@ -43,6 +43,11 @@
             border-top-right-radius: 0.25rem; /* bo góc phải trên */
             border-bottom-right-radius: 0.25rem; /* bo góc phải dưới */
         }
+        .dropdown-item:hover {
+            color: #fff;
+            background-color: #00D9A5;
+        }
+
     </style>
 </head>
 <body onload="changeColor(document.querySelector('.nav-link.active'))">
@@ -94,19 +99,42 @@
                     <ul class="navbar-nav ml-auto">
 
                         @RenderSection("navlink", required: false)
-                        <li class="nav-item">
+                        <li class="nav-item dropdown no-arrow">
                             @if (session == null)
                             {
                                 <a class="nav-link" href="/Admin/Login/Index">Đăng nhập</a>
                             }
                             else if (session.RoleId == 0)
                             {
-                                <a class="nav-link login" href="@Url.Action("Index", "HomeAdmin", new { area = "Admin" })">Hello! @session.Email</a>
+
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                                   aria-haspopup="true" aria-expanded="false">
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small login">
+                                        Hello! @session.Email
+                                    </span>
+
+                                </a>
+                                <!-- Dropdown - User Information -->
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="/Admin/HomeAdmin">My Profile</a>
+                                    <a class="dropdown-item" href="@Url.Action("Logout", "Login", new { area = "Admin" })">Logout</a>
+                                </div>
 
                             }
                             else if (session.RoleId == 1)
                             {
-                                <a class="nav-link login" href="@Url.Action("Index", "HomeUser", new { area = "Admin" })">Hello! @session.Email</a>
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                                   aria-haspopup="true" aria-expanded="false">
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small login">
+                                        Hello! @session.Email
+                                    </span>
+
+                                </a>
+                                <!-- Dropdown - User Information -->
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="/Admin/HomeUser">My Profile</a>
+                                    <a class="dropdown-item" href="@Url.Action("Logout", "Login", new { area = "Admin" })">Logout</a>
+                                </div>
                             }
                         </li>
                     </ul>

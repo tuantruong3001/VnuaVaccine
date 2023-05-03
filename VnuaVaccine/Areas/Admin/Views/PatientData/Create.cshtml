@@ -69,14 +69,6 @@
         <!-- Nav Item - Charts -->
         <hr class="sidebar-divider  my-0">
         <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item active">
-            <a class="nav-link" href="/Admin/HomeAdmin">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>My Profile</span>
-            </a>
-        </li>
-        <!-- Divider -->
-        <hr class="sidebar-divider d-none d-md-block">
 
         <!-- Sidebar Toggler (Sidebar) -->
         <div class="text-center d-none d-md-inline">
@@ -127,14 +119,23 @@
                                     @Html.LabelFor(model => model.Birthday, new { htmlAttribute = new { @class = "form-control form-control-user" } })
                                     @Html.TextBoxFor(model => model.Birthday, "{0:dd/MM/yyyy}", new { @type = "date", @class = "form-control form-control-user" })
                                 </div>
-                                <a>
-                                    <input style="background-color: #36b9cc" type="submit" value="Add Patient" class="btn btn-primary btn-user btn-block" />
-                                </a>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <a href="/Admin/PatientData/Index" class="btn btn-primary btn-user btn-block icon">
+                                            Back
+                                        </a>
+                                    </div>
+                                    <div class="col-md-8"></div>
+                                    <div class="col-md-2">
+                                        <a>
+                                            <input style="background-color: #36b9cc" type="submit" value="Add" class="btn btn-primary btn-user btn-block" />
+                                        </a>
+                                    </div>
+                                </div>
+
                             }
                             <hr>
-                            <a href="/Admin/PatientData/Index" class="btn btn-primary btn-user btn-block icon">
-                                Back to list
-                            </a>
+
                         </div>
                     </div>
                 </div>

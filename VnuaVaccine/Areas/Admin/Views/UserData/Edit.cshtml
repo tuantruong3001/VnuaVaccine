@@ -62,14 +62,6 @@
         <!-- Nav Item - Charts -->
         <hr class="sidebar-divider  my-0">
         <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item active">
-            <a class="nav-link" href="/Admin/HomeAdmin">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>My Profile</span>
-            </a>
-        </li>
-        <!-- Divider -->
-        <hr class="sidebar-divider d-none d-md-block">
 
         <!-- Sidebar Toggler (Sidebar) -->
         <div class="text-center d-none d-md-inline">
@@ -119,13 +111,23 @@
                                     <input type="text" class="form-control form-control-user" readonly="readonly" value="@(Model.Role == 0 ? "MedicalStaffs" : "Patient") " />
                                     @Html.HiddenFor(model => model.Role)
                                 </div>
-                                <input style="background-color: #36b9cc" type="submit" value="Update User" class="btn btn-primary btn-user btn-block" />
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <a href="/Admin/UserData/Index" class="btn btn-primary btn-user btn-block icon">
+                                            Back
+                                        </a>
+                                    </div>
+                                    <div class="col-md-8"></div>
+                                    <div class="col-md-2">
+                                        <a>
+                                            <input style="background-color: #36b9cc" type="submit" value="Update" class="btn btn-primary btn-user btn-block" />
+                                        </a>
+                                    </div>
+                                </div>
                             }
 
                             <hr>
-                            <a href="/Admin/UserData/Index" class="btn btn-primary btn-user btn-block icon">
-                                Back to list
-                            </a>
+                           
                         </div>
                     </div>
                 </div>

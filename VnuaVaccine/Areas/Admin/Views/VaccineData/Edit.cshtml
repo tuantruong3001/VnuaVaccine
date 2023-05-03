@@ -149,7 +149,7 @@
                                 {
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.ProductionDate, new { htmlAttribute = new { @class = "form-control form-control-user" } })
-                                        @Html.TextBoxFor(model => model.ProductionDate, "{0:dd/MM/yyyy}", new { @type = "datetime", @class = "form-control form-control-user" })
+                                        @Html.TextBoxFor(model => model.ProductionDate, "{0:dd/MM/yyyy}", new { @type = "date", @class = "form-control form-control-user" })
                                     </div>
                                 }
                                 if (Model.ExpirationData == null)
@@ -163,7 +163,7 @@
                                 {
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.ExpirationData, new { htmlAttribute = new { @class = "form-control form-control-user" } })
-                                        @Html.TextBoxFor(model => model.ExpirationData, "{0:dd/MM/yyyy}", new { @type = "datetime", @class = "form-control form-control-user" })
+                                        @Html.TextBoxFor(model => model.ExpirationData, "{0:dd/MM/yyyy}", new { @type = "date", @class = "form-control form-control-user" })
                                     </div>
                                 }
                                 <div class="form-group">
@@ -176,14 +176,22 @@
                                         </div>
                                     </div>
                                 </div>
-                                <a>
-                                    <input style="background-color: #36b9cc" type="submit" value="Update" class="btn btn-primary btn-user btn-block" />
-                                </a>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <a href="/Admin/VaccineData/Index" class="btn btn-primary btn-user btn-block icon">
+                                            Back
+                                        </a>
+                                    </div>
+                                    <div class="col-md-8"></div>
+                                    <div class="col-md-2">
+                                        <a>
+                                            <input style="background-color: #36b9cc" type="submit" value="Update" class="btn btn-primary btn-user btn-block" />
+                                        </a>
+                                    </div>
+                                </div>
                             }
                             <hr>
-                            <a href="/Admin/VaccineData/Index" class="btn btn-primary btn-user btn-block icon">
-                                Back to list
-                            </a>
+                           
                         </div>
                     </div>
                 </div>

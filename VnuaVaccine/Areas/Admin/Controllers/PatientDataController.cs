@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Profile;
 using VnuaVaccine.Areas.Admin.Models;
+using VnuaVaccine.Common;
 
 namespace VnuaVaccine.Areas.Admin.Controllers
 {
@@ -115,17 +116,39 @@ namespace VnuaVaccine.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Detail(int id)
         {
-            var patientDao = new PatientDAO();
-            var patient = patientDao.GetByID(id);
-            var patientModel = new PatientModel
+            try
             {
-                Name = patient.Name,
-                Sex = patient.Sex,
-                Address = patient.Address,
-                PhoneNumber = patient.PhoneNumber,
-                Birthday = patient.Birthday,
-            };
-            return View(patientModel);
+                var patientDao = new PatientDAO();
+                var patient = patientDao.GetByID(id);
+
+                //list infor patient
+                var db = new VaccineDbContext();
+                var profileModel = db.Patients
+                    .Where(getPatient => getPatient.IdUserName == patient.IdUserName)
+                    .Join(db.Users, getPatient => getPatient.IdUserName, getStaff => getStaff.ID, (getPatient, getStaff) => new InforPatientModel
+                    {
+                        ID = getPatient.ID,
+                        Name = getPatient.Name,
+                        Sex = getPatient.Sex,
+                        Address = getPatient.Address,
+                        Birthday = getPatient.Birthday,
+                        Age = getPatient.Age,
+                        PhoneNumber = getPatient.PhoneNumber,
+                        CreateAt = getPatient.CreateAt,
+                        UpdateAt = getPatient.UpdateAt,
+
+                        Email = getStaff != null ? getStaff.Email : (getPatient.IdUserName == null ? "" : null),
+                    })
+                    .SingleOrDefault();
+
+                return View(profileModel);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred: " + ex.Message);
+                return View();
+            }
         }
+
     }
 }

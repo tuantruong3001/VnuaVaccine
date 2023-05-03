@@ -29,7 +29,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                         UserName = getUser.UserName,
                         Email = getUser.Email,                       
                         Role = getUser.Role,
-
+                       
                         Age = getStaff.Age,
                         Sex = getStaff.Sex,
                         Birthday = getStaff.Birthday,
@@ -96,9 +96,10 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                             Sex = (int)model.Sex,
                             Name = model.Name,
                             PhoneNumber = (int)model.PhoneNumber,
+                            Birthday = model.Birthday,
                             Address = model.Address
                         };
-                        staffDao.Update(staff);
+                        staffDao.UpdateProfile(staff);
 
                         TempData["EditUserMessage"] = "Sửa thông tin thành công";
                         return RedirectToAction("Index", "HomeAdmin");

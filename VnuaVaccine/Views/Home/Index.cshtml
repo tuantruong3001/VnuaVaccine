@@ -47,12 +47,12 @@
                 }
                 else if (session.RoleId == 0)
                 {
-                    <a class="btn btn-primary" href="@Url.Action("Index", "HomeAdmin", new { area = "Admin" })">My Profile</a>
+                    <a class="btn btn-primary" href="/Admin/HomeAdmin/Index">My Profile</a>
 
                 }
                 else if (session.RoleId == 1)
                 {
-                    <a class="btn btn-primary" href="@Url.Action("Index", "HomeUser", new { area = "Admin" })">My Profile</a>
+                    <a class="btn btn-primary" href="/Admin/HomeUser/Index">My Profile</a>
                 }
             </div>
         </div>

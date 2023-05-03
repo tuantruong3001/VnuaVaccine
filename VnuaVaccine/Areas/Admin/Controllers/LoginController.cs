@@ -51,11 +51,11 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                         // redict by role
                         if (user.Role == 0)
                         {
-                            return RedirectToAction("Index", "HomeAdmin");
+                            return RedirectToAction("Index", "PatientData");
                         }
                         else
                         {
-                            return RedirectToAction("Index", "HomeUser");
+                            return RedirectToAction("Index", "Home", new { area = "" });
                         }
 
                     case 0:

@@ -148,6 +148,7 @@
     <Compile Include="Areas\Admin\Controllers\RegisterController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserDataController.cs" />
     <Compile Include="Areas\Admin\Controllers\VaccineDataController.cs" />
+    <Compile Include="Areas\Admin\Models\InforPatientModel.cs" />
     <Compile Include="Areas\Admin\Models\LoginModel.cs" />
     <Compile Include="Areas\Admin\Models\PatientModel.cs" />
     <Compile Include="Areas\Admin\Models\ProfileModel.cs" />

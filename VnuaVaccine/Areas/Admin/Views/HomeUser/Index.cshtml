@@ -46,14 +46,6 @@
         <!-- Nav Item - Charts -->
         <hr class="sidebar-divider  my-0">
         <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item active">
-            <a class="nav-link" href="/Admin/HomeUser">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>My Profile</span>
-            </a>
-        </li>
-        <!-- Divider -->
-        <hr class="sidebar-divider d-none d-md-block">
 
         <!-- Sidebar Toggler (Sidebar) -->
         <div class="text-center d-none d-md-inline">
@@ -104,12 +96,6 @@
                                 </div>
                                 <div class="form-group">
 
-                                    @Html.LabelFor(model => model.Age, new { htmlAttribute = new { @class = "form-control form-control-user" } })
-                                    @Html.TextBoxFor(model => model.Age, new { @class = "form-control form-control-user", @placeholder = "Type your Age" })
-
-                                </div>
-                                <div class="form-group">
-
                                     @Html.LabelFor(model => model.Address, new { htmlAttribute = new { @class = "form-control form-control-user" } })
                                     @Html.TextBoxFor(model => model.Address, new { @class = "form-control form-control-user", @placeholder = "Type your Address" })
 
@@ -155,7 +141,11 @@
                                         }
                                     </select>
                                 </div>
-
+                                <div class="form-group">
+                                    <label class="control-label">Age</label>
+                                    <input type="text" class="form-control form-control-user" readonly="readonly" value="@Model.Age" />
+                                    @Html.HiddenFor(model => model.Age)
+                                </div>
                                 <div class="form-group">
                                     <label class="control-label">Email</label>
                                     <input type="text" class="form-control form-control-user" readonly="readonly" value="@Model.Email" />
@@ -167,11 +157,11 @@
                                     @Html.HiddenFor(model => model.Role)
                                 </div>
                                 <a>
-                                    <input type="submit" value="Update" class="btn btn-primary btn-user btn-block" />
+                                    <input type="submit" value="Update" class="col-lg-2 btn btn-primary btn-user btn-block" />
                                 </a>
                                 <hr>
                             }
-                            <a style="background-color:#e74a3b;" class="btn btn-primary btn-user btn-block" @Html.ActionLink("Logout", "Logout", "Login")</a>
+
                         </div>
                     </div>
                 </div>
