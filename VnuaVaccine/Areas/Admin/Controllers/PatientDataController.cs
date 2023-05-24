@@ -123,23 +123,47 @@ namespace VnuaVaccine.Areas.Admin.Controllers
 
                 //list infor patient
                 var db = new VaccineDbContext();
-                var profileModel = db.Patients
-                    .Where(getPatient => getPatient.IdUserName == patient.IdUserName)
-                    .Join(db.Users, getPatient => getPatient.IdUserName, getStaff => getStaff.ID, (getPatient, getStaff) => new InforPatientModel
-                    {
-                        ID = getPatient.ID,
-                        Name = getPatient.Name,
-                        Sex = getPatient.Sex,
-                        Address = getPatient.Address,
-                        Birthday = getPatient.Birthday,
-                        Age = getPatient.Age,
-                        PhoneNumber = getPatient.PhoneNumber,
-                        CreateAt = getPatient.CreateAt,
-                        UpdateAt = getPatient.UpdateAt,
+                var profileModel = new InforPatientModel();
 
-                        Email = getStaff != null ? getStaff.Email : (getPatient.IdUserName == null ? "" : null),
-                    })
-                    .SingleOrDefault();
+                if (patient.IdUserName != null)
+                {
+                    profileModel = db.Patients
+                        .Where(getPatient => getPatient.IdUserName == patient.IdUserName)
+                        .Join(db.Users, getPatient => getPatient.IdUserName, getStaff => getStaff.ID, (getPatient, getStaff) => 
+                        new InforPatientModel
+                        {
+                            ID = getPatient.ID,
+                            Name = getPatient.Name,
+                            Sex = getPatient.Sex,
+                            Address = getPatient.Address,
+                            Birthday = getPatient.Birthday,
+                            Age = getPatient.Age,
+                            PhoneNumber = getPatient.PhoneNumber,
+                            CreateAt = getPatient.CreateAt,
+                            UpdateAt = getPatient.UpdateAt,
+                            Email = getStaff.Email
+                        })
+                        .SingleOrDefault();
+                }
+                else
+                {
+                    profileModel = db.Patients
+                        .Where(getPatient => getPatient.ID == id)
+                        .Select(getPatient => new InforPatientModel
+                        {
+                            ID = getPatient.ID,
+                            Name = getPatient.Name,
+                            Sex = getPatient.Sex,
+                            Address = getPatient.Address,
+                            Birthday = getPatient.Birthday,
+                            Age = getPatient.Age,
+                            PhoneNumber = getPatient.PhoneNumber,
+                            CreateAt = getPatient.CreateAt,
+                            UpdateAt = getPatient.UpdateAt,
+                            Email = ""
+                        })
+                        .SingleOrDefault();
+                }
 
                 return View(profileModel);
             }

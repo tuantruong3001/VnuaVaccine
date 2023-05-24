@@ -34,7 +34,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                 Email = user.Email,
                 Password = user.Password,
                 Role = user.Role,
-            };            
+            };
             return View(userModel);
         }
 
@@ -45,14 +45,14 @@ namespace VnuaVaccine.Areas.Admin.Controllers
             {
                 try
                 {
-                    var userDao = new UserDAO();                   
+                    var userDao = new UserDAO();
                     var user = new User
                     {
                         ID = userModel.ID,
                         UserName = userModel.UserName,
                         Email = userModel.Email,
                         Role = userModel.Role,
-                        Password = userModel.Password,
+                        Password = Encryptor.MD5Hash(userModel.Password),
                         UpdateAt = DateTime.Now,
                     };
                     userDao.Update(user);
@@ -93,6 +93,10 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                 ModelState.AddModelError("", "Đã có lỗi xảy ra, vui lòng thử lại sau!");
                 return View("Index");
             }
+        }
+        public ActionResult Create()
+        {
+            return RedirectToAction("Page404", "Home", new { area = "" });
         }
     }
 }

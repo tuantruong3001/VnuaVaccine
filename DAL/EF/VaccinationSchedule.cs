@@ -16,14 +16,17 @@ namespace DAL.EF
             VaccinationManagements = new HashSet<VaccinationManagement>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        //[DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ID { get; set; }
 
         public DateTime? Time { get; set; }
+        public DateTime? CreateAt { get; set; }
 
         public int? Quantity { get; set; }
 
         public int? IdPatient { get; set; }
+
+        public int? Status { get; set; }
 
         public int? IdVaccine { get; set; }
 
@@ -35,6 +38,6 @@ namespace DAL.EF
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VaccinationManagement> VaccinationManagements { get; set; }
 
-        public virtual Vaccine Vaccine { get; set; }
+        public virtual Vaccine Vaccine { get; set; }      
     }
 }

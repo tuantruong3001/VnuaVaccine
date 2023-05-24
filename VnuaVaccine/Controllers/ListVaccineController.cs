@@ -10,7 +10,7 @@ namespace VnuaVaccine.Controllers
     public class ListVaccineController : Controller
     {
         // GET: ListVaccine
-        public ActionResult Index(string searchString, int page = 1, int pageSize = 9)
+        public ActionResult Index(string searchString, int page = 1, int pageSize = 6)
         {
             try
             {

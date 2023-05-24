@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<DAL.EF.Vaccine>
+﻿@model PagedList.IPagedList<DAL.EF.VaccinationSchedule>
 @using PagedList.Mvc;
 @{
     ViewBag.Title = "Index";
@@ -60,7 +60,14 @@
         </li>
 
         <!-- Nav Item - Charts -->
-        
+        <hr class="sidebar-divider  my-0">
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item active">
+            <a class="nav-link" href="/Admin/HomeAdmin">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>My Profile</span>
+            </a>
+        </li>
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
 
@@ -78,36 +85,34 @@
         Response.Redirect("~/Home/Index");
     }
 }
+<style>
+    .status-link {
+        text-decoration: none;
+    }
+
+    .pending {
+        color: #ffc107;
+    }
+
+    .confirmed {
+        color: #198754;
+    }
+
+    .rejected {
+        color: #dc3545;
+    }
+</style>
+
+
 <div class="row">
     <div class="col-lg-12">
-        @if (TempData["UserMessage"] != null)
-        {
-            <div class="alert alert-success alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                </button> <h5><i class="icon fas fa-check"></i> @TempData["UserMessage"]</h5>
-            </div>
-        }
-        @if (TempData["EditUserMessage"] != null)
-        {
-            <div class="alert alert-success alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                </button> <h5><i class="icon fas fa-check"></i> @TempData["EditUserMessage"]</h5>
-            </div>
-        }
-        @if (TempData["DeleteUserMessage"] != null)
-        {
-            <div class="alert alert-success alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                </button> <h5><i class="icon fas fa-check"></i> @TempData["DeleteUserMessage"]</h5>
-            </div>
-        }
         <div class="panel panel-default">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h2 class="m-0 font-weight-bold text-primary" style="text-align:center;">Danh sách Vaccines</h2>
+                    <h2 class="m-0 font-weight-bold text-primary" style="text-align:center;">Danh sách lịch tiêm</h2>
                 </div>
                 <div class="card-body">
-                    @using (Html.BeginForm("Index", "VaccineData", FormMethod.Get))
+                    @using (Html.BeginForm("Index", "VaccineSchedule", FormMethod.Get))
                     {
                         <div class="form-group">
                             @Html.Label("Search:", new { @class = "control-label" })
@@ -122,14 +127,13 @@
                             <table style="text-align:center" class="table table-striped table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th>Tên Vaccine</th>
-                                        <th>Cơ sở sản xuất</th>
+                                        <th>Tên bệnh nhân</th>
                                         <th>Số lượng</th>
-                                        <th>Mô tả</th>
-                                        <th>Ảnh</th>
-                                        <th>Ngày nhập</th>
-                                        <th>Ngày hết hạn</th>
-                                        <th>Ghi chú</th>
+                                        <th>Tên vaccine</th>
+                                        <th>Trạng thái</th>
+                                        <th>Ngày tiêm</th>
+                                        <th>Ngày đặt lịch</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -145,14 +149,18 @@
                                         foreach (var item in Model)
                                         {
                                             <tr id="row_@item.ID">
-                                                <td>@item.NameVaccine</td>
-                                                <td>@item.Munafacturer</td>
-                                                <td>@item.QuantityStock</td>
-                                                <td>@item.Description</td>
-                                                <td><img style="width: 100px; height: auto;" src="@item.Path"></td>
-                                                <td>@(item.ProductionDate == null ? "" : item.ProductionDate.Value.ToString("dd/MM/yyyy"))</td>
-                                                <td>@(item.ExpirationData == null ? "" : item.ExpirationData.Value.ToString("dd/MM/yyyy"))</td>
-                                                <td>@item.Note</td>
+                                                <td>@item.IdVaccine</td>
+                                                <td>@item.Quantity</td>
+                                                <td>@item.IdPatient</td>
+                                                <td>
+                                                    <a class="status-link @(item.Status == 0 ? "pending" : (item.Status == 1 ? "confirmed" : "rejected"))" data-id="@item.ID">
+                                                        @(item.Status == 0 ? "Chờ xác nhận" : (item.Status == 1 ? "Đã xác nhận" : "Đã từ chối"))
+                                                    </a>
+                                                </td>
+
+                                                <td>@(item.Time == null ? "" : item.Time.Value.ToString("dd/MM/yyyy"))</td>
+                                                <td>@(item.CreateAt == null ? "" : item.CreateAt.Value.ToString("dd/MM/yyyy"))</td>
+
                                                 <td>
                                                     <a class="btn btn-success" style="text-decoration:none; " href="/Admin/VaccineData/Edit/@item.ID"><i class="fa fa-edit"></i> Edit</a>
                                                     <a style="text-decoration: none;" href="@Url.Action("Delete", "VaccineData", new { id = item.ID })" class="btn btn-danger" onclick="return confirm('Xác nhận xoá?')"><i class="fas fa-trash"></i> Delete</a>
@@ -163,7 +171,7 @@
                                 </tbody>
 
                             </table>
-                            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchString = ViewBag.SearchString }))
+                            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, }))
 
                         </div>
 
@@ -179,3 +187,4 @@
         </div>
     </div>
 </div>
+

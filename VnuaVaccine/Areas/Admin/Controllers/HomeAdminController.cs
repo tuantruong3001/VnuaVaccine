@@ -23,7 +23,8 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                 var db = new VaccineDbContext();
                 var profileModel = db.Users
                     .Where(getUser => getUser.ID == user.ID)
-                    .Join(db.MedicalStaffs, getUser => getUser.ID, getStaff => getStaff.IdUserName, (getUser, getStaff) => new ProfileModel
+                    .Join(db.MedicalStaffs, getUser => getUser.ID, getStaff => getStaff.IdUserName, (getUser, getStaff) => 
+                    new ProfileModel
                     {
                         ID = getUser.ID,
                         UserName = getUser.UserName,

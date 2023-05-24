@@ -148,18 +148,23 @@
     <Compile Include="Areas\Admin\Controllers\RegisterController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserDataController.cs" />
     <Compile Include="Areas\Admin\Controllers\VaccineDataController.cs" />
+    <Compile Include="Areas\Admin\Controllers\VaccineScheduleController.cs" />
     <Compile Include="Areas\Admin\Models\InforPatientModel.cs" />
+    <Compile Include="Areas\Admin\Models\InforScheduleModel.cs" />
     <Compile Include="Areas\Admin\Models\LoginModel.cs" />
     <Compile Include="Areas\Admin\Models\PatientModel.cs" />
     <Compile Include="Areas\Admin\Models\ProfileModel.cs" />
     <Compile Include="Areas\Admin\Models\VaccineModel.cs" />
+    <Compile Include="Common\Encryptor.cs" />
     <Compile Include="Common\SessionConstants.cs" />
     <Compile Include="Common\UserLogin.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ListVaccineController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CartItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -2744,6 +2749,7 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\Style404.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -3080,6 +3086,7 @@
     <Content Include="Areas\Admin\Views\UserData\Index.cshtml" />
     <Content Include="Areas\Admin\Views\UserData\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\PatientData\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\VaccineSchedule\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -3108,11 +3115,13 @@
     <Content Include="Views\ListVaccine\Index.cshtml" />
     <Content Include="Views\ListVaccine\Detail.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Page404.cshtml" />
+    <Content Include="Views\Cart\Index.cshtml" />
+    <Content Include="Views\Cart\SaveSuccess.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Views\Base\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

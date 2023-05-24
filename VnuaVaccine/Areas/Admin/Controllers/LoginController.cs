@@ -34,7 +34,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                 }
 
                 var userDao = new UserDAO();
-                var loginResult = userDao.Login(loginModel.Password, loginModel.Email);
+                var loginResult = userDao.Login(Encryptor.MD5Hash(loginModel.Password), loginModel.Email);
 
                 switch (loginResult)
                 {

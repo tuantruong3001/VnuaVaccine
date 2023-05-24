@@ -2,8 +2,6 @@
 using PagedList;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Infrastructure;
-using System.IO;
 using System.Linq;
 
 namespace DAL.Dao

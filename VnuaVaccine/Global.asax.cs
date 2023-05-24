@@ -17,5 +17,16 @@ namespace VnuaVaccine
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+        protected void Application_Error(object sender, EventArgs e)
+        {
+            Exception exception = Server.GetLastError();
+
+            if (exception is HttpException httpException && httpException.GetHttpCode() == 404)
+            {
+                Server.ClearError();
+                Response.Redirect("~/Home/Page404");
+            }
+        }
+
     }
 }

@@ -16,6 +16,10 @@ namespace VnuaVaccine.Controllers
         {
             return View();
         }
-      
+        public ActionResult Page404()
+        {
+            Response.StatusCode = 404;
+            return View("Page404");
+        }
     }
 }
