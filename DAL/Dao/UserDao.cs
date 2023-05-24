@@ -1,9 +1,8 @@
 ﻿using DAL.EF;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL.Dao
 {
@@ -25,10 +24,7 @@ namespace DAL.Dao
         {
             return db.Users.Find(id);
         }
-       /* public Patient GetByIdUserName(int id, int idUserName)
-        {
-            return db.Patients.FirstOrDefault(p => p.ID == id && p.IdUserName == idUserName);
-        }*/
+      
         public bool CheckUserName(string userName)
         {
             var name = db.Users.SingleOrDefault(x => x.UserName == userName);
@@ -73,7 +69,10 @@ namespace DAL.Dao
                 if (user != null)
                 {
                     userUpdate.UserName = user.UserName;
-                    userUpdate.Email = user.Email;                  
+                    userUpdate.Email = user.Email;
+                    userUpdate.Role = user.Role;
+                    userUpdate.Password = user.Password;
+                    userUpdate.UpdateAt = DateTime.Now;
                     db.SaveChanges();
                     return true;
                 }
@@ -81,10 +80,60 @@ namespace DAL.Dao
             }
             catch (Exception) { return false; }
         }
-
-        public object GetByIdUserName(int idUserName)
+        public bool UpdateProfile(User user)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var userUpdate = db.Users.Find(user.ID);
+                if (user != null)
+                {
+                    userUpdate.UserName = user.UserName;
+                    userUpdate.Email = user.Email;
+                    userUpdate.UpdateAt = DateTime.Now;
+                    db.SaveChanges();
+                    return true;
+                }
+                else { return false; }
+            }
+            catch (Exception) { return false; }
+        }
+        public bool Delete(int id)
+        {
+            try
+            {
+                using (var db = new VaccineDbContext())
+                {
+                    
+                    User user = db.Users.Find(id);
+                    if (user == null)
+                    {
+                        return false;
+                    }
+
+                    db.Users.Remove(user);
+                    db.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Đã có lỗi xảy ra, vui lòng thử lại sau", ex);
+            }
+        }
+
+        public IEnumerable<User> ListAllPaging(string searchString, int page, int pageSize)
+        {
+
+            IQueryable<User> model = db.Users;
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                model = model.Where(x => x.UserName.Contains(searchString) || x.Email.Contains(searchString));
+                if (model == null)
+                {
+                    return null;
+                }
+            }
+            return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
         }
     }
 }

@@ -19,20 +19,21 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                 var userDao = new UserDAO();
                 var userLogin = (UserLogin)Session[SessionConstants.USER_SESSION];
                 var user = userDao.GetById(userLogin.UserID);
-                //list infor staff
+                //list infor staff by foreign key
                 var db = new VaccineDbContext();
                 var profileModel = db.Users
                     .Where(getUser => getUser.ID == user.ID)
-                    .Join(db.MedicalStaffs, getUser => getUser.ID, getStaff => getStaff.IdUserName, (getUser, getStaff) => new ProfileModel
+                    .Join(db.MedicalStaffs, getUser => getUser.ID, getStaff => getStaff.IdUserName, (getUser, getStaff) => 
+                    new ProfileModel
                     {
                         ID = getUser.ID,
                         UserName = getUser.UserName,
-                        Email = getUser.Email,
-                        Password = getUser.Password,
+                        Email = getUser.Email,                       
                         Role = getUser.Role,
-
+                       
                         Age = getStaff.Age,
                         Sex = getStaff.Sex,
+                        Birthday = getStaff.Birthday,
                         Address = getStaff.Address,
                         Name = getStaff.Name,
                         PhoneNumber = getStaff.PhoneNumber
@@ -85,21 +86,21 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                             ID = model.ID,
                             Email = model.Email,
                             UserName = model.UserName,
-                            Password = model.Password,
                             Role = model.Role
                         };
-                        userDao.Update(user);
+                        userDao.UpdateProfile(user);
 
                         var staff = new MedicalStaff
                         {
                             IdUserName = user.ID,
-                            Age = model.Age,
-                            Sex = model.Sex,
+                            Age = (int)model.Age,
+                            Sex = (int)model.Sex,
                             Name = model.Name,
                             PhoneNumber = (int)model.PhoneNumber,
+                            Birthday = model.Birthday,
                             Address = model.Address
                         };
-                        staffDao.Update(staff);
+                        staffDao.UpdateProfile(staff);
 
                         TempData["EditUserMessage"] = "Sửa thông tin thành công";
                         return RedirectToAction("Index", "HomeAdmin");

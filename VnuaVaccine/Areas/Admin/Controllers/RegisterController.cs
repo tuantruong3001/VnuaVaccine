@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using VnuaVaccine.Areas.Admin.Models;
+using VnuaVaccine.Common;
 
 namespace VnuaVaccine.Areas.Admin.Controllers
 {
@@ -47,7 +48,8 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                     {
                         UserName = registerModel.UserName,
                         Email = registerModel.Email,
-                        Password = registerModel.Password,
+                        Password = Encryptor.MD5Hash(registerModel.Password),
+                        CreateAt = DateTime.Now,
                         Role = 1,
                         Status = 1,
                     };
@@ -57,6 +59,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                     var newPatient = new Patient
                     {
                         IdUserName = newUser.ID,
+                        Name = newUser.UserName,
                         CreateAt = DateTime.Now,
                     };
                     patientDao.Insert(newPatient);

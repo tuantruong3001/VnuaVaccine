@@ -26,6 +26,14 @@
         <hr class="sidebar-divider  my-0">
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item active">
+            <a class="nav-link" href="/Admin/UserData/Index">
+                <i class="fas fa-fw fa-user"></i>
+                <span>List User</span>
+            </a>
+        </li>
+        <hr class="sidebar-divider  my-0">
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item active">
             <a class="nav-link" href="/Admin/StaffData/Index">
                 <i class="fas fa-fw fa-user"></i>
                 <span>List Staff</span>
@@ -35,7 +43,7 @@
         <hr class="sidebar-divider  my-0">
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item active">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="/Admin/VaccineSchedule/Index">
                 <i class="fas fa-fw fa-comment"></i>
                 <span>List Schedule</span>
             </a>
@@ -53,14 +61,6 @@
         <!-- Nav Item - Charts -->
         <hr class="sidebar-divider  my-0">
         <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item active">
-            <a class="nav-link" href="/Admin/HomeAdmin">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>My Profile</span>
-            </a>
-        </li>
-        <!-- Divider -->
-        <hr class="sidebar-divider d-none d-md-block">
 
         <!-- Sidebar Toggler (Sidebar) -->
         <div class="text-center d-none d-md-inline">
@@ -69,6 +69,7 @@
 
     </ul>
 }
+<!-- check role để chuyển hướng user và admin -->
 
 @section bodymain{
     <div class="card-body p-0">
@@ -109,18 +110,27 @@
                                     @Html.TextBoxFor(model => model.Name, new { @class = "form-control form-control-user", @placeholder = "Type your Name" })
 
                                 </div>
-                                <div class="form-group">
 
-                                    @Html.LabelFor(model => model.Age, new { htmlAttribute = new { @class = "form-control form-control-user" } })
-                                    @Html.TextBoxFor(model => model.Age, new { @class = "form-control form-control-user", @placeholder = "Type your Age" })
-
-                                </div>
                                 <div class="form-group">
 
                                     @Html.LabelFor(model => model.Address, new { htmlAttribute = new { @class = "form-control form-control-user" } })
                                     @Html.TextBoxFor(model => model.Address, new { @class = "form-control form-control-user", @placeholder = "Type your Address" })
 
                                 </div>
+                                if (Model.Birthday == null)
+                                {
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Birthday, new { htmlAttribute = new { @class = "form-control form-control-user" } })
+                                        @Html.TextBoxFor(model => model.Birthday, "{0:dd/MM/yyyy}", new { @type = "date", @class = "form-control form-control-user" })
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Birthday, new { htmlAttribute = new { @class = "form-control form-control-user" } })
+                                        @Html.TextBoxFor(model => model.Birthday, "{0:dd/MM/yyyy}", new { @type = "datetime", @class = "form-control form-control-user" })
+                                    </div>
+                                }
                                 <div class="form-group">
 
                                     @Html.LabelFor(model => model.PhoneNumber, new { htmlAttribute = new { @class = "form-control form-control-user" } })
@@ -132,15 +142,26 @@
                                         cursor: pointer;
                                     }
                                 </style>
-
                                 <div class="form-group">
                                     <label for="Sex">Sex</label>
                                     <select class="form-control Sex" name="Sex">
-                                        @foreach (var option in ViewBag.SexOptions)
+                                        @if (ViewBag.SexOptions != null)
                                         {
-                                            <option value="@option.Value" @(option.Selected ? "selected" : "")>@option.Text</option>
+                                            foreach (var option in ViewBag.SexOptions)
+                                            {
+                                                <option value="@option.Value" @(option.Selected ? "selected" : "")>@option.Text</option>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <option value="1"></option>
                                         }
                                     </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Age</label>
+                                    <input type="text" class="form-control form-control-user" readonly="readonly" value="@Model.Age" />
+                                    @Html.HiddenFor(model => model.Age)
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Email</label>
@@ -148,16 +169,15 @@
                                     @Html.HiddenFor(model => model.Email)
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Type</label>
+                                    <label class="control-label">Role</label>
                                     <input type="text" class="form-control form-control-user" readonly="readonly" value="@(Model.Role == 0 ? "MedicalStaffs" : "Patient") " />
-                                    @Html.HiddenFor(model => model.Role) <!-- Thêm hidden field để giữ giá trị của trường Role -->
+                                    @Html.HiddenFor(model => model.Role)
                                 </div>
                                 <a>
-                                    <input type="submit" value="Update" class="btn btn-primary btn-user btn-block" />
+                                    <input type="submit" value="Update" class="col-lg-2 btn btn-primary btn-user btn-block" />
                                 </a>
                                 <hr>
                             }
-                        <a style="background-color:#e74a3b;" class="btn btn-primary btn-user btn-block" @Html.ActionLink("Logout", "Logout", "Login")</a>
                         </div>
                     </div>
                 </div>

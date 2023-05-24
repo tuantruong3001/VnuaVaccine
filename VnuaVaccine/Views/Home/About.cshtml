@@ -34,7 +34,7 @@
     </script>
 }
 @section body{
-    <div class="page-banner overlay-dark bg-image" style="background-image: url(/Assets/images/bg_image_2.jpg); background-size: cover;`">
+    <div class="page-banner overlay-dark bg-image" style="background-image: url(/Assets/images/bg_image_2.jpg); background-size: cover;">
         <div class="banner-section">
             <div class="container text-center wow fadeInUp">
                 <nav aria-label="Breadcrumb">
@@ -115,5 +115,38 @@
         </div>
     </div>
 
+}
+@section form{
+    <h1 class="text-center wow fadeInUp">Để Lại Lời Nhắn Cho Bác Sĩ</h1>
+
+    <form class="main-form">
+        <div class="row mt-5 ">
+            <div class="col-12 col-sm-6 py-2 wow fadeInLeft">
+                <input type="text" class="form-control" placeholder="Tên đầy đủ">
+            </div>
+            <div class="col-12 col-sm-6 py-2 wow fadeInRight">
+                <input type="text" class="form-control" placeholder="Địa chỉ email..">
+            </div>
+            <div class="col-12 col-sm-6 py-2 wow fadeInLeft" data-wow-delay="300ms">
+                <input type="date" class="form-control">
+            </div>
+            <div class="col-12 col-sm-6 py-2 wow fadeInRight" data-wow-delay="300ms">
+                <select name="departement" id="departement" class="custom-select">
+                    <option value="general">Tình Trạng Sức Khoẻ</option>
+                    <option value="cardiology">Tốt</option>
+                    <option value="dental">Bình Thường</option>
+                    <option value="neurology">Xấu</option>
+                </select>
+            </div>
+            <div class="col-12 py-2 wow fadeInUp" data-wow-delay="300ms">
+                <input type="text" class="form-control" placeholder="Số điện thoại">
+            </div>
+            <div class="col-12 py-2 wow fadeInUp" data-wow-delay="300ms">
+                <textarea name="message" id="message" class="form-control" rows="6" placeholder="Lời nhắn.."></textarea>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3 wow zoomIn">Gửi yêu cầu</button>
+    </form>
 }
 

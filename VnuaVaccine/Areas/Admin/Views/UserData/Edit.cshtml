@@ -1,28 +1,9 @@
-﻿@model VnuaVaccine.Areas.Admin.Models.VaccineModel
+﻿@model VnuaVaccine.Areas.Admin.Models.ProfileModel
 @{
-    ViewBag.Title = "Add Vaccine";
+    ViewBag.Title = "Create";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-@section jsFooter{
 
-    <script>
-        $('#btnSelectImage').on('click', function (e) {
-            e.preventDefault();
-            var finder = new CKFinder();
-            finder.selectActionFunction = function (url) {
-                $('#txtImage').val(url);
-            };
-            finder.popup();
-        })
-    </script>
-}
-@{
-    var session = (VnuaVaccine.Common.UserLogin)Session[VnuaVaccine.Common.SessionConstants.USER_SESSION];
-    if (session == null || session.RoleId == 1)
-    {
-        Response.Redirect("~/Home/Index");
-    }
-}
 @section sidebar{
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
         <hr class="sidebar-divider my-0">
@@ -89,7 +70,14 @@
 
     </ul>
 }
-@section bodymain{
+@{
+    var session = (VnuaVaccine.Common.UserLogin)Session[VnuaVaccine.Common.SessionConstants.USER_SESSION];
+    if (session == null || session.RoleId == 1)
+    {
+        Response.Redirect("~/Home/Index");
+    }
+}
+@section bodymain{   
 
     <div class="card-body p-0">
         <!-- Nested Row within Card Body -->
@@ -100,72 +88,46 @@
                     <div class="card shadow mb-4">
                         <div class="p-5">
                             <div class="card-header py-3">
-                                <h2 class="m-0 font-weight-bold text-primary" style="text-align:center;">Add Vaccine</h2>
+                                <h2 class="m-0 font-weight-bold text-primary" style="text-align:center;">Cập nhật thông tin User</h2>
                             </div>
-                            @using (Html.BeginForm("Create", "VaccineData", FormMethod.Post))
+                            @using (Html.BeginForm("Edit", "UserData", FormMethod.Post, new { id = "editForm" }))
                             {
                                 @Html.ValidationSummary(false, "", new { @class = "text-danger" });
                                 <div class="form-group">
-                                    NameVaccine
-                                    @Html.TextBoxFor(model => model.NameVaccine, new { @class = "form-control form-control-user", @autofocus = "autofocus", @placeholder = "Type NameVaccine" })
-
-                                </div>
-                                <div class="form-group">
-                                    Munafacturer
-                                    @Html.TextBoxFor(model => model.Munafacturer, new { @class = "form-control form-control-user", @placeholder = "Type Munafacturer" })
-
-                                </div>
-                                <div class="form-group">
-                                    Description
-                                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-user", @placeholder = "Type Description" })
-
-                                </div>
-                                <div class="form-group">
-                                    QuantityStock
-                                    @Html.TextBoxFor(model => model.QuantityStock, new { @class = "form-control form-control-user", @placeholder = "Type QuantityStock" })
-
-                                </div>
-                                <div class="form-group">
-                                    Note
-                                    @Html.TextBoxFor(model => model.Note, new { @class = "form-control form-control-user", @placeholder = "Type Note" })
-
-                                </div>
-                                <div class="form-group">
-                                    @Html.LabelFor(model => model.ProductionDate, new { htmlAttribute = new { @class = "form-control form-control-user" } })
-                                    @Html.TextBoxFor(model => model.ProductionDate, "{0:dd/MM/yyyy}", new { @type = "date", @class = "form-control form-control-user" })
+                                    UserName
+                                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control form-control-user", @autofocus = "autofocus", @placeholder = "Type UserName" })
                                 </div>
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.ExpirationData, new { htmlAttribute = new { @class = "form-control form-control-user" } })
-                                    @Html.TextBoxFor(model => model.ExpirationData, "{0:dd/MM/yyyy}", new { @type = "date", @class = "form-control form-control-user" })
+                                    Email
+                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control form-control-user", @placeholder = "Type Email" })
                                 </div>
-
                                 <div class="form-group">
-                                    <div class="col-md-10">
-                                        Image
-                                        <div class="col-md-10">
-                                            @Html.TextBoxFor(model => model.Path, new { htmlAttributes = new { @class = "form-control" }, id = "txtImage" })
-                                            <a id="btnSelectImage" href="#">Choose Image </a>
-
-                                        </div>
-                                    </div>
+                                    Password
+                                    @Html.PasswordFor(model => model.Password, new { @class = "form-control form-control-user", @placeholder = "Type Password", id = "passwordInput" })
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Role</label>
+                                    <input type="text" class="form-control form-control-user" readonly="readonly" value="@(Model.Role == 0 ? "MedicalStaffs" : "Patient") " />
+                                    @Html.HiddenFor(model => model.Role)
                                 </div>
                                 <div class="row">
                                     <div class="col-md-2">
-                                        <a href="/Admin/VaccineData/Index" class="btn btn-primary btn-user btn-block icon">
+                                        <a href="/Admin/UserData/Index" class="btn btn-primary btn-user btn-block icon">
                                             Back
                                         </a>
                                     </div>
                                     <div class="col-md-8"></div>
                                     <div class="col-md-2">
                                         <a>
-                                            <input style="background-color: #36b9cc" type="submit" value="Add" class="btn btn-primary btn-user btn-block" />
+                                            <input style="background-color: #36b9cc" type="submit" value="Update" class="btn btn-primary btn-user btn-block" />
                                         </a>
                                     </div>
                                 </div>
                             }
+
                             <hr>
-                            
+                           
                         </div>
                     </div>
                 </div>
@@ -174,10 +136,14 @@
     </div>
 }
 <script>
-    var loadFile = function (event) {
-        var image = document.getElementById('output');
-        image.src = URL.createObjectURL(event.target.files[0]);
-    };
+    document.getElementById('editForm').addEventListener('submit', function (event) {
+        var passwordInput = document.getElementById('passwordInput');
+        if (passwordInput.value === '') {
+            event.preventDefault();
+            alert('Password không được để trống');
+        }
+    });
 </script>
+
 
 

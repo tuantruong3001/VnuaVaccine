@@ -22,7 +22,8 @@ namespace VnuaVaccine.Areas.Admin.Controllers
             var db = new VaccineDbContext();
             var profileModel = db.Users
                 .Where(getUser => getUser.ID == user.ID)
-                .Join(db.Patients, getUser => getUser.ID, getPatient => getPatient.IdUserName, (getUser, getPatient) => new ProfileModel
+                .Join(db.Patients, getUser => getUser.ID, getPatient => getPatient.IdUserName, (getUser, getPatient) 
+                => new ProfileModel
                 {
                     ID = getUser.ID,
                     UserName = getUser.UserName,
@@ -84,12 +85,12 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                             Password = model.Password,
                             Role = model.Role
                         };
-                        userDao.Update(user);
+                        userDao.UpdateProfile(user);
 
                         var patient = new Patient
                         {
                             IdUserName = user.ID,
-                            Age = model.Age,
+                            Age = (int)model.Age,
                             Sex = model.Sex,
                             Name = model.Name,
                             PhoneNumber = model.PhoneNumber,

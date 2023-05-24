@@ -7,17 +7,18 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Profile;
 using VnuaVaccine.Areas.Admin.Models;
+using VnuaVaccine.Common;
 
 namespace VnuaVaccine.Areas.Admin.Controllers
 {
-    public class PatientDataController : Controller
+    public class PatientDataController : BaseController
     {
         private readonly PatientDAO _patientDao = new PatientDAO();
 
         // GET: Admin/PatientData
         public ActionResult Index(string searchString, int page = 1, int pageSize = 10)
         {
-            var model = _patientDao.ListAllPaging(searchString, page, pageSize);
+            var model = _patientDao.ListPatientPaging(searchString, page, pageSize);
             ViewBag.SearchString = searchString;
             return View(model);
         }
@@ -92,6 +93,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                         Address = patientModel.Address,
                         PhoneNumber = patientModel.PhoneNumber,
                         Birthday = patientModel.Birthday,
+                        UpdateAt = DateTime.Now,
                     };
                     ViewBag.SexOptions = new List<SelectListItem>
                     {
@@ -111,5 +113,66 @@ namespace VnuaVaccine.Areas.Admin.Controllers
             }
             return View(patientModel);
         }
+        [HttpGet]
+        public ActionResult Detail(int id)
+        {
+            try
+            {
+                var patientDao = new PatientDAO();
+                var patient = patientDao.GetByID(id);
+
+                //list infor patient
+                var db = new VaccineDbContext();
+                var profileModel = new InforPatientModel();
+
+                if (patient.IdUserName != null)
+                {
+                    profileModel = db.Patients
+                        .Where(getPatient => getPatient.IdUserName == patient.IdUserName)
+                        .Join(db.Users, getPatient => getPatient.IdUserName, getStaff => getStaff.ID, (getPatient, getStaff) => 
+                        new InforPatientModel
+                        {
+                            ID = getPatient.ID,
+                            Name = getPatient.Name,
+                            Sex = getPatient.Sex,
+                            Address = getPatient.Address,
+                            Birthday = getPatient.Birthday,
+                            Age = getPatient.Age,
+                            PhoneNumber = getPatient.PhoneNumber,
+                            CreateAt = getPatient.CreateAt,
+                            UpdateAt = getPatient.UpdateAt,
+                            Email = getStaff.Email
+                        })
+                        .SingleOrDefault();
+                }
+                else
+                {
+                    profileModel = db.Patients
+                        .Where(getPatient => getPatient.ID == id)
+                        .Select(getPatient => new InforPatientModel
+                        {
+                            ID = getPatient.ID,
+                            Name = getPatient.Name,
+                            Sex = getPatient.Sex,
+                            Address = getPatient.Address,
+                            Birthday = getPatient.Birthday,
+                            Age = getPatient.Age,
+                            PhoneNumber = getPatient.PhoneNumber,
+                            CreateAt = getPatient.CreateAt,
+                            UpdateAt = getPatient.UpdateAt,
+                            Email = ""
+                        })
+                        .SingleOrDefault();
+                }
+
+                return View(profileModel);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred: " + ex.Message);
+                return View();
+            }
+        }
+
     }
 }

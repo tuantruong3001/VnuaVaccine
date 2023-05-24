@@ -5,7 +5,13 @@
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-
+@{
+    var session = (VnuaVaccine.Common.UserLogin)Session[VnuaVaccine.Common.SessionConstants.USER_SESSION];
+    if (session == null || session.RoleId == 1)
+    {
+        Response.Redirect("~/Home/Index");
+    }
+}
 @section sidebar{
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
         <hr class="sidebar-divider my-0">
@@ -29,6 +35,14 @@
         <hr class="sidebar-divider  my-0">
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item active">
+            <a class="nav-link" href="/Admin/UserData/Index">
+                <i class="fas fa-fw fa-user"></i>
+                <span>List User</span>
+            </a>
+        </li>
+        <hr class="sidebar-divider  my-0">
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item active">
             <a class="nav-link" href="/Admin/StaffData/Index">
                 <i class="fas fa-fw fa-user"></i>
                 <span>List Staff</span>
@@ -38,7 +52,7 @@
         <hr class="sidebar-divider  my-0">
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item active">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="/Admin/VaccineSchedule/Index">
                 <i class="fas fa-fw fa-comment"></i>
                 <span>List Schedule</span>
             </a>
@@ -56,14 +70,6 @@
         <!-- Nav Item - Charts -->
         <hr class="sidebar-divider  my-0">
         <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item active">
-            <a class="nav-link" href="/Admin/HomeAdmin">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>My Profile</span>
-            </a>
-        </li>
-        <!-- Divider -->
-        <hr class="sidebar-divider d-none d-md-block">
 
         <!-- Sidebar Toggler (Sidebar) -->
         <div class="text-center d-none d-md-inline">
@@ -121,7 +127,8 @@
                                         <th>Địa chỉ</th>
                                         <th>Số điện thoại</th>
                                         <th>Sinh nhật</th>
-                                        <th>Ngày tạo tài khoản</th>
+                                        <th>Ngày tạo hồ sơ</th>
+                                        <th>Ngày cập nhật hồ sơ</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -143,8 +150,10 @@
                                                 <td>@item.PhoneNumber</td>
                                                 <td>@(item.Birthday == null ? "" : item.Birthday.Value.ToString("dd/MM/yyyy"))</td>
                                                 <td>@(item.CreateAt == null ? "" : item.CreateAt.Value.ToString("dd/MM/yyyy"))</td>
+                                                <td>@(item.UpdateAt == null ? "" : item.UpdateAt.Value.ToString("dd/MM/yyyy"))</td>
                                                 <td>
                                                     <a class="btn btn-success" style="text-decoration:none; " href="/Admin/PatientData/Edit/@item.ID"><i class="fa fa-edit"></i> Edit</a>
+                                                    <a class="btn btn-info" style="text-decoration:none; " href="/Admin/PatientData/Detail/@item.ID"><i class="bi bi-info-circle"></i> Detail</a>
                                                 </td>
                                             </tr>
                                         }

@@ -1,0 +1,154 @@
+﻿@model VnuaVaccine.Areas.Admin.Models.InforPatientModel
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@{
+    var session = (VnuaVaccine.Common.UserLogin)Session[VnuaVaccine.Common.SessionConstants.USER_SESSION];
+    if (session == null || session.RoleId == 1)
+    {
+        Response.Redirect("~/Home/Index");
+    }
+}
+@section sidebar{
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <hr class="sidebar-divider my-0">
+
+        <li class="nav-item active">
+            <a class="nav-link" href="/Home/Index">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>HomePage</span>
+            </a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider  my-0">
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item active">
+            <a class="nav-link" href="/Admin/PatientData/Index">
+                <i class="fas fa-fw fa-user"></i>
+                <span>List Patient</span>
+            </a>
+        </li>
+        <hr class="sidebar-divider  my-0">
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item active">
+            <a class="nav-link" href="/Admin/UserData/Index">
+                <i class="fas fa-fw fa-user"></i>
+                <span>List User</span>
+            </a>
+        </li>
+        <hr class="sidebar-divider  my-0">
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item active">
+            <a class="nav-link" href="/Admin/StaffData/Index">
+                <i class="fas fa-fw fa-user"></i>
+                <span>List Staff</span>
+            </a>
+        </li>
+        <!-- Nav Item - Utilities Collapse Menu -->
+        <hr class="sidebar-divider  my-0">
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item active">
+            <a class="nav-link" href="/Admin/VaccineSchedule/Index">
+                <i class="fas fa-fw fa-comment"></i>
+                <span>List Schedule</span>
+            </a>
+        </li>
+        <!-- Divider -->
+        <hr class="sidebar-divider  my-0">
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item active">
+            <a class="nav-link" href="/Admin/VaccineData/Index">
+                <i class="fas fa-fw fa-folder"></i>
+                <span>List Vaccine</span>
+            </a>
+        </li>
+
+        <!-- Nav Item - Charts -->
+        <hr class="sidebar-divider  my-0">
+        <!-- Nav Item - Pages Collapse Menu -->
+
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+
+    </ul>
+}
+<h2>Thông tin bệnh nhân</h2>
+@Html.AntiForgeryToken()
+<div class="col-lg-12">
+    <div class="panel panel-default">
+        <div class="card shadow mb-4">
+            <div class="p-5">
+
+                @using (Html.BeginForm("Detail", "PatientData", FormMethod.Get))
+                {
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputEmail4">Name</label>
+                            <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.Name" />
+                            @Html.HiddenFor(model => model.Name)
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputEmail4">Sex</label>
+                            <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@(Model.Sex == 0 ? "Nữ" : "Nam")" />
+                            @Html.HiddenFor(model => model.Sex)
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail4">Address</label>
+                        <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.Address" />
+                        @Html.HiddenFor(model => model.Address)
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-5">
+                            <label for="inputEmail4">Birthday</label>
+                            <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.Birthday" />
+                            @Html.HiddenFor(model => model.Birthday)
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label for="inputEmail4">PhoneNumber</label>
+                            <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.PhoneNumber" />
+                            @Html.HiddenFor(model => model.PhoneNumber)
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="inputEmail4">Age</label>
+                            <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.Age" />
+                            @Html.HiddenFor(model => model.Age)
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputEmail4">CreateAt</label>
+                            <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.CreateAt" />
+                            @Html.HiddenFor(model => model.Name)
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputEmail4">UpdateAt</label>
+                            <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.UpdateAt" />
+                            @Html.HiddenFor(model => model.UpdateAt)
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail4">Email</label>
+                        <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.Email" />
+                        @Html.HiddenFor(model => model.Email)
+                    </div>
+                    <div class="form-group">
+
+                    </div>
+                }
+                <a href="/Admin/PatientData/Index" class="col-md-1 btn btn-primary btn-user btn-block icon">
+                    Back
+                </a>
+                <hr>
+
+            </div>
+        </div>
+    </div>
+</div>

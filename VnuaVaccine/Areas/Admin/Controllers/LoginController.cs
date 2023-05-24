@@ -34,7 +34,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                 }
 
                 var userDao = new UserDAO();
-                var loginResult = userDao.Login(loginModel.Password, loginModel.Email);
+                var loginResult = userDao.Login(Encryptor.MD5Hash(loginModel.Password), loginModel.Email);
 
                 switch (loginResult)
                 {
@@ -51,11 +51,11 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                         // redict by role
                         if (user.Role == 0)
                         {
-                            return RedirectToAction("Index", "HomeAdmin");
+                            return RedirectToAction("Index", "PatientData");
                         }
                         else
                         {
-                            return RedirectToAction("Index", "HomeUser");
+                            return RedirectToAction("Index", "Home", new { area = "" });
                         }
 
                     case 0:

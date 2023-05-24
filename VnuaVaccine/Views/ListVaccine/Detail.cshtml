@@ -43,68 +43,65 @@
             </div>
             <div class="card">
                 <div class="container-fluid">
-                    <form name="frmsanphamchitiet" id="frmsanphamchitiet" method="post"
-                          action="/php/twig/frontend/giohang/themvaogiohang">
-                        <input type="hidden" name="sp_ma" id="sp_ma" value="@Model.Munafacturer">
-                        <input type="hidden" name="sp_ten" id="sp_ten" value="@Model.NameVaccine">
-                        <input type="hidden" name="sp_gia" id="sp_gia" value="">
-                        <input type="hidden" name="hinhdaidien" id="hinhdaidien" value="samsung-galaxy-tab-10.jpg">
-                        <div class="container-fluid">
-                            <h3>Thông tin vaccine</h3>
-                            <div class="row">
-                                <div class="col">
 
-                                </div>
+                    <div class="container-fluid" style="margin-left:20px">
+                        <h3>Thông tin vaccine</h3>
+                        <div class="row">
+                            <div class="col">
+
                             </div>
                         </div>
-                        <div class="wrapper row">
-                            <div class="preview col-md-6">
-                                <div class="preview-pic tab-content">
-                                    <div class="tab-pane" id="pic-1">
-                                        <img src="@Model.Path">
+                    </div>
+                    <div class="wrapper row">
+                        <div class="preview col-md-6">
+                            <div class="preview-pic tab-content">
+
+                                <ul class="preview-thumbnail nav nav-tabs">
+                                    <li class="active">
+                                        <a href="#" data-target="#pic-1" data-toggle="tab" class="" style="margin:20px">
+                                            <img src="@Model.Path">
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="details col-md-10">
+                                <h3 class="product-title">Tên Vaccine: @Model.NameVaccine</h3>
+                                <div class="rating">
+                                    <div class="stars">
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>
                                     </div>
-                                    <ul class="preview-thumbnail nav nav-tabs">
-                                        <li class="active">
-                                            <a href="#" data-target="#pic-1" data-toggle="tab" class="">
-                                                <img src="@Model.Path">
-                                            </a>
-                                        </li>
-                                    </ul>
+                                    <span class="review-no"></span>
                                 </div>
-                                <div class="details col-md-6">
-                                    <h3 class="product-title">@Model.NameVaccine</h3>
-                                    <div class="rating">
-                                        <div class="stars">
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star"></span>
-                                            <span class="fa fa-star"></span>
-                                        </div>
-                                        <span class="review-no"></span>
-                                    </div>
-                                    <p class="product-description">@Model.Description</p>
-                                    <h4 class="price">Giá hiện tại: <span></span></h4>
-                                    <p class="vote">
-                                        <strong>Chứng chỉ IOS</strong>
-                                        !
-                                    </p>
-                                    <div class="form-group">
-                                        <label for="soluong">Số lượng đặt mua:</label>
-                                        <input type="number" class="form-control" id="soluong" name="soluong">
-                                    </div>
-                                    <div class="action">
-                                        <button type="button" class="btn btn-outline-danger">
+                                <p class="product-description">Mô tả: @Model.Description</p>
+                                <p class="product-description">Nơi sản xuất: @Model.Munafacturer</p>
+                                <h4 class="price">Số lượng trong kho: @Model.QuantityStock <span></span></h4>
+                                <p class="vote">
+                                    <strong>Lưu ý: @Model.Note</strong>
+
+                                </p>
+                                <div class="form-group col-md-4">
+                                    <label for="soluong">Số lượng đặt:</label>
+                                    <input type="number" class="form-control" id="soluong" name="soluong">
+                                </div>
+                                <div class="action col-md-4" style="margin-bottom:30px">
+                                    @using (Html.BeginForm("AddToCart", "Cart", FormMethod.Post))
+                                    {
+                                        @Html.Hidden("id", Model.ID)
+                                        <button type="submit" class="btn btn-outline-danger">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
                                                 <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"></path>
                                             </svg>
-                                            Wishlist
+                                            Đặt lịch
                                         </button>
-                                    </div>
+                                    }
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>

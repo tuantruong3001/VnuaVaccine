@@ -1,9 +1,6 @@
 ﻿using DAL.EF;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL.Dao
 {
@@ -13,9 +10,9 @@ namespace DAL.Dao
         public StaffDAO()
         {
             db = new VaccineDbContext();
-        }
+        }       
 
-        public bool Update(MedicalStaff staff)
+        public bool UpdateProfile(MedicalStaff staff)
         {
             try
             {
@@ -23,10 +20,11 @@ namespace DAL.Dao
                 if (patientUpdate != null)
                 {
                     patientUpdate.Sex = staff.Sex;
+                    patientUpdate.Birthday = staff.Birthday;
                     patientUpdate.PhoneNumber = staff.PhoneNumber;
                     patientUpdate.Name = staff.Name;
                     patientUpdate.Address = staff.Address;
-                    patientUpdate.Age = staff.Age;
+                    patientUpdate.Age = CalculateAge((DateTime)staff.Birthday);
                     db.SaveChanges();
                     return true;
                 }
@@ -36,6 +34,16 @@ namespace DAL.Dao
             {
                 return false;
             }
+        }
+        private int CalculateAge(DateTime birthday)
+        {
+            var today = DateTime.Today;
+            var age = today.Year - birthday.Year;
+            if (birthday > today.AddYears(-age))
+            {
+                age--;
+            }
+            return age;
         }
     }
 }

@@ -2,11 +2,7 @@
 using PagedList;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Runtime.Remoting.Contexts;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL.Dao
 {
@@ -35,7 +31,7 @@ namespace DAL.Dao
                     patientUpdate.Name = patient.Name;
                     patientUpdate.Birthday = patient.Birthday;
                     patientUpdate.Address = patient.Address;
-                    patientUpdate.Age = patient.Age;
+                    patientUpdate.Age = CalculateAge((DateTime)patient.Birthday);
                     db.SaveChanges();
                     return true;
                 }
@@ -45,7 +41,7 @@ namespace DAL.Dao
             {
                 return false;
             }
-        }
+        }      
         public bool Update(Patient patient)
         {
             try
@@ -58,7 +54,8 @@ namespace DAL.Dao
                     patientUpdate.Name = patient.Name;
                     patientUpdate.Birthday = patient.Birthday;
                     patientUpdate.Address = patient.Address;
-                    patientUpdate.Age = patient.Age;
+                    patientUpdate.Age = CalculateAge((DateTime)patient.Birthday); // Calculate the age based on the provided birthday
+                    patientUpdate.UpdateAt = patient.UpdateAt;
                     db.SaveChanges();
                     return true;
                 }
@@ -69,11 +66,44 @@ namespace DAL.Dao
                 return false;
             }
         }
+        
+        private int CalculateAge(DateTime birthday)
+        {
+            var today = DateTime.Today;
+            var age = today.Year - birthday.Year;
+            if (birthday > today.AddYears(-age))
+            {
+                age--;
+            }
+            return age;
+        }
+
         public Patient GetByID(int id)
         {
             return db.Patients.Find(id);
         }
-        public IEnumerable<Patient> ListAllPaging(string searchString, int page, int pageSize)
+        public bool DeleteByUserId(int userId)
+        {
+            try
+            {
+                // Lấy danh sách bệnh nhân có IdUser là userId
+                List<Patient> patients = db.Patients.Where(p => p.IdUserName == userId).ToList();
+
+                // Xoá các bệnh nhân tương ứng
+                db.Patients.RemoveRange(patients);
+
+                // Lưu thay đổi vào cơ sở dữ liệu
+                db.SaveChanges();
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public IEnumerable<Patient> ListPatientPaging(string searchString, int page, int pageSize)
         {
 
             IQueryable<Patient> model = db.Patients;
@@ -86,6 +116,10 @@ namespace DAL.Dao
                 }
             }
             return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
+        }
+        public Patient ViewDetail(int id)
+        {
+            return db.Patients.Find(id);
         }
     }
 }

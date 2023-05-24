@@ -39,6 +39,14 @@
         <hr class="sidebar-divider  my-0">
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item active">
+            <a class="nav-link" href="/Admin/UserData/Index">
+                <i class="fas fa-fw fa-user"></i>
+                <span>List User</span>
+            </a>
+        </li>
+        <hr class="sidebar-divider  my-0">
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item active">
             <a class="nav-link" href="/Admin/StaffData/Index">
                 <i class="fas fa-fw fa-user"></i>
                 <span>List Staff</span>
@@ -48,7 +56,7 @@
         <hr class="sidebar-divider  my-0">
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item active">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="/Admin/VaccineSchedule/Index">
                 <i class="fas fa-fw fa-comment"></i>
                 <span>List Schedule</span>
             </a>
@@ -64,14 +72,7 @@
         </li>
 
         <!-- Nav Item - Charts -->
-        <hr class="sidebar-divider  my-0">
-        <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item active">
-            <a class="nav-link" href="/Admin/HomeAdmin">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>My Profile</span>
-            </a>
-        </li>
+       
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
 
@@ -81,6 +82,13 @@
         </div>
 
     </ul>
+}
+@{
+    var session = (VnuaVaccine.Common.UserLogin)Session[VnuaVaccine.Common.SessionConstants.USER_SESSION];
+    if (session == null || session.RoleId == 1)
+    {
+        Response.Redirect("~/Home/Index");
+    }
 }
 @section bodymain{
 
@@ -134,7 +142,7 @@
                                 {
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.ProductionDate, new { htmlAttribute = new { @class = "form-control form-control-user" } })
-                                        @Html.TextBoxFor(model => model.ProductionDate, "{0:dd/MM/yyyy}", new { @type = "datetime", @class = "form-control form-control-user" })
+                                        @Html.TextBoxFor(model => model.ProductionDate, "{0:dd/MM/yyyy}", new { @type = "date", @class = "form-control form-control-user" })
                                     </div>
                                 }
                                 if (Model.ExpirationData == null)
@@ -148,7 +156,7 @@
                                 {
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.ExpirationData, new { htmlAttribute = new { @class = "form-control form-control-user" } })
-                                        @Html.TextBoxFor(model => model.ExpirationData, "{0:dd/MM/yyyy}", new { @type = "datetime", @class = "form-control form-control-user" })
+                                        @Html.TextBoxFor(model => model.ExpirationData, "{0:dd/MM/yyyy}", new { @type = "date", @class = "form-control form-control-user" })
                                     </div>
                                 }
                                 <div class="form-group">
@@ -161,14 +169,22 @@
                                         </div>
                                     </div>
                                 </div>
-                                <a>
-                                    <input style="background-color: #36b9cc" type="submit" value="Update" class="btn btn-primary btn-user btn-block" />
-                                </a>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <a href="/Admin/VaccineData/Index" class="btn btn-primary btn-user btn-block icon">
+                                            Back
+                                        </a>
+                                    </div>
+                                    <div class="col-md-8"></div>
+                                    <div class="col-md-2">
+                                        <a>
+                                            <input style="background-color: #36b9cc" type="submit" value="Update" class="btn btn-primary btn-user btn-block" />
+                                        </a>
+                                    </div>
+                                </div>
                             }
                             <hr>
-                            <a href="/Admin/VaccineData/Index" class="btn btn-primary btn-user btn-block icon">
-                                Back to list
-                            </a>
+                           
                         </div>
                     </div>
                 </div>
