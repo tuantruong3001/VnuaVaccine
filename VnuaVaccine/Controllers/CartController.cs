@@ -43,20 +43,34 @@ namespace VnuaVaccine.Controllers
             }
             #endregion
 
-            var vaccine = new VaccineDAO().ViewDetail(idVaccine);
-            var cart = Session[CartSession];
-            if (cart != null)
+            try
             {
-                var list = (List<CartItem>)cart;
-                if (list.Exists(x => x.Vaccine.ID == idVaccine))
+                var vaccine = new VaccineDAO().ViewDetail(idVaccine);
+                var cart = Session[CartSession];
+                if (cart != null)
                 {
-                    foreach (var item in list)
+                    var list = (List<CartItem>)cart;
+                    if (list.Exists(x => x.Vaccine.ID == idVaccine))
                     {
-                        if (item.Vaccine.ID == idVaccine)
+                        foreach (var item in list)
                         {
-                            item.Quantity += quantity;
+                            if (item.Vaccine.ID == idVaccine)
+                            {
+                                item.Quantity += quantity;
+                            }
                         }
                     }
+                    else
+                    {
+                        var item = new CartItem();
+                        item.IdPatient = user.ID;
+                        item.Vaccine = vaccine;
+                        item.Quantity = quantity;
+                        item.Status = 0;
+                        item.CreateAt = DateTime.Now;
+                        list.Add(item);
+                    }
+                    Session[CartSession] = list;
                 }
                 else
                 {
@@ -64,62 +78,72 @@ namespace VnuaVaccine.Controllers
                     item.IdPatient = user.ID;
                     item.Vaccine = vaccine;
                     item.Quantity = quantity;
-                    item.Status = 0;
                     item.CreateAt = DateTime.Now;
+                    item.Status = 0;
+                    var list = new List<CartItem>();
                     list.Add(item);
+                    Session[CartSession] = list;
                 }
-                Session[CartSession] = list;
+                return RedirectToAction("Index");
             }
-            else
+            catch (Exception)
             {
-                var item = new CartItem();
-                item.IdPatient = user.ID;
-                item.Vaccine = vaccine;
-                item.Quantity = quantity;
-                item.CreateAt = DateTime.Now;
-                item.Status = 0;
-                var list = new List<CartItem>();  
-                list.Add(item);  
-                Session[CartSession] = list; 
+                ModelState.AddModelError("", "Đã có lỗi xảy ra, vui lòng thử lại sau!");
+                return View("Index");
             }
-            return RedirectToAction("Index");
         }
-
 
         public ActionResult RemoveFromCart(int id)
         {
-            var cart = (List<CartItem>)Session[CartSession];
-            if (cart != null)
+            try
             {
-                var item = cart.FirstOrDefault(i => i.ID == id);
-                if (item != null)
+                var cart = (List<CartItem>)Session[CartSession];
+                if (cart != null)
                 {
-                    cart.Remove(item);
+                    var item = cart.FirstOrDefault(i => i.ID == id);
+                    if (item != null)
+                    {
+                        cart.Remove(item);
+                    }
                 }
+                Session[CartSession] = cart;
+                return RedirectToAction("Index");
             }
-            Session[CartSession] = cart;
-            return RedirectToAction("Index");
-        }
-       
-        public ActionResult SaveSchedule(CartItem cartItem)
-        {
-            var cart = (List<CartItem>)Session[CartSession];
-            if (cart != null && cart.Count > 0)
+            catch (Exception)
             {
-                var vaccineScheduleDao = new ScheduleDAO();
-                var schedule = new VaccinationSchedule
-                {
-                    Quantity = cartItem.Quantity,
-                    IdPatient = cartItem.IdPatient,
-                    IdVaccine = cartItem.Vaccine.ID,
-                    Status = 0,
-                    CreateAt = DateTime.Now,
-                };
-                vaccineScheduleDao.Insert(schedule);
-                Session[CartSession] = null;
+                ModelState.AddModelError("", "Đã có lỗi xảy ra, vui lòng thử lại sau!");
+                return View("Index");
             }
 
-            return RedirectToAction("SaveSuccess");
+        }
+
+        public ActionResult SaveSchedule(CartItem cartItem)
+        {
+            try
+            {
+                var cart = (List<CartItem>)Session[CartSession];
+                if (cart != null && cart.Count > 0)
+                {
+                    var vaccineScheduleDao = new ScheduleDAO();
+                    var schedule = new VaccinationSchedule
+                    {
+                        Quantity = cartItem.Quantity,
+                        IdPatient = cartItem.IdPatient,
+                        IdVaccine = cartItem.Vaccine.ID,
+                        Status = 0,
+                        CreateAt = DateTime.Now,
+                    };
+                    vaccineScheduleDao.Insert(schedule);
+                    Session[CartSession] = null;
+                }
+                return RedirectToAction("SaveSuccess");
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("", "Đã có lỗi xảy ra, vui lòng thử lại sau!");
+                return View("Index");
+            }
+
         }
 
         public ActionResult SaveSuccess()

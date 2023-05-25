@@ -21,25 +21,32 @@ namespace DAL.Dao
             return newSchedule.ID;
         }
 
-        public IEnumerable<VaccinationSchedule> ListAllPaging(int page, int pageSize)
+        public IPagedList<VaccinationSchedule> ListAllPaging(string searchString, int page, int pageSize)
         {
-            IQueryable<VaccinationSchedule> model = db.VaccinationSchedules;           
+            IQueryable<VaccinationSchedule> model = db.VaccinationSchedules;
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                model = model.Where(x => x.Patient.Name.Contains(searchString) || x.Vaccine.NameVaccine.Contains(searchString));
+                if (model == null)
+                {
+                    return null;
+                }
+            }
             return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
         }
-
         public VaccinationSchedule GetByID(int id)
         {
             return db.VaccinationSchedules.Find(id);
         }
-        /*public Patient GetPatientName(int patientId)
+        public Patient GetPatientName(int patientId)
         {
-            return db.Set<Patient>().FirstOrDefault(p => p.ID == patientId);
+            return db.Patients.FirstOrDefault(v => v.ID == patientId);
         }
 
         public Vaccine GetVaccineName(int vaccineId)
         {
-            return db.Set<Vaccine>().FirstOrDefault(v => v.ID == vaccineId);
-        }*/
+            return db.Vaccines.FirstOrDefault(v => v.ID == vaccineId);
+        }
 
     }
 }
