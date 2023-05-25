@@ -15,7 +15,7 @@ namespace DAL.EF
             VaccinationManagements = new HashSet<VaccinationManagement>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        //[DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ID { get; set; }
 
         [StringLength(50)]
@@ -28,6 +28,7 @@ namespace DAL.EF
 
         public DateTime? Birthday { get; set; }
         public DateTime? CreateAt { get; set; }
+        public DateTime? UpdateAt { get; set; }
 
         [StringLength(150)]
         public string Address { get; set; }

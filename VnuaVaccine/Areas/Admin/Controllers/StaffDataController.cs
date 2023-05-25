@@ -5,20 +5,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Profile;
 using VnuaVaccine.Areas.Admin.Models;
-using VnuaVaccine.Common;
 
 namespace VnuaVaccine.Areas.Admin.Controllers
 {
-    public class PatientDataController : BaseController
+    public class StaffDataController : Controller
     {
-        private readonly PatientDAO _patientDao = new PatientDAO();
+        // GET: Admin/Staff
+        private readonly StaffDAO _staffDao = new StaffDAO();
 
         // GET: Admin/PatientData
         public ActionResult Index(string searchString, int page = 1, int pageSize = 10)
         {
-            var model = _patientDao.ListPatientPaging(searchString, page, pageSize);
+            var model = _staffDao.ListPatientPaging(searchString, page, pageSize);
             ViewBag.SearchString = searchString;
             return View(model);
         }
@@ -28,7 +27,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Create(PatientModel createModel, int isSex)
+        public ActionResult Create(InforStaffModel createModel, int isSex)
         {
             if (!ModelState.IsValid)
             {
@@ -36,19 +35,19 @@ namespace VnuaVaccine.Areas.Admin.Controllers
             }
             try
             {
-                var patientDao = new PatientDAO();
-                var patient = new Patient
+                var patientDao = new StaffDAO();
+                var patient = new MedicalStaff
                 {
                     Name = createModel.Name,
                     Sex = isSex,
                     Address = createModel.Address,
-                    PhoneNumber = createModel.PhoneNumber,
+                    PhoneNumber = (int)createModel.PhoneNumber,
                     Birthday = createModel.Birthday,
                     CreateAt = DateTime.Now,
                 };
                 patientDao.Insert(patient);
-                TempData["UserMessage"] = "Thêm mới thông tin bệnh nhân thành công";
-                return RedirectToAction("Index", "PatientData");
+                TempData["UserMessage"] = "Thêm mới thông tin nhân viên thành công";
+                return RedirectToAction("Index", "StaffData");
             }
             catch (Exception ex)
             {
@@ -59,10 +58,10 @@ namespace VnuaVaccine.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var patientDao = new PatientDAO();
+            var patientDao = new StaffDAO();
             var patient = patientDao.GetByID(id);
 
-            var patientModel = new PatientModel
+            var patientModel = new InforStaffModel
             {
                 Name = patient.Name,
                 Sex = patient.Sex,
@@ -78,20 +77,20 @@ namespace VnuaVaccine.Areas.Admin.Controllers
             return View(patientModel);
         }
         [HttpPost]
-        public ActionResult Edit(PatientModel patientModel)
+        public ActionResult Edit(InforStaffModel patientModel)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var patientDao = new PatientDAO();
-                    var patient = new Patient
+                    var patientDao = new StaffDAO();
+                    var patient = new MedicalStaff
                     {
-                        ID = (int)patientModel.Id,
+                        ID = (int)patientModel.ID,
                         Name = patientModel.Name,
-                        Sex = patientModel.Sex,
+                        Sex = (int)patientModel.Sex,
                         Address = patientModel.Address,
-                        PhoneNumber = patientModel.PhoneNumber,
+                        PhoneNumber = (int)patientModel.PhoneNumber,
                         Birthday = patientModel.Birthday,
                         UpdateAt = DateTime.Now,
                     };
@@ -102,8 +101,8 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                     };
 
                     patientDao.Update(patient);
-                    TempData["EditUserMessage"] = "Sửa thông tin bệnh nhân thành công";
-                    return RedirectToAction("Index", "PatientData");
+                    TempData["EditUserMessage"] = "Sửa thông tin nhân viên thành công";
+                    return RedirectToAction("Index", "StaffData");
                 }
                 catch (Exception ex)
                 {
@@ -118,19 +117,19 @@ namespace VnuaVaccine.Areas.Admin.Controllers
         {
             try
             {
-                var patientDao = new PatientDAO();
+                var patientDao = new StaffDAO();
                 var patient = patientDao.GetByID(id);
 
                 //list infor patient
                 var db = new VaccineDbContext();
-                var profileModel = new InforPatientModel();
+                var profileModel = new InforStaffModel();
 
                 if (patient.IdUserName != null)
                 {
-                    profileModel = db.Patients
+                    profileModel = db.MedicalStaffs
                         .Where(getPatient => getPatient.IdUserName == patient.IdUserName)
-                        .Join(db.Users, getPatient => getPatient.IdUserName, getStaff => getStaff.ID, (getPatient, getStaff) => 
-                        new InforPatientModel
+                        .Join(db.Users, getPatient => getPatient.IdUserName, getStaff => getStaff.ID, (getPatient, getStaff) =>
+                        new InforStaffModel
                         {
                             ID = getPatient.ID,
                             Name = getPatient.Name,
@@ -147,9 +146,9 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                 }
                 else
                 {
-                    profileModel = db.Patients
+                    profileModel = db.MedicalStaffs
                         .Where(getPatient => getPatient.ID == id)
-                        .Select(getPatient => new InforPatientModel
+                        .Select(getPatient => new InforStaffModel
                         {
                             ID = getPatient.ID,
                             Name = getPatient.Name,
@@ -173,6 +172,5 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                 return View();
             }
         }
-
     }
 }

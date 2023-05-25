@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
-using System.Web;
 
 namespace VnuaVaccine.Common
 {
@@ -12,7 +8,6 @@ namespace VnuaVaccine.Common
         public static string MD5Hash(string text)
         {
             MD5 md5 = new MD5CryptoServiceProvider();
-
             md5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(text));
 
             byte[] result = md5.Hash;

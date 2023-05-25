@@ -146,11 +146,13 @@
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\PatientDataController.cs" />
     <Compile Include="Areas\Admin\Controllers\RegisterController.cs" />
+    <Compile Include="Areas\Admin\Controllers\StaffDataController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserDataController.cs" />
     <Compile Include="Areas\Admin\Controllers\VaccineDataController.cs" />
     <Compile Include="Areas\Admin\Controllers\VaccineScheduleController.cs" />
     <Compile Include="Areas\Admin\Models\InforPatientModel.cs" />
     <Compile Include="Areas\Admin\Models\InforScheduleModel.cs" />
+    <Compile Include="Areas\Admin\Models\InforStaffModel.cs" />
     <Compile Include="Areas\Admin\Models\LoginModel.cs" />
     <Compile Include="Areas\Admin\Models\PatientModel.cs" />
     <Compile Include="Areas\Admin\Models\ProfileModel.cs" />
@@ -2748,7 +2750,6 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
-    <Content Include="Content\PagedList.css" />
     <Content Include="Content\Style404.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -3087,6 +3088,10 @@
     <Content Include="Areas\Admin\Views\UserData\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\PatientData\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\VaccineSchedule\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\StaffData\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\StaffData\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\StaffData\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\StaffData\Detail.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -3122,6 +3127,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Views\Base\" />
+    <Folder Include="Areas\Admin\Views\Staff\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
