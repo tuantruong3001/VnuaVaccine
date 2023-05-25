@@ -1,17 +1,8 @@
-﻿using DAL.EF;
-using DAL.Dao;
+﻿using DAL.Dao;
 using System;
-using System.Collections.Generic;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Reflection;
-using System.Web;
 using System.Web.Mvc;
 using VnuaVaccine.Areas.Admin.Models;
 using VnuaVaccine.Common;
-using System.Web.Security;
-using System.Security.Principal;
-using System.Web.UI.WebControls;
 
 namespace VnuaVaccine.Areas.Admin.Controllers
 {

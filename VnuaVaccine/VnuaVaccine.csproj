@@ -150,6 +150,7 @@
     <Compile Include="Areas\Admin\Controllers\UserDataController.cs" />
     <Compile Include="Areas\Admin\Controllers\VaccineDataController.cs" />
     <Compile Include="Areas\Admin\Controllers\VaccineScheduleController.cs" />
+    <Compile Include="Areas\Admin\Controllers\WishlistController.cs" />
     <Compile Include="Areas\Admin\Models\InforPatientModel.cs" />
     <Compile Include="Areas\Admin\Models\InforScheduleModel.cs" />
     <Compile Include="Areas\Admin\Models\InforStaffModel.cs" />
@@ -3092,6 +3093,8 @@
     <Content Include="Areas\Admin\Views\StaffData\Create.cshtml" />
     <Content Include="Areas\Admin\Views\StaffData\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\StaffData\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\VaccineSchedule\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Wishlist\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -3127,7 +3130,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Views\Base\" />
-    <Folder Include="Areas\Admin\Views\Staff\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

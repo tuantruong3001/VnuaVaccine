@@ -9,7 +9,7 @@ namespace DAL.EF
     [Table("Appointment")]
     public partial class Appointment
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        //[DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ID { get; set; }
 
         public int? IdPatient { get; set; }
