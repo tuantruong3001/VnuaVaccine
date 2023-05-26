@@ -44,29 +44,29 @@
                 @using (Html.BeginForm("Register", "Register", FormMethod.Post))
                 {
                     <span class="login100-form-title p-b-20">
-                        Register
+                        Đăng ký
                     </span>
                     @Html.ValidationSummary(false, "", new { @class = "text-danger" });
                     <div asp-validation-summary="ModelOnly"></div>
                     <div class="wrap-input100 validate-input m-b-23">
-                        <span class="label-input100" style="">Username</span>
-                        @Html.TextBoxFor(model => model.UserName, new { @class = "input100", @autofocus = "autofocus", @placeholder = "Type your username" })
+                        <span class="label-input100" style="">Tài khoản</span>
+                        @Html.TextBoxFor(model => model.UserName, new { @class = "input100", @autofocus = "autofocus", @placeholder = "Nhập tên tài khoản" })
                         <span class="focus-input100" data-symbol="&#xf206;"></span>
                     </div>
                     <div class="wrap-input100 validate-input m-b-23">
                         <span class="label-input100">Email</span>
-                        @Html.TextBoxFor(model => model.Email, new { @class = "input100", @placeholder = "Type your email" })
+                        @Html.TextBoxFor(model => model.Email, new { @class = "input100", @placeholder = "Nhập email" })
                         <span class="focus-input100" data-symbol="&#xf206;"></span>
                     </div>
                     <div class="wrap-input100 validate-input m-b-23">
-                        <span class="label-input100">Password</span>
-                        @Html.TextBoxFor(model => model.Password, new { @class = "input100", @type = "password", @placeholder = "Type your password" })
+                        <span class="label-input100">Mật khẩu</span>
+                        @Html.TextBoxFor(model => model.Password, new { @class = "input100", @type = "password", @placeholder = "Nhập mật khẩu" })
                         <span class="focus-input100" data-symbol="&#xf190;"></span>
                     </div>
 
                     <div class="wrap-input100 validate-input m-b-23">
-                        <span class="label-input100">Confirm Password</span>
-                        @Html.TextBoxFor(model => model.ConfirmPassword, new { @class = "input100", @type = "password", @placeholder = "Confirm your password" })
+                        <span class="label-input100">Xác nhận mật khẩu</span>
+                        @Html.TextBoxFor(model => model.ConfirmPassword, new { @class = "input100", @type = "password", @placeholder = "Nhập lại mật khẩu" })
                         <span class="focus-input100" data-symbol="&#xf190;"></span>
                     </div>
 
@@ -76,13 +76,13 @@
                         <div class="wrap-login100-form-btn">
                             <div class="login100-form-bgbtn"></div>
                             <button id="registerSubmit" class="login100-form-btn">
-                                Register
+                                Đăng ký
                             </button>
                         </div>
                     </div>
                     <div class="flex-col-c p-t-20">
                         <span class="txt1 p-b-1" style="font-size:16px;">
-                            Already have an account? <a style="font-size:18px;color: #4e73df; " href="/Admin/Login">Login</a>
+                            Đã có tài khoản? <a style="font-size:18px;color: #4e73df; " href="/Admin/Login">Đăng nhập</a>
                         </span>
 
                     </div>

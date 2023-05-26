@@ -41,6 +41,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                 {
                     Name = createModel.Name,
                     Sex = isSex,
+                    NameParent = createModel.NameParent,
                     Address = createModel.Address,
                     PhoneNumber = createModel.PhoneNumber,
                     Birthday = createModel.Birthday,
@@ -66,6 +67,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
             {
                 Name = patient.Name,
                 Sex = patient.Sex,
+                NameParent = patient.NameParent,
                 Address = patient.Address,
                 PhoneNumber = patient.PhoneNumber,
                 Birthday = patient.Birthday,
@@ -89,6 +91,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                     {
                         ID = (int)patientModel.Id,
                         Name = patientModel.Name,
+                        NameParent= patientModel.NameParent,
                         Sex = patientModel.Sex,
                         Address = patientModel.Address,
                         PhoneNumber = patientModel.PhoneNumber,
@@ -134,6 +137,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                         {
                             ID = getPatient.ID,
                             Name = getPatient.Name,
+                            NameParent = getPatient.NameParent,
                             Sex = getPatient.Sex,
                             Address = getPatient.Address,
                             Birthday = getPatient.Birthday,
@@ -153,6 +157,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                         {
                             ID = getPatient.ID,
                             Name = getPatient.Name,
+                            NameParent = getPatient.NameParent,
                             Sex = getPatient.Sex,
                             Address = getPatient.Address,
                             Birthday = getPatient.Birthday,

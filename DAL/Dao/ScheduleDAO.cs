@@ -1,9 +1,7 @@
 ﻿using DAL.EF;
 using PagedList;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-
 
 namespace DAL.Dao
 {
