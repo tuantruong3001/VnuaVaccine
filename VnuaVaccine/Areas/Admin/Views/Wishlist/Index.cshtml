@@ -72,7 +72,7 @@
 }
 @{
     var session = (VnuaVaccine.Common.UserLogin)Session[VnuaVaccine.Common.SessionConstants.USER_SESSION];
-    if (session == null || session.RoleId == 1)
+    if (session == null || session.RoleId == 0)
     {
         Response.Redirect("~/Home/Index");
     }
@@ -124,7 +124,7 @@
                     <h2 class="m-0 font-weight-bold text-primary" style="text-align:center;">Danh sách lịch tiêm</h2>
                 </div>
                 <div class="card-body">
-                    @using (Html.BeginForm("Index", "VaccineSchedule", FormMethod.Get))
+                    @using (Html.BeginForm("Index", "Wistlist", FormMethod.Get))
                     {
                         <div class="form-group">
                             @Html.Label("Search:", new { @class = "control-label" })
@@ -139,13 +139,12 @@
                             <table style="text-align:center" class="table table-striped table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th>Tên bệnh nhân</th>
+                                        <th>Tên</th>
                                         <th>Số lượng</th>
                                         <th>Tên vaccine</th>
                                         <th>Trạng thái</th>
                                         <th>Ngày tiêm</th>
                                         <th>Ngày đặt lịch</th>
-                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -169,36 +168,21 @@
                                                         @(item.Status == 0 ? "Chờ xác nhận" : (item.Status == 1 ? "Đã xác nhận" : "Đã từ chối"))
                                                     </a>
                                                 </td>
-
                                                 <td>@(item.Time == null ? "" : item.Time.Value.ToString("dd/MM/yyyy"))</td>
                                                 <td>@(item.CreateAt == null ? "" : item.CreateAt.Value.ToString("dd/MM/yyyy"))</td>
-
-                                                <td>
-                                                    <a class="btn btn-success" style="text-decoration:none; " href="/Admin/VaccineSchedule/Edit/@item.ID"><i class="fa fa-edit"></i> Edit</a>
-                                                    <a style="text-decoration: none;" href="@Url.Action("Delete", "VaccineSchedule", new { id = item.ID })" class="btn btn-danger" onclick="return confirm('Xác nhận xoá?')"><i class="fas fa-trash"></i> Delete</a>
-                                                    @*<a class="btn btn-info" style="text-decoration:none; " href="/Admin/VaccineSchedule/Detail/@item.ID"><i class="bi bi-info-circle"></i> Detail</a>*@
-                                                </td>
                                             </tr>
                                         }
                                     }
                                 </tbody>
-
                             </table>
-
                             <div class="pagination">
                                 @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchString = ViewBag.SearchString }), new PagedListRenderOptions { Display = PagedListDisplayMode.IfNeeded })
                             </div>
-
                         </div>
-
                         <div class="input-group-append">
-                            @*<a class="btn btn-primary" href="/Admin/VaccineSchedule/Create"><i class="bi-plus-circle"></i> Add Schedule</a>*@
                         </div>
                     </div>
-
                 </div>
-
-
             </div>
         </div>
     </div>

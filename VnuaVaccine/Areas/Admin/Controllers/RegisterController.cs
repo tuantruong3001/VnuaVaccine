@@ -31,14 +31,14 @@ namespace VnuaVaccine.Areas.Admin.Controllers
            
             if (registerModel.ConfirmPassword != registerModel.Password)
             {
-                ModelState.AddModelError("", "ConfirmPassword phải trùng với Password");
+                ModelState.AddModelError("", "Xác nhận mật khẩu phải trùng mới mật khẩu!");
                 return View("Index");
             }
 
             switch (result)
             {
                 case -1:
-                    ModelState.AddModelError("", "UserName đã tồn tại!");
+                    ModelState.AddModelError("", "Tài khoản đã tồn tại!");
                     break;
                 case 0:
                     ModelState.AddModelError("", "Email đã tồn tại!");

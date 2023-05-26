@@ -17,7 +17,7 @@
         <li class="nav-item active">
             <a class="nav-link" href="/Home/Index">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>HomePage</span>
+                <span>Trang chủ</span>
             </a>
         </li>
 
@@ -27,7 +27,7 @@
         <li class="nav-item active">
             <a class="nav-link" href="/Admin/PatientData/Index">
                 <i class="fas fa-fw fa-user"></i>
-                <span>List Patient</span>
+                <span>Danh sách bệnh nhi</span>
             </a>
         </li>
         <hr class="sidebar-divider  my-0">
@@ -35,7 +35,7 @@
         <li class="nav-item active">
             <a class="nav-link" href="/Admin/UserData/Index">
                 <i class="fas fa-fw fa-user"></i>
-                <span>List User</span>
+                <span>Danh sách tài khoản</span>
             </a>
         </li>
         <hr class="sidebar-divider  my-0">
@@ -43,7 +43,7 @@
         <li class="nav-item active">
             <a class="nav-link" href="/Admin/StaffData/Index">
                 <i class="fas fa-fw fa-user"></i>
-                <span>List Staff</span>
+                <span>Danh sách nhân viên</span>
             </a>
         </li>
         <!-- Nav Item - Utilities Collapse Menu -->
@@ -52,7 +52,7 @@
         <li class="nav-item active">
             <a class="nav-link" href="/Admin/VaccineSchedule/Index">
                 <i class="fas fa-fw fa-comment"></i>
-                <span>List Schedule</span>
+                <span>Lịch tiêm</span>
             </a>
         </li>
         <!-- Divider -->
@@ -61,14 +61,13 @@
         <li class="nav-item active">
             <a class="nav-link" href="/Admin/VaccineData/Index">
                 <i class="fas fa-fw fa-folder"></i>
-                <span>List Vaccine</span>
+                <span>Danh sách vaccine</span>
             </a>
         </li>
 
         <!-- Nav Item - Charts -->
         <hr class="sidebar-divider  my-0">
         <!-- Nav Item - Pages Collapse Menu -->
-
         <!-- Sidebar Toggler (Sidebar) -->
         <div class="text-center d-none d-md-inline">
             <button class="rounded-circle border-0" id="sidebarToggle"></button>
@@ -76,7 +75,7 @@
 
     </ul>
 }
-<h2>Thông tin bệnh nhân</h2>
+<h2>Thông tin bệnh nhi</h2>
 @Html.AntiForgeryToken()
 <div class="col-lg-12">
     <div class="panel panel-default">
@@ -87,35 +86,40 @@
                 {
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="inputEmail4">Name</label>
+                            <label for="inputEmail4">Tên bệnh nhi</label>
                             <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.Name" />
                             @Html.HiddenFor(model => model.Name)
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="inputEmail4">Sex</label>
+                            <label for="inputEmail4">Giới tính</label>
                             <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@(Model.Sex == 0 ? "Nữ" : "Nam")" />
                             @Html.HiddenFor(model => model.Sex)
                         </div>
 
                     </div>
                     <div class="form-group">
-                        <label for="inputEmail4">Address</label>
+                        <label for="inputEmail4">Tên cha mẹ bệnh nhi</label>
+                        <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.NameParent" />
+                        @Html.HiddenFor(model => model.NameParent)
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail4">Địa chỉ</label>
                         <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.Address" />
                         @Html.HiddenFor(model => model.Address)
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-5">
-                            <label for="inputEmail4">Birthday</label>
+                            <label for="inputEmail4">Sinh nhật</label>
                             <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.Birthday" />
                             @Html.HiddenFor(model => model.Birthday)
                         </div>
                         <div class="form-group col-md-5">
-                            <label for="inputEmail4">PhoneNumber</label>
+                            <label for="inputEmail4">Số điện thoại</label>
                             <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.PhoneNumber" />
                             @Html.HiddenFor(model => model.PhoneNumber)
                         </div>
                         <div class="form-group col-md-2">
-                            <label for="inputEmail4">Age</label>
+                            <label for="inputEmail4">Tuổi</label>
                             <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.Age" />
                             @Html.HiddenFor(model => model.Age)
                         </div>
@@ -123,19 +127,19 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="inputEmail4">CreateAt</label>
+                            <label for="inputEmail4">Ngày tạo lịch</label>
                             <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.CreateAt" />
                             @Html.HiddenFor(model => model.Name)
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="inputEmail4">UpdateAt</label>
+                            <label for="inputEmail4">Ngày cập nhật</label>
                             <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.UpdateAt" />
                             @Html.HiddenFor(model => model.UpdateAt)
                         </div>
 
                     </div>
                     <div class="form-group">
-                        <label for="inputEmail4">Email</label>
+                        <label for="inputEmail4">Địa chỉ email</label>
                         <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.Email" />
                         @Html.HiddenFor(model => model.Email)
                     </div>

@@ -1,4 +1,4 @@
-﻿@model VnuaVaccine.Areas.Admin.Models.VaccineModel
+﻿@model VnuaVaccine.Areas.Admin.Models.InforScheduleModel
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -101,75 +101,71 @@
                             <div class="card-header py-3">
                                 <h2 class="m-0 font-weight-bold text-primary" style="text-align:center;">Update Vaccine</h2>
                             </div>
-                            @using (Html.BeginForm("Edit", "VaccineData", FormMethod.Post))
+                            @using (Html.BeginForm("Edit", "VaccineSchedule", FormMethod.Post))
                             {
                                 @Html.ValidationSummary(false, "", new { @class = "text-danger" });
                                 <div class="form-group">
-                                    NameVaccine
-                                    @Html.TextBoxFor(model => model.NameVaccine, new { @class = "form-control form-control-user", @autofocus = "autofocus", @placeholder = "Type NameVaccine" })
+                                    <label for="inputEmail4">Tên bệnh nhân</label>
+                                    <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.NamePatient" />
+                                    @Html.HiddenFor(model => model.NamePatient)
 
                                 </div>
                                 <div class="form-group">
-                                    Munafacturer
-                                    @Html.TextBoxFor(model => model.Munafacturer, new { @class = "form-control form-control-user", @placeholder = "Type Munafacturer" })
+                                    <label for="inputEmail4">Tên vaccine</label>
+                                    <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.NameVaccine" />
+                                    @Html.HiddenFor(model => model.NameVaccine)
 
                                 </div>
+                                <style>
+                                    .Sex:hover {
+                                        cursor: pointer;
+                                    }
+                                </style>
                                 <div class="form-group">
-                                    Description
-                                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-user", @placeholder = "Type Description" })
-
+                                    <label for="Status">Trạng thái</label>
+                                    <select class="form-control Sex" name="Status">
+                                        @if (ViewBag.SexOptions != null)
+                                        {
+                                            foreach (var option in ViewBag.SexOptions)
+                                            {
+                                                <option value="@option.Value" @(option.Selected ? "selected" : "")>@option.Text</option>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <option value="0"></option>
+                                        }
+                                    </select>
                                 </div>
+
                                 <div class="form-group">
                                     QuantityStock
-                                    @Html.TextBoxFor(model => model.QuantityStock, new { @class = "form-control form-control-user", @placeholder = "Type QuantityStock" })
+                                    @Html.TextBoxFor(model => model.Quantity, new { @class = "form-control form-control-user" })
 
                                 </div>
-                                <div class="form-group">
-                                    Note
-                                    @Html.TextBoxFor(model => model.Note, new { @class = "form-control form-control-user", @placeholder = "Type Note" })
-
-                                </div>
-                                if (Model.ProductionDate == null)
+                                if (Model.Time == null)
                                 {
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.ProductionDate, new { htmlAttribute = new { @class = "form-control form-control-user" } })
-                                        @Html.TextBoxFor(model => model.ProductionDate, "{0:dd/MM/yyyy}", new { @type = "date", @class = "form-control form-control-user" })
+                                        <label for="inputEmail4">Ngày tiêm</label>
+                                        @Html.TextBoxFor(model => model.Time, "{0:dd/MM/yyyy}", new { @type = "date", @class = "form-control form-control-user" })
                                     </div>
                                 }
                                 else
                                 {
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.ProductionDate, new { htmlAttribute = new { @class = "form-control form-control-user" } })
-                                        @Html.TextBoxFor(model => model.ProductionDate, "{0:dd/MM/yyyy}", new { @type = "date", @class = "form-control form-control-user" })
-                                    </div>
-                                }
-                                if (Model.ExpirationData == null)
-                                {
-                                    <div class="form-group">
-                                        @Html.LabelFor(model => model.ExpirationData, new { htmlAttribute = new { @class = "form-control form-control-user" } })
-                                        @Html.TextBoxFor(model => model.ExpirationData, "{0:dd/MM/yyyy}", new { @type = "date", @class = "form-control form-control-user" })
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="form-group">
-                                        @Html.LabelFor(model => model.ExpirationData, new { htmlAttribute = new { @class = "form-control form-control-user" } })
-                                        @Html.TextBoxFor(model => model.ExpirationData, "{0:dd/MM/yyyy}", new { @type = "date", @class = "form-control form-control-user" })
+                                        <label for="inputEmail4">Ngày tiêm</label>
+                                        @Html.TextBoxFor(model => model.Time, "{0:dd/MM/yyyy}", new { @type = "datetime", @class = "form-control form-control-user" })
                                     </div>
                                 }
                                 <div class="form-group">
-                                    <div class="col-md-10">
-                                        Image
-                                        <div class="col-md-10">
-                                            @Html.TextBoxFor(model => model.Path, new { htmlAttributes = new { @class = "form-control" }, id = "txtImage" })
-                                            <a id="btnSelectImage" href="#">Choose Image </a>
+                                    <label for="inputEmail4">Ngày tạo lịch tiêm</label>
+                                    <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.CreateAt" />
+                                    @Html.HiddenFor(model => model.CreateAt)
 
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-2">
-                                        <a href="/Admin/VaccineData/Index" class="btn btn-primary btn-user btn-block icon">
+                                        <a href="/Admin/VaccineSchedule/Index" class="btn btn-primary btn-user btn-block icon">
                                             Back
                                         </a>
                                     </div>

@@ -129,12 +129,13 @@ namespace VnuaVaccine.Controllers
                     {
                         Quantity = cartItem.Quantity,
                         IdPatient = cartItem.IdPatient,
-                        IdVaccine = cartItem.Vaccine.ID,
+                        IdVaccine = cartItem.IdVaccine,
                         Status = 0,
                         CreateAt = DateTime.Now,
                     };
                     vaccineScheduleDao.Insert(schedule);
                     Session[CartSession] = null;
+
                 }
                 return RedirectToAction("SaveSuccess");
             }
@@ -143,7 +144,6 @@ namespace VnuaVaccine.Controllers
                 ModelState.AddModelError("", "Đã có lỗi xảy ra, vui lòng thử lại sau!");
                 return View("Index");
             }
-
         }
 
         public ActionResult SaveSuccess()
