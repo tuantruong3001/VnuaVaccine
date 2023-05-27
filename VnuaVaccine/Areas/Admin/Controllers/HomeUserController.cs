@@ -13,7 +13,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
     public class HomeUserController : BaseController
     {
         // GET: Admin/HomeUser
-        public ActionResult Index()
+         public ActionResult Index()
         {
             var userDao = new UserDAO();
             var model = (UserLogin)Session[SessionConstants.USER_SESSION];
@@ -55,7 +55,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                 if (ModelState.IsValid)
                 {
                     var userDao = new UserDAO();
-                    var patientDao = new PatientDAO();
+                    var staffDao = new PatientDAO();
                     var userByEmail = userDao.GetByEmail(model.Email);
                     model.ID = userByEmail.ID;
                     bool isUserNameAvailable;
@@ -82,28 +82,26 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                             ID = model.ID,
                             Email = model.Email,
                             UserName = model.UserName,
-                            Password = model.Password,
                             Role = model.Role
                         };
                         userDao.UpdateProfile(user);
 
-                        var patient = new Patient
+                        var staff = new Patient
                         {
                             IdUserName = user.ID,
                             Age = (int)model.Age,
-                            Sex = model.Sex,
+                            Sex = (int)model.Sex,
                             Name = model.Name,
-                            PhoneNumber = model.PhoneNumber,
+                            PhoneNumber = (int)model.PhoneNumber,
                             Birthday = model.Birthday,
                             Address = model.Address
                         };
-                        patientDao.UpdateProfile(patient);
+                        staffDao.UpdateProfile(staff);
 
                         TempData["EditUserMessage"] = "Sửa thông tin thành công";
                         return RedirectToAction("Index", "HomeUser");
                     }
-
-                    ModelState.AddModelError("", "UserName đã tồn tại");
+                  
                 }
                 return View(model);
             }

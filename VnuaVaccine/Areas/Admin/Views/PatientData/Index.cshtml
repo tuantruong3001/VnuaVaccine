@@ -100,6 +100,13 @@
                 </button> <h5><i class="icon fas fa-check"></i> @TempData["DeleteUserMessage"]</h5>
             </div>
         }
+        @if (TempData["UpdateAllMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                </button> <h5><i class="icon fas fa-check"></i> @TempData["UpdateAllMessage"]</h5>
+            </div>
+        }
         <div class="panel panel-default">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
@@ -109,8 +116,8 @@
                     @using (Html.BeginForm("Index", "PatientData", FormMethod.Get))
                     {
                         <div class="form-group">
-                            @Html.Label("Search:", new { @class = "control-label" })
-                            @Html.TextBox("searchString", null, new { @class = "form-control", @autofocus = "autofocus", @placeholder = "Search for..." })
+                            @Html.Label("Tìm kiếm:", new { @class = "control-label" })
+                            @Html.TextBox("Nhập từ khoá...", null, new { @class = "form-control", @autofocus = "autofocus", @placeholder = "Search for..." })
                         </div>
 
                         <button type="submit" class="btn btn-primary"><i class="bi-funnel-fill"></i> Tìm kiếm</button>
@@ -127,7 +134,8 @@
                                         <th>Địa chỉ</th>
                                         <th>Số điện thoại</th>
                                         <th>Sinh nhật</th>
-                                        <th>Tuổi</th>
+                                        <th>Tuổi (Năm)</th>
+                                        <th>Tuổi (Tháng)</th>
                                         <th>Ngày tạo hồ sơ</th>
                                         <th>Ngày cập nhật hồ sơ</th>
                                         <th></th>
@@ -152,22 +160,27 @@
                                                 <td>@item.PhoneNumber</td>
                                                 <td>@(item.Birthday == null ? "" : item.Birthday.Value.ToString("dd/MM/yyyy"))</td>
                                                 <td>@item.Age</td>
+                                                <td>@item.AgeMonth</td>
                                                 <td>@(item.CreateAt == null ? "" : item.CreateAt.Value.ToString("dd/MM/yyyy"))</td>
                                                 <td>@(item.UpdateAt == null ? "" : item.UpdateAt.Value.ToString("dd/MM/yyyy"))</td>
                                                 <td>
-                                                    <a class="btn btn-success" style="text-decoration:none; " href="/Admin/PatientData/Edit/@item.ID"><i class="fa fa-edit"></i> Edit</a>
-                                                    <a class="btn btn-info" style="text-decoration:none; " href="/Admin/PatientData/Detail/@item.ID"><i class="bi bi-info-circle"></i> Detail</a>
+                                                    <a class="btn btn-success" style="text-decoration:none; " href="/Admin/PatientData/Edit/@item.ID"><i class="fa fa-edit"></i> Sửa</a>
+                                                    <a class="btn btn-info" style="text-decoration:none; " href="/Admin/PatientData/Detail/@item.ID"><i class="bi bi-info-circle"></i> Chi tiết</a>
                                                 </td>
                                             </tr>
                                         }
                                     }
                                 </tbody>
                             </table>
+                            @using (Html.BeginForm("UpdateAll", "PatientData", FormMethod.Post))
+                            {
+                                <button type="submit" class="btn btn-warning" onclick="return confirm('Xác nhận cập nhật toàn bộ thông tin bệnh nhi?')"><i class="bi bi-arrow-clockwise"></i> Cập nhật dữ liệu</button>
+                            }
                             @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchString = ViewBag.SearchString }))
 
                         </div>
                         <div class="input-group-append">
-                            <a class="btn btn-primary" href="/Admin/PatientData/Create"><i class="bi-plus-circle"></i> Add Patient</a>
+                            <a class="btn btn-primary" href="/Admin/PatientData/Create"><i class="bi-plus-circle"></i> Thêm mới thông tin bệnh nhi</a>
                         </div>
                     </div>
                 </div>

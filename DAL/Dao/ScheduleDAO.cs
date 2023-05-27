@@ -1,6 +1,7 @@
 ﻿using DAL.EF;
 using PagedList;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace DAL.Dao
@@ -44,7 +45,7 @@ namespace DAL.Dao
                     return null;
                 }
             }
-        
+
             return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
         }
         public VaccinationSchedule GetByID(int id)
@@ -60,18 +61,58 @@ namespace DAL.Dao
         {
             return db.Vaccines.FirstOrDefault(v => v.ID == vaccineId);
         }
+        public List<VaccinationSchedule> GetAllSchedules()
+        {
+            var allSchedules = db.VaccinationSchedules.ToList();
+
+            return allSchedules.Select(infor => new VaccinationSchedule
+            {
+                ID = infor.ID,
+                IdPatient = infor.IdPatient,
+                IdVaccine = infor.IdVaccine,
+                Quantity = infor.Quantity,
+                Status = infor.Status,
+                CreateAt = infor.CreateAt,
+                Time = infor.Time
+            }).ToList();
+        }
+
+        public void UpdateAllSchedules(List<VaccinationSchedule> schedules)
+        {
+            foreach (var infor in schedules)
+            {
+                var scheduleUpdate = db.VaccinationSchedules.Find(infor.ID);
+                if (scheduleUpdate != null)
+                {
+                    scheduleUpdate.Status = infor.Status;
+                }
+            }
+
+            db.SaveChanges();
+        }
+        public void UpdateSchedules(VaccinationSchedule schedules)
+        {
+            var scheduleUpdate = db.VaccinationSchedules.Find(schedules.ID);
+            if (scheduleUpdate != null)
+            {
+                scheduleUpdate.Status = schedules.Status;
+            }
+
+            db.SaveChanges();
+        }
+
         public bool Delete(int id)
         {
             try
             {
                 using (var db = new VaccineDbContext())
-                {                  
-                    VaccinationSchedule vaccine = db.VaccinationSchedules.Find(id);                 
+                {
+                    VaccinationSchedule vaccine = db.VaccinationSchedules.Find(id);
                     if (vaccine == null)
                     {
                         return false;
                     }
-                   
+
                     db.VaccinationSchedules.Remove(vaccine);
                     db.SaveChanges();
                     return true;
@@ -88,16 +129,44 @@ namespace DAL.Dao
             {
                 var vaccineUpdate = db.VaccinationSchedules.Find(vaccine.ID);
                 if (vaccine != null)
-                {                   
+                {
                     vaccineUpdate.Status = vaccine.Status;
                     vaccineUpdate.Quantity = vaccine.Quantity;
-                    vaccineUpdate.Time = vaccine.Time;                
+                    vaccineUpdate.Time = vaccine.Time;
                     db.SaveChanges();
                     return true;
                 }
                 else { return false; }
             }
             catch (Exception) { return false; }
+        }
+        public int GetUserNameId(int loggedInUserId)
+        {
+            
+            var patient = db.Patients.FirstOrDefault(p => p.IdUserName == loggedInUserId);
+            if (patient != null)
+            {
+                return (int)patient.ID;
+            }
+            return 0; 
+        }
+
+      /*  public int GetPatientId(int userNameId)
+        {
+            
+            var patient = db.Patients.FirstOrDefault(p => p.IdUserName == userNameId);
+            if (patient != null)
+            {
+                return patient.ID;
+            }
+            return 0; 
+        }*/
+
+        public List<VaccinationSchedule> GetPatientSchedule(int patientId)
+        {
+            
+            var patientSchedule = db.VaccinationSchedules.Where(vs => vs.IdPatient == patientId).ToList();
+            return patientSchedule;
         }
     }
 }

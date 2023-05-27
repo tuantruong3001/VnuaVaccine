@@ -70,10 +70,10 @@ namespace DAL.EF
                 .WithOptional(e => e.VaccinationSchedule)
                 .HasForeignKey(e => e.IdSchedule);
 
-            modelBuilder.Entity<VaccinationSchedule>()
+           /* modelBuilder.Entity<VaccinationSchedule>()
                 .HasMany(e => e.VaccinationManagements)
                 .WithOptional(e => e.VaccinationSchedule)
-                .HasForeignKey(e => e.IdSchedule);
+                .HasForeignKey(e => e.IdSchedule);*/
 
             modelBuilder.Entity<Vaccine>()
                 .HasMany(e => e.VaccinationSchedules)

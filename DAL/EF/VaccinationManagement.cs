@@ -13,8 +13,8 @@ namespace DAL.EF
         public int ID { get; set; }
 
         public int? IdStaff { get; set; }
-
-        public int? IdSchedule { get; set; }
+      
+        public string Description { get; set; }
 
         public DateTime? Time { get; set; }
 

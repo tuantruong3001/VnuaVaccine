@@ -19,6 +19,7 @@ namespace VnuaVaccine.Areas.Admin.Models
         public int? PhoneNumber { get; set; }
         public int? IdUserName { get; set; }
         public int? Age { get; set; }
+        public int? AgeMonth { get; set; }
         public DateTime? Birthday { get; set; }
         public DateTime? CreateAt { get; set; }
         public DateTime? UpdateAt { get; set; }

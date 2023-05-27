@@ -44,22 +44,19 @@ namespace DAL.Dao
             return 1;
         }
         // Check Register account
-        public int RegisterCheck(string email, string user)
+        public int RegisterCheck(string email)
         {
             var emailExists = db.Users.SingleOrDefault(x => x.Email == email);
-            var usernameExists = db.Users.SingleOrDefault(x => x.UserName == user);
-            if (emailExists == null && usernameExists == null)
+           
+            if (emailExists == null)
             {
                 return 1;
             }
-            else if (emailExists != null)
+            else
             {
                 return 0; // trùng email
             }
-            else
-            {
-                return -1; // trùng user
-            }
+            
         }
         public bool Update(User user)
         {

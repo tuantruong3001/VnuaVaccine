@@ -108,20 +108,25 @@
                         @Html.HiddenFor(model => model.Address)
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-5">
+                        <div class="form-group col-md-4">
                             <label for="inputEmail4">Sinh nhật</label>
                             <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.Birthday" />
                             @Html.HiddenFor(model => model.Birthday)
                         </div>
-                        <div class="form-group col-md-5">
+                        <div class="form-group col-md-4">
                             <label for="inputEmail4">Số điện thoại</label>
                             <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.PhoneNumber" />
                             @Html.HiddenFor(model => model.PhoneNumber)
                         </div>
                         <div class="form-group col-md-2">
-                            <label for="inputEmail4">Tuổi</label>
+                            <label for="inputEmail4">Tuổi (Năm)</label>
                             <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.Age" />
                             @Html.HiddenFor(model => model.Age)
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="inputEmail4">Tuổi (Tháng)</label>
+                            <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.AgeMonth" />
+                            @Html.HiddenFor(model => model.AgeMonth)
                         </div>
 
                     </div>

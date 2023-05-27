@@ -13,6 +13,7 @@ namespace VnuaVaccine.Areas.Admin.Models
         public string Munafacturer { get; set; }
         public string Description { get; set; }
         public int? QuantityStock { get; set; }
+        public int? Times { get; set; }
         [DataType(DataType.Date)]
         public DateTime? ProductionDate { get; set; }
         public DateTime? ExpirationData { get; set; }
