@@ -7,12 +7,14 @@ using System.Web;
 using System.Web.Mvc;
 using VnuaVaccine.Common;
 using VnuaVaccine.Models;
+using static System.Collections.Specialized.BitVector32;
 
 namespace VnuaVaccine.Controllers
 {
     public class CartController : Controller
     {
         private const string CartSession = "CartSession";
+        private readonly ScheduleDAO _scheduleDao = new ScheduleDAO();
         public ActionResult Index()
         {
             var cart = Session[CartSession];
@@ -45,6 +47,9 @@ namespace VnuaVaccine.Controllers
             #region addtocart
             try
             {
+                int loggedInUserId = userLogin.UserID;
+                var userNameId = _scheduleDao.GetUserNameId(loggedInUserId);
+
                 var vaccine = new VaccineDAO().ViewDetail(idVaccine);
                 var cart = Session[CartSession];
                 if (cart != null)
@@ -63,7 +68,7 @@ namespace VnuaVaccine.Controllers
                     else
                     {
                         var item = new CartItem();
-                        item.IdPatient = user.ID;
+                        item.IdPatient = userNameId;
                         item.Vaccine = vaccine;
                         item.Quantity = quantity;
                         item.Status = 0;
@@ -75,7 +80,7 @@ namespace VnuaVaccine.Controllers
                 else
                 {
                     var item = new CartItem();
-                    item.IdPatient = user.ID;
+                    item.IdPatient = userNameId;
                     item.Vaccine = vaccine;
                     item.Quantity = quantity;
                     item.CreateAt = DateTime.Now;
