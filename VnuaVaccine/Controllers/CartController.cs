@@ -44,7 +44,12 @@ namespace VnuaVaccine.Controllers
                 return RedirectToAction("Index", "Login", new { area = "Admin" });
             }
             #endregion
+
             #region addtocart
+            int loggedInUserId = userLogin.UserID;
+
+            var userNameId = _scheduleDao.GetUserNameId(loggedInUserId);                      
+
             try
             {
                 int loggedInUserId = userLogin.UserID;
