@@ -45,10 +45,7 @@ namespace VnuaVaccine.Controllers
             }
             #endregion
 
-            #region addtocart
-            int loggedInUserId = userLogin.UserID;
-
-            var userNameId = _scheduleDao.GetUserNameId(loggedInUserId);                      
+            #region addtocart                              
 
             try
             {
