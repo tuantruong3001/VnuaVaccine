@@ -151,8 +151,8 @@
                                                 <td>@(item.CreateAt == null ? "" : item.CreateAt.Value.ToString("dd/MM/yyyy"))</td>
                                                 <td>@(item.UpdateAt == null ? "" : item.UpdateAt.Value.ToString("dd/MM/yyyy"))</td>
                                                 <td>
-                                                    <a class="btn btn-success" style="text-decoration:none; " href="/Admin/StaffData/Edit/@item.ID"><i class="fa fa-edit"></i> Edit</a>
-                                                    <a class="btn btn-info" style="text-decoration:none; " href="/Admin/StaffData/Detail/@item.ID"><i class="bi bi-info-circle"></i> Detail</a>
+                                                    <a class="btn btn-success" style="text-decoration:none; " href="/Admin/StaffData/Edit/@item.ID"><i class="fa fa-edit"></i> Sửa</a>
+                                                    <a class="btn btn-info" style="text-decoration:none; " href="/Admin/StaffData/Detail/@item.ID"><i class="bi bi-info-circle"></i> Chi tiết</a>
                                                 </td>
                                             </tr>
                                         }
@@ -163,7 +163,7 @@
 
                         </div>
                         <div class="input-group-append">
-                            <a class="btn btn-primary" href="/Admin/StaffData/Create"><i class="bi-plus-circle"></i> Add Staff</a>
+                            <a class="btn btn-primary" href="/Admin/StaffData/Create"><i class="bi-plus-circle"></i> Thêm nhân viên</a>
                         </div>
                     </div>
                 </div>

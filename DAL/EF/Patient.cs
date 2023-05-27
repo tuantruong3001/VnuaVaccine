@@ -39,6 +39,7 @@ namespace DAL.EF
         public int? IdUserName { get; set; }
 
         public int Age { get; set; }
+        public int AgeMonth { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Appointment> Appointments { get; set; }

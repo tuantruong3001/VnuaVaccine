@@ -87,47 +87,47 @@
                     <div class="card shadow mb-4">
                         <div class="p-5">
                             <div class="card-header py-3">
-                                <h2 class="m-0 font-weight-bold text-primary" style="text-align:center;">Add Staff</h2>
+                                <h2 class="m-0 font-weight-bold text-primary" style="text-align:center;">Thêm mới thông tin nhân viên</h2>
                             </div>
                             @using (Html.BeginForm("Create", "StaffData", FormMethod.Post))
                             {
                                 @Html.ValidationSummary(false, "", new { @class = "text-danger" });
                                 <div class="form-group">
-                                    Name
+                                    Tên
                                     @Html.TextBoxFor(model => model.Name, new { @class = "form-control form-control-user", @autofocus = "autofocus", @placeholder = "Type Name" })
 
                                 </div>
                                 <div class="form-group">
-                                    <label for="isSex">Sex</label>
+                                    <label for="isSex">Giới tính</label>
                                     <select class="form-control" id="isSex" name="isSex">
                                         <option value="1">Nam</option>
                                         <option value="0">Nữ</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    Address
+                                    Địa chỉ
                                     @Html.TextBoxFor(model => model.Address, new { @class = "form-control form-control-user", @placeholder = "Type Address" })
 
                                 </div>
                                 <div class="form-group">
-                                    PhoneNumber
+                                    Số điện thoại
                                     @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control form-control-user", @placeholder = "Type PhoneNumber" })
 
                                 </div>
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.Birthday, new { htmlAttribute = new { @class = "form-control form-control-user" } })
+                                   Sinh nhật
                                     @Html.TextBoxFor(model => model.Birthday, "{0:dd/MM/yyyy}", new { @type = "date", @class = "form-control form-control-user" })
                                 </div>
                                 <div class="row">
                                     <div class="col-md-2">
                                         <a href="/Admin/StaffData/Index" class="btn btn-primary btn-user btn-block icon">
-                                            Back
+                                            Quay lại
                                         </a>
                                     </div>
                                     <div class="col-md-8"></div>
                                     <div class="col-md-2">
                                         <a>
-                                            <input style="background-color: #36b9cc" type="submit" value="Add" class="btn btn-primary btn-user btn-block" />
+                                            <input style="background-color: #36b9cc" type="submit" value="Thêm mới" class="btn btn-primary btn-user btn-block" />
                                         </a>
                                     </div>
                                 </div>

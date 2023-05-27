@@ -99,49 +99,54 @@
                     <div class="card shadow mb-4">
                         <div class="p-5">
                             <div class="card-header py-3">
-                                <h2 class="m-0 font-weight-bold text-primary" style="text-align:center;">Add Vaccine</h2>
+                                <h2 class="m-0 font-weight-bold text-primary" style="text-align:center;">Thêm thông tin Vaccine</h2>
                             </div>
                             @using (Html.BeginForm("Create", "VaccineData", FormMethod.Post))
                             {
                                 @Html.ValidationSummary(false, "", new { @class = "text-danger" });
                                 <div class="form-group">
-                                    NameVaccine
-                                    @Html.TextBoxFor(model => model.NameVaccine, new { @class = "form-control form-control-user", @autofocus = "autofocus", @placeholder = "Type NameVaccine" })
+                                    Tên vaccine
+                                    @Html.TextBoxFor(model => model.NameVaccine, new { @class = "form-control form-control-user", @autofocus = "autofocus", @placeholder = "Nhập tên vaccine" })
 
                                 </div>
                                 <div class="form-group">
-                                    Munafacturer
-                                    @Html.TextBoxFor(model => model.Munafacturer, new { @class = "form-control form-control-user", @placeholder = "Type Munafacturer" })
+                                    Cơ sở sản xuất
+                                    @Html.TextBoxFor(model => model.Munafacturer, new { @class = "form-control form-control-user", @placeholder = "Nhập tên cơ sở sản xuất" })
 
                                 </div>
                                 <div class="form-group">
-                                    Description
-                                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-user", @placeholder = "Type Description" })
+                                    Mô tả
+                                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-user", @placeholder = "Nhập mô tả" })
 
                                 </div>
                                 <div class="form-group">
-                                    QuantityStock
-                                    @Html.TextBoxFor(model => model.QuantityStock, new { @class = "form-control form-control-user", @placeholder = "Type QuantityStock" })
+                                    Số lượng
+                                    @Html.TextBoxFor(model => model.QuantityStock, new { @class = "form-control form-control-user", @placeholder = "Nhập số lượng" })
 
                                 </div>
                                 <div class="form-group">
-                                    Note
-                                    @Html.TextBoxFor(model => model.Note, new { @class = "form-control form-control-user", @placeholder = "Type Note" })
+                                    Số mũi phải tiêm
+                                    @Html.TextBoxFor(model => model.QuantityStock, new { @class = "form-control form-control-user", @placeholder = "Nhập số mũi phải tiêm" })
 
                                 </div>
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.ProductionDate, new { htmlAttribute = new { @class = "form-control form-control-user" } })
+                                    Ghi chú
+                                    @Html.TextBoxFor(model => model.Note, new { @class = "form-control form-control-user", @placeholder = "Nhập ghi chú" })
+
+                                </div>
+                                <div class="form-group">
+                                    Ngày sản xuất
                                     @Html.TextBoxFor(model => model.ProductionDate, "{0:dd/MM/yyyy}", new { @type = "date", @class = "form-control form-control-user" })
                                 </div>
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.ExpirationData, new { htmlAttribute = new { @class = "form-control form-control-user" } })
+                                    Ngày hết hạn
                                     @Html.TextBoxFor(model => model.ExpirationData, "{0:dd/MM/yyyy}", new { @type = "date", @class = "form-control form-control-user" })
                                 </div>
 
                                 <div class="form-group">
                                     <div class="col-md-10">
-                                        Image
+                                        Ảnh
                                         <div class="col-md-10">
                                             @Html.TextBoxFor(model => model.Path, new { htmlAttributes = new { @class = "form-control" }, id = "txtImage" })
                                             <a id="btnSelectImage" href="#">Choose Image </a>
@@ -152,13 +157,13 @@
                                 <div class="row">
                                     <div class="col-md-2">
                                         <a href="/Admin/VaccineData/Index" class="btn btn-primary btn-user btn-block icon">
-                                            Back
+                                            Quay lại
                                         </a>
                                     </div>
                                     <div class="col-md-8"></div>
                                     <div class="col-md-2">
                                         <a>
-                                            <input style="background-color: #36b9cc" type="submit" value="Add" class="btn btn-primary btn-user btn-block" />
+                                            <input style="background-color: #36b9cc" type="submit" value="Thêm" class="btn btn-primary btn-user btn-block" />
                                         </a>
                                     </div>
                                 </div>

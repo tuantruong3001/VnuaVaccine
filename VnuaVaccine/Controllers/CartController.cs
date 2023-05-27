@@ -42,7 +42,7 @@ namespace VnuaVaccine.Controllers
                 return RedirectToAction("Index", "Login", new { area = "Admin" });
             }
             #endregion
-
+            #region addtocart
             try
             {
                 var vaccine = new VaccineDAO().ViewDetail(idVaccine);
@@ -91,6 +91,7 @@ namespace VnuaVaccine.Controllers
                 ModelState.AddModelError("", "Đã có lỗi xảy ra, vui lòng thử lại sau!");
                 return View("Index");
             }
+            #endregion
         }
 
         public ActionResult RemoveFromCart(int id)
@@ -117,7 +118,7 @@ namespace VnuaVaccine.Controllers
 
         }
 
-        public ActionResult SaveSchedule(CartItem cartItem)
+        public ActionResult SaveSchedule()
         {
             try
             {
@@ -125,18 +126,28 @@ namespace VnuaVaccine.Controllers
                 if (cart != null && cart.Count > 0)
                 {
                     var vaccineScheduleDao = new ScheduleDAO();
-                    var schedule = new VaccinationSchedule
-                    {
-                        Quantity = cartItem.Quantity,
-                        IdPatient = cartItem.IdPatient,
-                        IdVaccine = cartItem.IdVaccine,
-                        Status = 0,
-                        CreateAt = DateTime.Now,
-                    };
-                    vaccineScheduleDao.Insert(schedule);
-                    Session[CartSession] = null;
 
+                    foreach (var cartItem in cart)
+                    {
+                        var schedule = new VaccinationSchedule
+                        {
+                            Quantity = cartItem.Quantity,
+                            IdPatient = cartItem.IdPatient,
+                            IdVaccine = cartItem.Vaccine.ID,
+                            Status = 0,
+                            CreateAt = DateTime.Now,
+                        };
+                        vaccineScheduleDao.Insert(schedule);
+                    }
+
+                    Session[CartSession] = null;
                 }
+                else
+                {
+                    ModelState.AddModelError("", "Giỏ hàng trống. Vui lòng thêm mục hàng trước khi lưu lịch tiêm chủng.");
+                    return View("Index");
+                }
+
                 return RedirectToAction("SaveSuccess");
             }
             catch (Exception)

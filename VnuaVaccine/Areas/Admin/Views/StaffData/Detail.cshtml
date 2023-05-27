@@ -86,35 +86,35 @@
                 {
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="inputEmail4">Name</label>
+                            <label for="inputEmail4">Họ và tên</label>
                             <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.Name" />
                             @Html.HiddenFor(model => model.Name)
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="inputEmail4">Sex</label>
+                            <label for="inputEmail4">Giới tính</label>
                             <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@(Model.Sex == 0 ? "Nữ" : "Nam")" />
                             @Html.HiddenFor(model => model.Sex)
                         </div>
 
                     </div>
                     <div class="form-group">
-                        <label for="inputEmail4">Address</label>
+                        <label for="inputEmail4">Địa chỉ</label>
                         <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.Address" />
                         @Html.HiddenFor(model => model.Address)
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-5">
-                            <label for="inputEmail4">Birthday</label>
+                            <label for="inputEmail4">Sinh nhật</label>
                             <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.Birthday" />
                             @Html.HiddenFor(model => model.Birthday)
                         </div>
                         <div class="form-group col-md-5">
-                            <label for="inputEmail4">PhoneNumber</label>
+                            <label for="inputEmail4">Số điện thoại</label>
                             <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.PhoneNumber" />
                             @Html.HiddenFor(model => model.PhoneNumber)
                         </div>
                         <div class="form-group col-md-2">
-                            <label for="inputEmail4">Age</label>
+                            <label for="inputEmail4">Tuổi</label>
                             <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.Age" />
                             @Html.HiddenFor(model => model.Age)
                         </div>
@@ -122,12 +122,12 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="inputEmail4">CreateAt</label>
+                            <label for="inputEmail4">Ngày tạo thông tin</label>
                             <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.CreateAt" />
                             @Html.HiddenFor(model => model.Name)
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="inputEmail4">UpdateAt</label>
+                            <label for="inputEmail4">Ngày cập nhật thông tin</label>
                             <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.UpdateAt" />
                             @Html.HiddenFor(model => model.UpdateAt)
                         </div>
@@ -143,7 +143,7 @@
                     </div>
                 }
                 <a href="/Admin/StaffData/Index" class="col-md-1 btn btn-primary btn-user btn-block icon">
-                    Back
+                    Quay lại
                 </a>
                 <hr>
 

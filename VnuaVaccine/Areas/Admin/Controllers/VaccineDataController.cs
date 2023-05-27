@@ -41,6 +41,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                     NameVaccine = createModel.NameVaccine,
                     Munafacturer = createModel.Munafacturer,
                     Description = createModel.Description,
+                    Times = createModel.Times,
                     QuantityStock = createModel.QuantityStock,
                     Path = createModel.Path,
                     ProductionDate = createModel.ProductionDate,
@@ -66,6 +67,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
             {
                 NameVaccine = vaccine.NameVaccine,
                 Munafacturer = vaccine.Munafacturer,
+                Times = vaccine.Times,
                 Description = vaccine.Description,
                 QuantityStock = vaccine.QuantityStock,
                 Path = vaccine.Path,
@@ -86,6 +88,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                     var vaccine = new Vaccine
                     {
                         ID = vaccineModel.Id,
+                        Times = vaccineModel.Times,
                         NameVaccine = vaccineModel.NameVaccine,
                         Munafacturer = vaccineModel.Munafacturer,
                         Description = vaccineModel.Description,

@@ -3198,6 +3198,7 @@
     <Content Include="obj\Debug\VnuaVaccine.csproj.AssemblyReference.cache" />
     <Content Include="obj\Debug\VnuaVaccine.csproj.CopyComplete" />
     <Content Include="obj\Debug\VnuaVaccine.csproj.CoreCompileInputs.cache" />
+    <Content Include="Areas\Admin\Views\UserData\Create.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -3235,6 +3236,7 @@
     <Folder Include="Areas\Admin\Views\Base\" />
     <Folder Include="Data\images\" />
     <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

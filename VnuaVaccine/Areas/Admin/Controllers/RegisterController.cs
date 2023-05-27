@@ -25,9 +25,8 @@ namespace VnuaVaccine.Areas.Admin.Controllers
             {
                 return View("Index");
             }
-
             var userDao = new UserDAO();
-            var result = userDao.RegisterCheck(registerModel.Email, registerModel.UserName);
+            var result = userDao.RegisterCheck(registerModel.Email);
            
             if (registerModel.ConfirmPassword != registerModel.Password)
             {
@@ -36,10 +35,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
             }
 
             switch (result)
-            {
-                case -1:
-                    ModelState.AddModelError("", "Tài khoản đã tồn tại!");
-                    break;
+            {               
                 case 0:
                     ModelState.AddModelError("", "Email đã tồn tại!");
                     break;

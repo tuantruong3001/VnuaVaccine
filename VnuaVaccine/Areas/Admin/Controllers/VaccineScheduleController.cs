@@ -35,15 +35,60 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                         CreateAt = infor.CreateAt,
                         Time = infor.Time,
                         NameVaccine = vaccine != null ? vaccine.NameVaccine : string.Empty,
-                        NamePatient = patient != null ? patient.Name : string.Empty
+                        NamePatient = patient != null ? patient.Name : string.Empty,
+                        Times = vaccine.Times
+
                     };
                 }),
                 page,
                 pageSize,
-                pagedModel.TotalItemCount
-            );
+                pagedModel.TotalItemCount);
             ViewBag.SearchString = searchString;
             return View(model);
+        }
+        public ActionResult UpdateAll()
+        {
+            try
+            {
+                var allSchedules = _scheduleDao.GetAllSchedules();
+
+                foreach (var infor in allSchedules)
+                {
+                    var vaccine = _scheduleDao.GetVaccineName((int)infor.IdVaccine);
+                    var status = infor.Status;
+
+                    if (vaccine != null)
+                    {
+                        if (infor.Quantity == vaccine.Times)
+                        {
+                            status = 2;
+                        }
+                        else if (infor.Quantity > vaccine.Times && infor.Quantity != 0)
+                        {
+                            status = 3;
+                        }
+                        else if (infor.Quantity < vaccine.Times && infor.Quantity != 0)
+                        {
+                            status = 1;
+                        }
+                        else if (infor.Quantity == 0)
+                        {
+                            status = 0;
+                        }
+                    }
+                    infor.Status = status;
+                }
+
+                _scheduleDao.UpdateAllSchedules(allSchedules);
+                TempData["UpdateAllMessage"] = "Cập nhật thông tin tất cả lịch tiêm thành công";
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Đã có lỗi xảy ra, vui lòng thử lại sau: {ex.Message}";
+
+                return RedirectToAction("Index");
+            }
         }
 
         public ActionResult Delete(int id)
@@ -84,6 +129,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                 IdVaccine = schedule.IdVaccine,
                 Status = schedule.Status,
                 Time = schedule.Time,
+                Times = vaccine.Times,
                 CreateAt = schedule.CreateAt,
                 Quantity = schedule.Quantity,
                 NameVaccine = vaccine != null ? vaccine.NameVaccine : string.Empty,
@@ -91,9 +137,10 @@ namespace VnuaVaccine.Areas.Admin.Controllers
             };
             ViewBag.SexOptions = new List<SelectListItem>
             {
-                    new SelectListItem { Value = "0", Text = "Chưa xác nhận", Selected = vaccineModel?.Status == 0 },
-                    new SelectListItem { Value = "1", Text = "Đã xác nhận", Selected = vaccineModel?.Status == 1 },
-                    new SelectListItem { Value = "2", Text = "Đã từ chối", Selected = vaccineModel?.Status == 2 },
+                    new SelectListItem { Value = "0", Text = "Chưa tiêm", Selected = vaccineModel?.Status == 0 },
+                    new SelectListItem { Value = "1", Text = "Chưa tiêm đủ số mũi", Selected = vaccineModel?.Status == 1 },
+                    new SelectListItem { Value = "2", Text = "Đã tiêm đủ số mũi", Selected = vaccineModel?.Status == 2 },
+                    new SelectListItem { Value = "3", Text = "Đã tiêm liều tăng cường", Selected = vaccineModel?.Status == 3 },
             };
             return View(vaccineModel);
         }
@@ -106,11 +153,12 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                 var schedule = vaccineDao.GetByID(model.ID);
                 ViewBag.SexOptions = new List<SelectListItem>
                  {
-                     new SelectListItem { Value = "0", Text = "Chưa xác nhận", Selected = model.Status == 0 },
-                     new SelectListItem { Value = "1", Text = "Đã xác nhận", Selected = model.Status == 1 },
-                     new SelectListItem { Value = "2", Text = "Đã từ chối", Selected = model.Status == 2 },
+                     new SelectListItem { Value = "0", Text = "Chưa tiêm", Selected = model.Status == 0 },
+                     new SelectListItem { Value = "1", Text = "Chưa tiêm đủ số mũi", Selected = model.Status == 1 },
+                     new SelectListItem { Value = "2", Text = "Đã tiêm đủ số mũi", Selected = model.Status == 2 },
+                     new SelectListItem { Value = "3", Text = "Đã tiêm liều tăng cường", Selected = model.Status == 3 },
                  };
-
+              
                 schedule.Status = model.Status;
                 schedule.Time = model.Time;
                 schedule.Quantity = model.Quantity;

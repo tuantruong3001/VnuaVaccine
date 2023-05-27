@@ -31,6 +31,8 @@ namespace DAL.EF
         public DateTime? ExpirationData { get; set; }
 
         public int? QuantityStock { get; set; }
+        public int? IdManageVaccine { get; set; }
+        public int? Times { get; set; }
 
         [StringLength(150)]
         public string Description { get; set; }

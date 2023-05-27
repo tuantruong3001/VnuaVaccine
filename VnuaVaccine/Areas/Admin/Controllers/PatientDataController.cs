@@ -142,6 +142,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                             Address = getPatient.Address,
                             Birthday = getPatient.Birthday,
                             Age = getPatient.Age,
+                            AgeMonth = getPatient.AgeMonth,
                             PhoneNumber = getPatient.PhoneNumber,
                             CreateAt = getPatient.CreateAt,
                             UpdateAt = getPatient.UpdateAt,
@@ -162,6 +163,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                             Address = getPatient.Address,
                             Birthday = getPatient.Birthday,
                             Age = getPatient.Age,
+                            AgeMonth = getPatient.AgeMonth,
                             PhoneNumber = getPatient.PhoneNumber,
                             CreateAt = getPatient.CreateAt,
                             UpdateAt = getPatient.UpdateAt,
@@ -178,6 +180,24 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                 return View();
             }
         }
+        public ActionResult UpdateAll()
+        {
+            try
+            {
+                var allPatients = _patientDao.GetAllPatients();
 
+                _patientDao.UpdateAllPatients(allPatients);
+
+                TempData["UpdateAllMessage"] = "Cập nhật thông tin tất cả bệnh nhi thành công";
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Đã có lỗi xảy ra, vui lòng thử lại sau: {ex.Message}";
+
+                return RedirectToAction("Index");
+            }
+        }
     }
 }

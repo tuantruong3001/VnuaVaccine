@@ -19,19 +19,25 @@ namespace DAL.Dao
             db.SaveChanges();
             return newPatient.ID;
         }
-        public bool UpdateProfile(Patient patient)
+        public List<Patient> GetAllPatients()
+        {
+            return db.Patients.ToList();
+        }
+
+        public bool UpdateProfile(Patient staff)
         {
             try
             {
-                var patientUpdate = db.Patients.FirstOrDefault(getPatient => getPatient.ID == patient.IdUserName);
+                var patientUpdate = db.Patients.FirstOrDefault(getStaff => getStaff.ID == staff.IdUserName);
                 if (patientUpdate != null)
                 {
-                    patientUpdate.Sex = patient.Sex;
-                    patientUpdate.PhoneNumber = patient.PhoneNumber;
-                    patientUpdate.Name = patient.Name;
-                    patientUpdate.Birthday = patient.Birthday;
-                    patientUpdate.Address = patient.Address;
-                    patientUpdate.Age = CalculateAge((DateTime)patient.Birthday);
+                    patientUpdate.Sex = staff.Sex;
+                    patientUpdate.Birthday = staff.Birthday;
+                    patientUpdate.PhoneNumber = staff.PhoneNumber;
+                    patientUpdate.Name = staff.Name;
+                    patientUpdate.Address = staff.Address;
+                    patientUpdate.Age = CalculateAge((DateTime)staff.Birthday);
+                    patientUpdate.AgeMonth = CalculateAgeMonth((DateTime)staff.Birthday);
                     db.SaveChanges();
                     return true;
                 }
@@ -41,7 +47,37 @@ namespace DAL.Dao
             {
                 return false;
             }
-        }      
+        }       
+        public bool UpdateAllPatients(List<Patient> patients)
+        {
+            try
+            {
+                foreach (var patient in patients)
+                {
+                    var patientUpdate = db.Patients.Find(patient.ID);
+                    if (patientUpdate != null)
+                    {
+                        patientUpdate.Sex = patient.Sex;
+                        patientUpdate.PhoneNumber = patient.PhoneNumber;
+                        patientUpdate.Name = patient.Name;
+                        patientUpdate.NameParent = patient.NameParent;
+                        patientUpdate.Birthday = patient.Birthday;
+                        patientUpdate.Address = patient.Address;
+                        patientUpdate.Age = CalculateAge((DateTime)patient.Birthday);
+                        patientUpdate.AgeMonth = CalculateAgeMonth((DateTime)patient.Birthday);
+                        patientUpdate.UpdateAt = patient.UpdateAt;
+                    }
+                }
+               
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         public bool Update(Patient patient)
         {
             try
@@ -52,9 +88,11 @@ namespace DAL.Dao
                     patientUpdate.Sex = patient.Sex;
                     patientUpdate.PhoneNumber = patient.PhoneNumber;
                     patientUpdate.Name = patient.Name;
+                    patientUpdate.NameParent = patient.NameParent;
                     patientUpdate.Birthday = patient.Birthday;
                     patientUpdate.Address = patient.Address;
-                    patientUpdate.Age = CalculateAge((DateTime)patient.Birthday); // Calculate the age based on the provided birthday
+                    patientUpdate.Age = CalculateAge((DateTime)patient.Birthday);
+                    patientUpdate.AgeMonth = CalculateAgeMonth((DateTime)patient.Birthday);
                     patientUpdate.UpdateAt = patient.UpdateAt;
                     db.SaveChanges();
                     return true;
@@ -66,7 +104,25 @@ namespace DAL.Dao
                 return false;
             }
         }
-        
+
+        private int CalculateAgeMonth(DateTime birthday)
+        {
+            var today = DateTime.Today;
+            var age = today.Month - birthday.Month;
+
+            if (today.Day < birthday.Day)
+            {
+                age--;
+            }
+
+            if (age < 0)
+            {
+                age += 12;
+            }
+
+            return age;
+        }
+
         private int CalculateAge(DateTime birthday)
         {
             var today = DateTime.Today;
@@ -85,14 +141,9 @@ namespace DAL.Dao
         public bool DeleteByUserId(int userId)
         {
             try
-            {
-                // Lấy danh sách bệnh nhân có IdUser là userId
-                List<Patient> patients = db.Patients.Where(p => p.IdUserName == userId).ToList();
-
-                // Xoá các bệnh nhân tương ứng
+            {              
+                List<Patient> patients = db.Patients.Where(p => p.IdUserName == userId).ToList();               
                 db.Patients.RemoveRange(patients);
-
-                // Lưu thay đổi vào cơ sở dữ liệu
                 db.SaveChanges();
 
                 return true;

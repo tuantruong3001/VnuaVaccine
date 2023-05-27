@@ -99,40 +99,40 @@
                                 @Html.ValidationSummary(false, "", new { @class = "text-danger" });
                                 <div class="form-group">
 
-                                    @Html.LabelFor(model => model.UserName, new { htmlAttribute = new { @class = "form-control form-control-user" } })
+                                    UserName
                                     @Html.TextBoxFor(model => model.UserName, new { @class = "form-control form-control-user", @autofocus = "autofocus", @placeholder = "Type your password" })
 
                                 </div>
                                 <div class="form-group">
 
-                                    @Html.LabelFor(model => model.Name, new { htmlAttribute = new { @class = "form-control form-control-user" } })
+                                    Họ tên
                                     @Html.TextBoxFor(model => model.Name, new { @class = "form-control form-control-user", @placeholder = "Type your Name" })
 
                                 </div>
 
                                 <div class="form-group">
 
-                                    @Html.LabelFor(model => model.Address, new { htmlAttribute = new { @class = "form-control form-control-user" } })
+                                   Địa chỉ
                                     @Html.TextBoxFor(model => model.Address, new { @class = "form-control form-control-user", @placeholder = "Type your Address" })
 
                                 </div>
                                 if (Model.Birthday == null)
                                 {
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.Birthday, new { htmlAttribute = new { @class = "form-control form-control-user" } })
+                                       Sinh nhật
                                         @Html.TextBoxFor(model => model.Birthday, "{0:dd/MM/yyyy}", new { @type = "date", @class = "form-control form-control-user" })
                                     </div>
                                 }
                                 else
                                 {
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.Birthday, new { htmlAttribute = new { @class = "form-control form-control-user" } })
+                                       Sinh nhật
                                         @Html.TextBoxFor(model => model.Birthday, "{0:dd/MM/yyyy}", new { @type = "datetime", @class = "form-control form-control-user" })
                                     </div>
                                 }
                                 <div class="form-group">
 
-                                    @Html.LabelFor(model => model.PhoneNumber, new { htmlAttribute = new { @class = "form-control form-control-user" } })
+                                  Số điện thoại
                                     @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control form-control-user", @placeholder = "Type your Phone" })
 
                                 </div>
@@ -142,7 +142,7 @@
                                     }
                                 </style>
                                 <div class="form-group">
-                                    <label for="Sex">Sex</label>
+                                    <label for="Sex">Giới tính</label>
                                     <select class="form-control Sex" name="Sex">
                                         @if (ViewBag.SexOptions != null)
                                         {
@@ -158,7 +158,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Age</label>
+                                    <label class="control-label">Tuổi</label>
                                     <input type="text" class="form-control form-control-user" readonly="readonly" value="@Model.Age" />
                                     @Html.HiddenFor(model => model.Age)
                                 </div>
@@ -168,12 +168,12 @@
                                     @Html.HiddenFor(model => model.Email)
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Role</label>
-                                    <input type="text" class="form-control form-control-user" readonly="readonly" value="@(Model.Role == 0 ? "MedicalStaffs" : "Patient") " />
+                                    <label class="control-label">Chức vụ</label>
+                                    <input type="text" class="form-control form-control-user" readonly="readonly" value="@(Model.Role == 0 ? "Nhân viên y tế" : "Bệnh nhân") " />
                                     @Html.HiddenFor(model => model.Role)
                                 </div>
                                 <a>
-                                    <input type="submit" value="Update" class="col-lg-2 btn btn-primary btn-user btn-block" />
+                                    <input type="submit" value="Cập nhật" class="col-lg-2 btn btn-primary btn-user btn-block" />
                                 </a>
                                 <hr>
                             }

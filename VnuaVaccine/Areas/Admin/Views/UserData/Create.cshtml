@@ -89,27 +89,27 @@
                             <div class="card-header py-3">
                                 <h2 class="m-0 font-weight-bold text-primary" style="text-align:center;">Cập nhật thông tin User</h2>
                             </div>
-                            @using (Html.BeginForm("Edit", "UserData", FormMethod.Post, new { id = "editForm" }))
+                            @using (Html.BeginForm("Create", "UserData", FormMethod.Post, new { id = "editForm" }))
                             {
                                 @Html.ValidationSummary(false, "", new { @class = "text-danger" });
                                 <div class="form-group">
                                     Họ và tên
-                                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control form-control-user", @autofocus = "autofocus", @placeholder = "Type UserName" })
+                                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control form-control-user", @autofocus = "autofocus", @placeholder = "Nhập họ và tên bệnh nhân" })
                                 </div>
 
                                 <div class="form-group">
                                     Email
-                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control form-control-user", @placeholder = "Type Email" })
+                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control form-control-user", @placeholder = "Nhập enail" })
                                 </div>
                                 <div class="form-group">
                                     Mật khẩu
-                                    @Html.PasswordFor(model => model.Password, new { @class = "form-control form-control-user", @placeholder = "Type Password", id = "passwordInput" })
+                                    @Html.TextBoxFor(model => model.Password, new { @class = "form-control form-control-user", @type = "password", @placeholder = "Nhập mật khẩu", id = "passwordInput" })
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Vai trò</label>
-                                    <input type="text" class="form-control form-control-user" readonly="readonly" value="@(Model.Role == 0 ? "Nhân viên y tế" : "Bệnh nhân") " />
-                                    @Html.HiddenFor(model => model.Role)
+                                   Xác nhận mật khẩu
+                                    @Html.TextBoxFor(model => model.ConfirmPassword, new { @class = "form-control form-control-user", @type = "password", id = "passwordInput" })
                                 </div>
+                                
                                 <div class="row">
                                     <div class="col-md-2">
                                         <a href="/Admin/UserData/Index" class="btn btn-primary btn-user btn-block icon">

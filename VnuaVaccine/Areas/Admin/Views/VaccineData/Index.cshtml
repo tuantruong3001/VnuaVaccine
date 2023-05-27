@@ -122,6 +122,7 @@
                                     <tr>
                                         <th>Tên Vaccine</th>
                                         <th>Cơ sở sản xuất</th>
+                                        <th>Số mũi phải tiêm</th>
                                         <th>Số lượng</th>
                                         <th>Mô tả</th>
                                         <th>Ảnh</th>
@@ -145,6 +146,7 @@
                                             <tr id="row_@item.ID">
                                                 <td>@item.NameVaccine</td>
                                                 <td>@item.Munafacturer</td>
+                                                <td>@item.Times</td>
                                                 <td>@item.QuantityStock</td>
                                                 <td>@item.Description</td>
                                                 <td><img style="width: 100px; height: auto;" src="@item.Path"></td>
@@ -152,8 +154,8 @@
                                                 <td>@(item.ExpirationData == null ? "" : item.ExpirationData.Value.ToString("dd/MM/yyyy"))</td>
                                                 <td>@item.Note</td>
                                                 <td>
-                                                    <a class="btn btn-success" style="text-decoration:none; " href="/Admin/VaccineData/Edit/@item.ID"><i class="fa fa-edit"></i> Edit</a>
-                                                    <a style="text-decoration: none;" href="@Url.Action("Delete", "VaccineData", new { id = item.ID })" class="btn btn-danger" onclick="return confirm('Xác nhận xoá?')"><i class="fas fa-trash"></i> Delete</a>
+                                                    <a class="btn btn-success" style="text-decoration:none; " href="/Admin/VaccineData/Edit/@item.ID"><i class="fa fa-edit"></i> Sửa</a>
+                                                    <a style="text-decoration: none;" href="@Url.Action("Delete", "VaccineData", new { id = item.ID })" class="btn btn-danger" onclick="return confirm('Xác nhận xoá?')"><i class="fas fa-trash"></i> Xoá</a>
                                                 </td>
                                             </tr>
                                         }
@@ -166,7 +168,7 @@
                         </div>
 
                         <div class="input-group-append">
-                            <a class="btn btn-primary" href="/Admin/VaccineData/Create"><i class="bi-plus-circle"></i> Add Vaccine</a>
+                            <a class="btn btn-primary" href="/Admin/VaccineData/Create"><i class="bi-plus-circle"></i> Thêm mới thông tin Vaccine</a>
                         </div>
                     </div>
 
