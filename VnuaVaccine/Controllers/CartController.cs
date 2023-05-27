@@ -52,6 +52,9 @@ namespace VnuaVaccine.Controllers
 
             try
             {
+                int loggedInUserId = userLogin.UserID;
+                var userNameId = _scheduleDao.GetUserNameId(loggedInUserId);
+
                 var vaccine = new VaccineDAO().ViewDetail(idVaccine);
                 var cart = Session[CartSession];
                 if (cart != null)
