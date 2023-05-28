@@ -27,7 +27,6 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                     new ProfileModel
                     {
                         ID = getUser.ID,
-                        UserName = getUser.UserName,
                         Email = getUser.Email,                       
                         Role = getUser.Role,
                        
@@ -85,7 +84,6 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                         {
                             ID = model.ID,
                             Email = model.Email,
-                            UserName = model.UserName,
                             Role = model.Role
                         };
                         userDao.UpdateProfile(user);

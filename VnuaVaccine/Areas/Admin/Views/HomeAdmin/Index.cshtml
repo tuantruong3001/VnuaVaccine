@@ -97,12 +97,7 @@
                             @using (Html.BeginForm("Index", "HomeAdmin", FormMethod.Post))
                             {
                                 @Html.ValidationSummary(false, "", new { @class = "text-danger" });
-                                <div class="form-group">
-
-                                    UserName
-                                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control form-control-user", @autofocus = "autofocus", @placeholder = "Type your password" })
-
-                                </div>
+                               
                                 <div class="form-group">
 
                                     Họ tên

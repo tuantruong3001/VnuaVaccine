@@ -95,6 +95,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
             }
         }
 
+        [HttpGet]
         public ActionResult Create()
         {
             return View();
@@ -103,26 +104,29 @@ namespace VnuaVaccine.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Create(ProfileModel registerModel)
         {
-
-            if (!ModelState.IsValid)
+            try
             {
-                return View("Index");
-            }
-            var userDao = new UserDAO();
-            var result = userDao.RegisterCheck(registerModel.Email);
+                if (!ModelState.IsValid)
+                {
+                    return View();
+                }
 
-            if (registerModel.ConfirmPassword != registerModel.Password)
-            {
-                ModelState.AddModelError("", "Xác nhận mật khẩu phải trùng mới mật khẩu!");
-                return View("Index");
-            }
+                var userDao = new UserDAO();
+                var result = userDao.RegisterCheck(registerModel.Email);
 
-            switch (result)
-            {
-                case 0:
+                if (registerModel.ConfirmPassword != registerModel.Password)
+                {
+                    ModelState.AddModelError("", "Xác nhận mật khẩu phải trùng mới mật khẩu!");
+                    return View();
+                }
+
+                if (result == 0)
+                {
                     ModelState.AddModelError("", "Email đã tồn tại!");
-                    break;
-                case 1:
+                    return View();
+                }
+                else if (result == 1)
+                {
                     var newUser = new User
                     {
                         UserName = registerModel.UserName,
@@ -143,10 +147,20 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                     };
                     patientDao.Insert(newPatient);
 
-                    TempData["SuccessMessage"] = "Đăng ký thành công";
+                    TempData["SuccessMessage"] = "Thêm tài khoản thành công";
                     return RedirectToAction("Index", "UserData");
+                }
+
+                TempData["ErrorMessage"] = "Thêm tài khoản thất bại";
+                return RedirectToAction("Index", "UserData");
             }
-            return View("Index");
+            catch (Exception)
+            {
+                TempData["ErrorMessage"] = "Có lỗi xảy ra trong quá trình xử lý";
+                return RedirectToAction("Index", "UserData");
+            }
         }
+
+
     }
 }

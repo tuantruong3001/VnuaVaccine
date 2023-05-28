@@ -25,8 +25,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                 .Join(db.Patients, getUser => getUser.ID, getPatient => getPatient.IdUserName, (getUser, getPatient) 
                 => new ProfileModel
                 {
-                    ID = getUser.ID,
-                    UserName = getUser.UserName,
+                    ID = getUser.ID,                   
                     Email = getUser.Email,
                     Password = getUser.Password,
                     Role = getUser.Role,
@@ -81,7 +80,6 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                         {
                             ID = model.ID,
                             Email = model.Email,
-                            UserName = model.UserName,
                             Role = model.Role
                         };
                         userDao.UpdateProfile(user);

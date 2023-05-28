@@ -84,7 +84,6 @@ namespace DAL.Dao
                 var userUpdate = db.Users.Find(user.ID);
                 if (user != null)
                 {
-                    userUpdate.UserName = user.UserName;
                     userUpdate.Email = user.Email;
                     userUpdate.UpdateAt = DateTime.Now;
                     db.SaveChanges();

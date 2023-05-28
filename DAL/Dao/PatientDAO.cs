@@ -28,7 +28,7 @@ namespace DAL.Dao
         {
             try
             {
-                var patientUpdate = db.Patients.FirstOrDefault(getStaff => getStaff.ID == staff.IdUserName);
+                var patientUpdate = db.Patients.FirstOrDefault(getStaff => getStaff.IdUserName == staff.IdUserName);
                 if (patientUpdate != null)
                 {
                     patientUpdate.Sex = staff.Sex;

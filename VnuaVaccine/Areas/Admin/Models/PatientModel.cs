@@ -12,7 +12,7 @@ namespace VnuaVaccine.Areas.Admin.Models
         public string Name { get; set; }
         public string NameParent { get; set; }
         [DataType(DataType.Date)]
-
+       
         public DateTime? Birthday { get; set; }
 
         public int? Sex { get; set; }

@@ -82,39 +82,37 @@ namespace VnuaVaccine.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Edit(PatientModel patientModel)
         {
-            if (ModelState.IsValid)
+
+            try
             {
-                try
+                var patientDao = new PatientDAO();
+                var patient = new Patient
                 {
-                    var patientDao = new PatientDAO();
-                    var patient = new Patient
-                    {
-                        ID = (int)patientModel.Id,
-                        Name = patientModel.Name,
-                        NameParent= patientModel.NameParent,
-                        Sex = patientModel.Sex,
-                        Address = patientModel.Address,
-                        PhoneNumber = patientModel.PhoneNumber,
-                        Birthday = patientModel.Birthday,
-                        UpdateAt = DateTime.Now,
-                    };
-                    ViewBag.SexOptions = new List<SelectListItem>
+                    ID = (int)patientModel.Id,
+                    Name = patientModel.Name,
+                    NameParent = patientModel.NameParent,
+                    Sex = patientModel.Sex,
+                    Address = patientModel.Address,
+                    PhoneNumber = patientModel.PhoneNumber,
+                    Birthday = patientModel.Birthday,
+                    UpdateAt = DateTime.Now,
+                };
+                ViewBag.SexOptions = new List<SelectListItem>
                     {
                         new SelectListItem { Value = "1", Text = "Nam", Selected = patientModel?.Sex == 1 },
                         new SelectListItem { Value = "0", Text = "Nữ", Selected = patientModel?.Sex == 0 },
                     };
 
-                    patientDao.Update(patient);
-                    TempData["EditUserMessage"] = "Sửa thông tin bệnh nhân thành công";
-                    return RedirectToAction("Index", "PatientData");
-                }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError("", $"Đã có lỗi xảy ra, vui lòng thử lại sau: {ex.Message}");
-                    return View(patientModel);
-                }
+                patientDao.Update(patient);
+                TempData["EditUserMessage"] = "Sửa thông tin bệnh nhân thành công";
+                return RedirectToAction("Index", "PatientData");
             }
-            return View(patientModel);
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", $"Đã có lỗi xảy ra, vui lòng thử lại sau: {ex.Message}");
+                return View(patientModel);
+            }
+
         }
         [HttpGet]
         public ActionResult Detail(int id)
@@ -132,7 +130,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                 {
                     profileModel = db.Patients
                         .Where(getPatient => getPatient.IdUserName == patient.IdUserName)
-                        .Join(db.Users, getPatient => getPatient.IdUserName, getStaff => getStaff.ID, (getPatient, getStaff) => 
+                        .Join(db.Users, getPatient => getPatient.IdUserName, getStaff => getStaff.ID, (getPatient, getStaff) =>
                         new InforPatientModel
                         {
                             ID = getPatient.ID,

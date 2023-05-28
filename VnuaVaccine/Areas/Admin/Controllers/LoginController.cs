@@ -10,8 +10,8 @@ namespace VnuaVaccine.Areas.Admin.Controllers
     {
         // GET: Admin/Login
         public ActionResult Index()
-        {
-            return View();
+        {          
+            return View("Index");
         }
         
         [HttpPost]
@@ -70,18 +70,15 @@ namespace VnuaVaccine.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
-                // handle the exception here
                 ViewBag.ErrorMessage = "Đã có lỗi xảy ra, vui lòng thử lại sau " + ex.Message;
                 return RedirectToAction("Login", "Login");
-               // return View("Index");
             }
         }
         public ActionResult Logout()
         {
             try
             {
-                // Xóa session hiện tại
-                Session.Clear();
+                Session?.Clear();
                 return View("Index");
             }
             catch (Exception ex)

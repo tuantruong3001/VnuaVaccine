@@ -75,6 +75,21 @@
 
 </ul>
 }
+
+<script>
+    document.getElementById("birthday-input").addEventListener("blur", function () {
+        var birthdayInput = document.getElementById("birthday-input");
+        var birthdayError = document.getElementById("birthday-error");
+
+        var regex = /^\d{2}\/\d{2}\/\d{4}$/;
+
+        if (!regex.test(birthdayInput.value)) {
+            birthdayError.textContent = "Ngày sinh không hợp lệ. Vui lòng nhập định dạng dd/MM/yyyy. Ví dụ: 01/01/2023";
+        } else {
+            birthdayError.textContent = "";
+        }
+    });
+</script>
 @section bodymain{
 
     <div class="card-body p-0">
@@ -123,15 +138,17 @@
                                 if (Model.Birthday == null)
                                 {
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.Birthday, new { htmlAttribute = new { @class = "form-control form-control-user" } })
-                                        @Html.TextBoxFor(model => model.Birthday, "{0:dd/MM/yyyy}", new { @type = "date", @class = "form-control form-control-user" })
+                                       Ngày sinh
+                                        @Html.TextBoxFor(model => model.Birthday, "{0:dd/MM/yyyy}", new { @type = "date", @class = "form-control form-control-user", @id = "birthday-input" })
+                                        <span id="birthday-error" class="text-danger"></span>
                                     </div>
                                 }
                                 else
                                 {
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.Birthday, new { htmlAttribute = new { @class = "form-control form-control-user" } })
-                                        @Html.TextBoxFor(model => model.Birthday, "{0:dd/MM/yyyy}", new { @type = "datetime", @class = "form-control form-control-user" })
+                                       Ngày sinh
+                                        @Html.TextBoxFor(model => model.Birthday, "{0:dd/MM/yyyy}", new { @type = "datetime", @class = "form-control form-control-user", @id = "birthday-input" })
+                                        <span id="birthday-error" class="text-danger"></span>
                                     </div>
                                 }
                                 <div class="row">
@@ -152,6 +169,7 @@
 
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

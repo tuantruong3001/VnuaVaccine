@@ -12,7 +12,7 @@ namespace VnuaVaccine.Areas.Admin.Models
         [Required(ErrorMessage = "Email không được để trống!")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "UserName không được để trống!")]
+        //[Required(ErrorMessage = "UserName không được để trống!")]
         //[RegularExpression(@"^.{2,10}$", ErrorMessage = "{0} chỉ từ 2 đến 10 ký tự.")]
 
         public string UserName { get; set; }

@@ -18,6 +18,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
         {
             return View();
         }
+        [HttpPost]
         public ActionResult Register(ProfileModel registerModel)
         {
 
@@ -63,7 +64,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                     TempData["SuccessMessage"] = "Đăng ký thành công";
                     return RedirectToAction("Index", "Login");
             }
-            return View("Index");
+            return View("Index", registerModel);
         }
     }
 }
