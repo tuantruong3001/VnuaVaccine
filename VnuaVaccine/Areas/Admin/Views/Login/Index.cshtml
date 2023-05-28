@@ -82,7 +82,6 @@
                 @using (Html.BeginForm("Login", "Login", FormMethod.Post))
                 {
                     @Html.AntiForgeryToken()
-
                     <span class="login100-form-title p-b-20">
                         Đăng nhập
                     </span>
@@ -90,7 +89,7 @@
 
                     <div class="wrap-input100 validate-input m-b-23">
                         <span class="label-input100" style="">Tài khoản</span>
-                        @Html.TextBoxFor(model => model.Email, new { @class = "input100", @autofocus = "autofocus", @placeholder = "Nhập tài khoản" })
+                        @Html.TextBoxFor(model => model.Email, new { @class = "input100", @placeholder = "Nhập tài khoản" })
                         <span class="focus-input100" data-symbol="&#xf206;"></span>
                     </div>
                     <div class="wrap-input100 validate-input">

@@ -11,9 +11,10 @@ namespace VnuaVaccine.Areas.Admin.Controllers
         // GET: Admin/Login
         public ActionResult Index()
         {
-            return View();
+            var model = new LoginModel();
+            return View(model);
         }
-        
+
         [HttpPost]
         public ActionResult Login(LoginModel loginModel)
         {
@@ -25,7 +26,8 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                 }
 
                 var userDao = new UserDAO();
-                var loginResult = userDao.Login(Encryptor.MD5Hash(loginModel.Password), loginModel.Email);
+                var encryptedPassword = Encryptor.MD5Hash(loginModel.Password);
+                var loginResult = userDao.Login(encryptedPassword, loginModel.Email);
 
                 switch (loginResult)
                 {
@@ -39,7 +41,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                             RoleId = user.Role
                         };
                         Session[SessionConstants.USER_SESSION] = userSession;
-                        // redict by role
+                        // Redirect based on role
                         if (user.Role == 0)
                         {
                             return RedirectToAction("Index", "PatientData");
@@ -70,12 +72,13 @@ namespace VnuaVaccine.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
-                // handle the exception here
-                ViewBag.ErrorMessage = "Đã có lỗi xảy ra, vui lòng thử lại sau " + ex.Message;
+                // Xử lý ngoại lệ tại đây
+                ViewBag.ErrorMessage = "Đã có lỗi xảy ra, vui lòng thử lại sau. " + ex.Message;
                 return RedirectToAction("Login", "Login");
-               // return View("Index");
             }
         }
+
+
         public ActionResult Logout()
         {
             try
