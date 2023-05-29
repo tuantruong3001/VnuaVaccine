@@ -1,4 +1,4 @@
-﻿@model VnuaVaccine.Areas.Admin.Models.InforPatientModel
+﻿@model VnuaVaccine.Areas.Admin.Models.DetailViewModel
 @{
     ViewBag.Title = "Detail";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -87,66 +87,96 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="inputEmail4">Tên bệnh nhi</label>
-                            <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.Name" />
-                            @Html.HiddenFor(model => model.Name)
+                            <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.ProfileModel.Name" />
+
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputEmail4">Giới tính</label>
-                            <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@(Model.Sex == 0 ? "Nữ" : "Nam")" />
-                            @Html.HiddenFor(model => model.Sex)
+                            <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@(Model.ProfileModel.Sex == 0 ? "Nữ" : "Nam")" />
+
                         </div>
 
                     </div>
                     <div class="form-group">
                         <label for="inputEmail4">Tên cha mẹ bệnh nhi</label>
-                        <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.NameParent" />
-                        @Html.HiddenFor(model => model.NameParent)
+                        <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.ProfileModel.NameParent" />
+
                     </div>
                     <div class="form-group">
                         <label for="inputEmail4">Địa chỉ</label>
-                        <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.Address" />
-                        @Html.HiddenFor(model => model.Address)
+                        <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.ProfileModel.Address" />
+
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="inputEmail4">Sinh nhật</label>
-                            <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.Birthday" />
-                            @Html.HiddenFor(model => model.Birthday)
+                            <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.ProfileModel.Birthday" />
+
                         </div>
                         <div class="form-group col-md-4">
                             <label for="inputEmail4">Số điện thoại</label>
-                            <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.PhoneNumber" />
-                            @Html.HiddenFor(model => model.PhoneNumber)
+                            <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.ProfileModel.PhoneNumber" />
+
                         </div>
                         <div class="form-group col-md-2">
                             <label for="inputEmail4">Tuổi (Năm)</label>
-                            <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.Age" />
-                            @Html.HiddenFor(model => model.Age)
+                            <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.ProfileModel.Age" />
+
                         </div>
                         <div class="form-group col-md-2">
                             <label for="inputEmail4">Tuổi (Tháng)</label>
-                            <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.AgeMonth" />
-                            @Html.HiddenFor(model => model.AgeMonth)
+                            <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.ProfileModel.AgeMonth" />
+
                         </div>
 
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="inputEmail4">Ngày tạo lịch</label>
-                            <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.CreateAt" />
-                            @Html.HiddenFor(model => model.Name)
+                            <label for="inputEmail4">Ngày tạo hồ sơ</label>
+                            <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.ProfileModel.CreateAt" />
+
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="inputEmail4">Ngày cập nhật</label>
-                            <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.UpdateAt" />
-                            @Html.HiddenFor(model => model.UpdateAt)
+                            <label for="inputEmail4">Ngày cập nhật hồ sơ</label>
+                            <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.ProfileModel.UpdateAt" />
+
                         </div>
 
                     </div>
                     <div class="form-group">
                         <label for="inputEmail4">Địa chỉ email</label>
-                        <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.Email" />
-                        @Html.HiddenFor(model => model.Email)
+                        <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.ProfileModel.Email" />
+
+                    </div>
+
+                    <h2>Lịch sử tiêm chủng</h2>
+                    <div class="table-responsive">
+                        <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                            <table style="text-align:center" class="table table-striped table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Tên vắc xin</th>
+                                        <th>Số mũi đã tiêm</th> 
+                                        <th>Ngày tiêm gần nhất</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var vaccineInfo in Model.NameVaccineList)
+                                    {
+                                        var splitInfo = vaccineInfo.Split('-');
+                                        var nameVaccine = splitInfo[0].Trim();
+                                        var quantity = splitInfo[1].Trim().Substring(10);
+                                        var time = splitInfo[2].Trim().Substring(6);
+                                        <tr>
+                                            <td>@nameVaccine </td>
+                                            <td>@quantity</td>
+                                            <td>@time</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        
                     </div>
                     <div class="form-group">
 

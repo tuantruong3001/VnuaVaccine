@@ -16,8 +16,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
             var session = (Common.UserLogin)Session[Common.SessionConstants.USER_SESSION];
             int loggedInUserId = session.UserID;
 
-            var userNameId = _scheduleDao.GetUserNameId(loggedInUserId);
-           /* var patientId = _scheduleDao.GetPatientId(userNameId);*/
+            var userNameId = _scheduleDao.GetUserNameId(loggedInUserId);         
             var patientSchedule = _scheduleDao.GetPatientSchedule(userNameId);
 
             var patientScheduleInfoList = new List<InforScheduleModel>();

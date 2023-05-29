@@ -75,21 +75,32 @@
 
 </ul>
 }
-
 <script>
-    document.getElementById("birthday-input").addEventListener("blur", function () {
+    document.getElementById("birthday-input").addEventListener("change", function () {
+        var birthdayInput = document.getElementById("birthday-input");
+        var birthdayError = document.getElementById("birthday-error");
+
+        if (birthdayInput.value === "") {
+            birthdayError.textContent = "Ngày sinh là bắt buộc";
+        } else {
+            birthdayError.textContent = "";
+        }
+    });
+</script>
+@*<script>
+   /* document.getElementById("birthday-input").addEventListener("blur", function () {
         var birthdayInput = document.getElementById("birthday-input");
         var birthdayError = document.getElementById("birthday-error");
 
         var regex = /^\d{2}\/\d{2}\/\d{4}$/;
 
         if (!regex.test(birthdayInput.value)) {
-            birthdayError.textContent = "Ngày sinh không hợp lệ. Vui lòng nhập định dạng dd/MM/yyyy. Ví dụ: 01/01/2023";
+            birthdayError.textContent = "Ngày sinh không hợp lệ. Vui lòng nhập định dạng dd/MM/yyyy";
         } else {
             birthdayError.textContent = "";
         }
-    });
-</script>
+    });*/
+</script>*@
 @section bodymain{
 
     <div class="card-body p-0">

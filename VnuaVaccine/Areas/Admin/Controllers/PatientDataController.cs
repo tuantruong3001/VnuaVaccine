@@ -3,17 +3,15 @@ using DAL.EF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Profile;
 using VnuaVaccine.Areas.Admin.Models;
-using VnuaVaccine.Common;
 
 namespace VnuaVaccine.Areas.Admin.Controllers
 {
     public class PatientDataController : BaseController
     {
         private readonly PatientDAO _patientDao = new PatientDAO();
+        private readonly ScheduleDAO _scheduleDao = new ScheduleDAO();
 
         // GET: Admin/PatientData
         public ActionResult Index(string searchString, int page = 1, int pageSize = 10)
@@ -115,6 +113,70 @@ namespace VnuaVaccine.Areas.Admin.Controllers
 
         }
         [HttpGet]
+        /*  public ActionResult Detail(int id)
+          {
+              try
+              {
+                  var patientDao = new PatientDAO();
+                  var patient = patientDao.GetByID(id);
+
+                  //list infor patient
+                  var db = new VaccineDbContext();
+                  var profileModel = new InforPatientModel();
+
+                  if (patient.IdUserName != null)
+                  {
+                      profileModel = db.Patients
+                          .Where(getPatient => getPatient.IdUserName == patient.IdUserName)
+
+                          .Join(db.Users, getPatient => getPatient.IdUserName, getStaff => getStaff.ID, (getPatient, getStaff) =>
+                          new InforPatientModel
+                          {
+                              ID = getPatient.ID,
+                              Name = getPatient.Name,
+                              NameParent = getPatient.NameParent,
+                              Sex = getPatient.Sex,
+                              Address = getPatient.Address,
+                              Birthday = getPatient.Birthday,
+                              Age = getPatient.Age,
+                              AgeMonth = getPatient.AgeMonth,
+                              PhoneNumber = getPatient.PhoneNumber,
+                              CreateAt = getPatient.CreateAt,
+                              UpdateAt = getPatient.UpdateAt,
+                              Email = getStaff.Email
+                          })
+                          .SingleOrDefault();
+                  }
+                  else
+                  {
+                      profileModel = db.Patients
+                          .Where(getPatient => getPatient.ID == id)
+                          .Select(getPatient => new InforPatientModel
+                          {
+                              ID = getPatient.ID,
+                              Name = getPatient.Name,
+                              NameParent = getPatient.NameParent,
+                              Sex = getPatient.Sex,
+                              Address = getPatient.Address,
+                              Birthday = getPatient.Birthday,
+                              Age = getPatient.Age,
+                              AgeMonth = getPatient.AgeMonth,
+                              PhoneNumber = getPatient.PhoneNumber,
+                              CreateAt = getPatient.CreateAt,
+                              UpdateAt = getPatient.UpdateAt,
+                              Email = ""
+                          })
+                          .SingleOrDefault();
+                  }
+
+                  return View(profileModel);
+              }
+              catch (Exception ex)
+              {
+                  Console.WriteLine("An error occurred: " + ex.Message);
+                  return View();
+              }
+          }*/
         public ActionResult Detail(int id)
         {
             try
@@ -125,28 +187,47 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                 //list infor patient
                 var db = new VaccineDbContext();
                 var profileModel = new InforPatientModel();
+                var viewModel = new DetailViewModel();
 
+                int loggedInUserId = patient.ID;
+
+                var patientSchedule = _scheduleDao.GetPatientSchedule(loggedInUserId);
+                var nameVaccineList = new List<string>();
+
+                foreach (var schedule in patientSchedule)
+                {
+                    var vaccine = _scheduleDao.GetVaccineName((int)schedule.IdVaccine);
+                                       
+                    if (vaccine != null)
+                    {
+                        var vaccineInfo = $"{vaccine.NameVaccine} - Quantity: {schedule.Quantity} - Time: {schedule.Time}";
+                        nameVaccineList.Add(vaccineInfo);
+                    }
+
+                }
                 if (patient.IdUserName != null)
                 {
                     profileModel = db.Patients
-                        .Where(getPatient => getPatient.IdUserName == patient.IdUserName)
-                        .Join(db.Users, getPatient => getPatient.IdUserName, getStaff => getStaff.ID, (getPatient, getStaff) =>
-                        new InforPatientModel
-                        {
-                            ID = getPatient.ID,
-                            Name = getPatient.Name,
-                            NameParent = getPatient.NameParent,
-                            Sex = getPatient.Sex,
-                            Address = getPatient.Address,
-                            Birthday = getPatient.Birthday,
-                            Age = getPatient.Age,
-                            AgeMonth = getPatient.AgeMonth,
-                            PhoneNumber = getPatient.PhoneNumber,
-                            CreateAt = getPatient.CreateAt,
-                            UpdateAt = getPatient.UpdateAt,
-                            Email = getStaff.Email
-                        })
-                        .SingleOrDefault();
+                      .Where(getPatient => getPatient.IdUserName == patient.IdUserName)
+
+                      .Join(db.Users, getPatient => getPatient.IdUserName, getStaff => getStaff.ID, (getPatient, getStaff) =>
+                      new InforPatientModel
+                      {
+                          ID = getPatient.ID,
+                          Name = getPatient.Name,
+                          NameParent = getPatient.NameParent,
+                          Sex = getPatient.Sex,
+                          Address = getPatient.Address,
+                          Birthday = getPatient.Birthday,
+                          Age = getPatient.Age,
+                          AgeMonth = getPatient.AgeMonth,
+                          PhoneNumber = getPatient.PhoneNumber,
+                          CreateAt = getPatient.CreateAt,
+                          UpdateAt = getPatient.UpdateAt,
+                          Email = getStaff.Email,
+                          
+                      })
+                      .SingleOrDefault();
                 }
                 else
                 {
@@ -165,12 +246,14 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                             PhoneNumber = getPatient.PhoneNumber,
                             CreateAt = getPatient.CreateAt,
                             UpdateAt = getPatient.UpdateAt,
-                            Email = ""
+                            Email = "",                           
                         })
                         .SingleOrDefault();
                 }
+                viewModel.ProfileModel = profileModel; 
+                viewModel.NameVaccineList = nameVaccineList; 
 
-                return View(profileModel);
+                return View(viewModel);
             }
             catch (Exception ex)
             {

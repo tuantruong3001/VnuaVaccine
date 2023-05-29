@@ -158,7 +158,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                      new SelectListItem { Value = "2", Text = "Đã tiêm đủ số mũi", Selected = model.Status == 2 },
                      new SelectListItem { Value = "3", Text = "Đã tiêm liều tăng cường", Selected = model.Status == 3 },
                  };
-              
+
                 schedule.Status = model.Status;
                 schedule.Time = model.Time;
                 schedule.Quantity = model.Quantity;
@@ -168,6 +168,15 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
 
+            return View(model);
+        }
+        public ActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Create(InforScheduleModel model)
+        {
             return View(model);
         }
 

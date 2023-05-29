@@ -109,8 +109,8 @@
                     @using (Html.BeginForm("Index", "StaffData", FormMethod.Get))
                     {
                         <div class="form-group">
-                            @Html.Label("Search:", new { @class = "control-label" })
-                            @Html.TextBox("searchString", null, new { @class = "form-control", @autofocus = "autofocus", @placeholder = "Search for..." })
+                            @Html.Label("Tìm kiếm:", new { @class = "control-label" })
+                            @Html.TextBox("searchString", null, new { @class = "form-control", @autofocus = "autofocus", @placeholder = "Nhập từ khoá..." })
                         </div>
 
                         <button type="submit" class="btn btn-primary"><i class="bi-funnel-fill"></i> Tìm kiếm</button>
