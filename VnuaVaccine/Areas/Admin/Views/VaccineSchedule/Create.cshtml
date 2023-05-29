@@ -1,4 +1,4 @@
-﻿
+﻿@model VnuaVaccine.Areas.Admin.Models.InforScheduleModel
 @{
     ViewBag.Title = "Create";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -76,5 +76,108 @@
     }
 }
 
-<h2>Create</h2>
+@section bodymain{
+
+    <div class="card-body p-0">
+        <!-- Nested Row within Card Body -->
+        <div class="row">
+            @Html.AntiForgeryToken()
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="card shadow mb-4">
+                        <div class="p-5">
+                            <div class="card-header py-3">
+                                <h2 class="m-0 font-weight-bold text-primary" style="text-align:center;">Cập nhật lịch tiêm vaccine</h2>
+                            </div>
+                            @using (Html.BeginForm("Create", "VaccineSchedule", FormMethod.Post))
+                            {
+                                @Html.ValidationSummary(false, "", new { @class = "text-danger" });
+                                <div class="form-group">
+                                    <label for="inputEmail4">Tên bệnh nhân</label>
+                                    <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.NamePatient" />
+                                    @Html.HiddenFor(model => model.NamePatient)
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail4">Tên vaccine</label>
+                                    <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.NameVaccine" />
+                                    @Html.HiddenFor(model => model.NameVaccine)
+
+                                </div>
+                                <style>
+                                    .Sex:hover {
+                                        cursor: pointer;
+                                    }
+                                </style>
+                                <div class="form-group">
+                                    <label for="Status">Trạng thái</label>
+                                    <select class="form-control Sex" name="Status">
+                                        @if (ViewBag.SexOptions != null)
+                                        {
+                                            foreach (var option in ViewBag.SexOptions)
+                                            {
+                                                <option value="@option.Value" @(option.Selected ? "selected" : "")>@option.Text</option>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <option value="0"></option>
+                                        }
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    Số mũi đã tiêm
+                                    @Html.TextBoxFor(model => model.Quantity, new { @class = "form-control form-control-user" })
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail4">Số mũi phải tiêm</label>
+                                    <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.Times" />
+                                    @Html.HiddenFor(model => model.Times)
+
+                                </div>
+                                if (Model.Time == null)
+                                {
+                                    <div class="form-group">
+                                        <label for="inputEmail4">Ngày tiêm</label>
+                                        @Html.TextBoxFor(model => model.Time, "{0:dd/MM/yyyy}", new { @type = "date", @class = "form-control form-control-user" })
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="form-group">
+                                        <label for="inputEmail4">Ngày tiêm</label>
+                                        @Html.TextBoxFor(model => model.Time, "{0:dd/MM/yyyy}", new { @type = "datetime", @class = "form-control form-control-user" })
+                                    </div>
+                                }
+                                <div class="form-group">
+                                    <label for="inputEmail4">Ngày tạo lịch tiêm</label>
+                                    <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.CreateAt" />
+                                    @Html.HiddenFor(model => model.CreateAt)
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <a href="/Admin/VaccineSchedule/Index" class="btn btn-primary btn-user btn-block icon">
+                                            Quay lại
+                                        </a>
+                                    </div>
+                                    <div class="col-md-8"></div>
+                                    <div class="col-md-2">
+                                        <a>
+                                            <input style="background-color: #36b9cc" type="submit" value="Cập nhật" class="btn btn-primary btn-user btn-block" />
+                                        </a>
+                                    </div>
+                                </div>
+                            }
+                            <hr>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 

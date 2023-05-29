@@ -12,7 +12,6 @@ namespace VnuaVaccine.Areas.Admin.Controllers
 {
     public class VaccineScheduleController : BaseController
     {
-
         // GET: Admin/VaccineSchedule
         private readonly ScheduleDAO _scheduleDao = new ScheduleDAO();
 
@@ -177,8 +176,26 @@ namespace VnuaVaccine.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Create(InforScheduleModel model)
         {
+            if (ModelState.IsValid)
+            {
+            }
+
             return View(model);
         }
+
+        private bool CheckVaccinationConditions(int patientId, int vaccineId, int times)
+        {
+
+            var vaccinationCount = _scheduleDao.GetVaccinationCount(patientId, vaccineId);
+
+            if (vaccinationCount >= times)
+            {
+                return true; 
+            }
+
+            return false; 
+        }
+
 
     }
 }
