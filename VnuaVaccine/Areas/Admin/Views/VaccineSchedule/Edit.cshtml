@@ -99,6 +99,12 @@
 
                                 </div>
                                 <div class="form-group">
+                                    <label for="inputEmail4">Email</label>
+                                    <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.Email" />
+                                    @Html.HiddenFor(model => model.Email)
+
+                                </div>
+                                <div class="form-group">
                                     <label for="inputEmail4">Tên vaccine</label>
                                     <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.NameVaccine" />
                                     @Html.HiddenFor(model => model.NameVaccine)
@@ -141,7 +147,7 @@
                                 {
                                     <div class="form-group">
                                         <label for="inputEmail4">Ngày tiêm</label>
-                                        @Html.TextBoxFor(model => model.Time, "{0:dd/MM/yyyy}", new { @type = "date", @class = "form-control form-control-user" })
+                                        @Html.TextBoxFor(model => model.Time, new { @type = "date", @class = "form-control form-control-user", @min = DateTime.Now.ToString("yyyy-MM-dd") })
                                     </div>
                                 }
                                 else

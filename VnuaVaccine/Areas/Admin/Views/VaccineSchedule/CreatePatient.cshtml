@@ -1,4 +1,4 @@
-﻿@model VnuaVaccine.Areas.Admin.Models.InforScheduleModel
+﻿@model VnuaVaccine.Areas.Admin.Models.CreateScheduleViewModel
 @{
     ViewBag.Title = "Create";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -82,81 +82,48 @@
         <!-- Nested Row within Card Body -->
         <div class="row">
             @Html.AntiForgeryToken()
+            <div class="col-lg-4">
+                <div class="panel panel-default">
+                    <div class="card shadow mb-4">
+                        <div class="p-5">
+                            <div class="form-group">
+                                <label for="searchName">Tìm kiếm bệnh nhân:</label>
+                                <input type="text" id="searchName" onkeyup="Search()" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label for="searchName">Tìm kiếm vắc xin:</label>
+                                <input type="text" id="searchNameVaccine" onkeyup="SearchVaccine()" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
             <div class="col-lg-6">
                 <div class="panel panel-default">
                     <div class="card shadow mb-4">
                         <div class="p-5">
                             <div class="card-header py-3">
-                                <h2 class="m-0 font-weight-bold text-primary" style="text-align:center;">Cập nhật lịch tiêm vaccine</h2>
+                                <h2 class="m-0 font-weight-bold text-primary" style="text-align:center;">Thêm lịch tiêm vaccine</h2>
                             </div>
-                            @using (Html.BeginForm("Create", "VaccineSchedule", FormMethod.Post))
+
+                            @using (Html.BeginForm("CreatePatient", "VaccineSchedule", FormMethod.Post))
                             {
-                                @Html.ValidationSummary(false, "", new { @class = "text-danger" });
-                                <div class="form-group">
-                                    <label for="inputEmail4">Tên bệnh nhân</label>
-                                    <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.NamePatient" />
-                                    @Html.HiddenFor(model => model.NamePatient)
 
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.SelectedPatientId, "Bệnh nhân")
+                                    @Html.DropDownListFor(model => model.SelectedPatientId, Model.PatientList.Take(5), "-- Chọn bệnh nhân --", new { @class = "form-control", @id = "patientDropdown" })
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputEmail4">Tên vaccine</label>
-                                    <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.NameVaccine" />
-                                    @Html.HiddenFor(model => model.NameVaccine)
-
-                                </div>
-                                <style>
-                                    .Sex:hover {
-                                        cursor: pointer;
-                                    }
-                                </style>
-                                <div class="form-group">
-                                    <label for="Status">Trạng thái</label>
-                                    <select class="form-control Sex" name="Status">
-                                        @if (ViewBag.SexOptions != null)
-                                        {
-                                            foreach (var option in ViewBag.SexOptions)
-                                            {
-                                                <option value="@option.Value" @(option.Selected ? "selected" : "")>@option.Text</option>
-                                            }
-                                        }
-                                        else
-                                        {
-                                            <option value="0"></option>
-                                        }
-                                    </select>
+                                    @Html.LabelFor(model => model.ScheduleModel.IdVaccine, "Vắc-xin")
+                                    @Html.DropDownListFor(model => model.ScheduleModel.IdVaccine, Model.VaccineList.Take(10), "-- Chọn vắc-xin --", new { @class = "form-control", @id = "vaccineDropdown" })
                                 </div>
 
                                 <div class="form-group">
-                                    Số mũi đã tiêm
-                                    @Html.TextBoxFor(model => model.Quantity, new { @class = "form-control form-control-user" })
-
+                                    @Html.LabelFor(model => model.ScheduleModel.Time, "Ngày tiêm")
+                                    @Html.TextBoxFor(model => model.ScheduleModel.Time, new { @type = "date", @class = "form-control", @min = DateTime.Now.ToString("yyyy-MM-dd") })
                                 </div>
-                                <div class="form-group">
-                                    <label for="inputEmail4">Số mũi phải tiêm</label>
-                                    <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.Times" />
-                                    @Html.HiddenFor(model => model.Times)
 
-                                </div>
-                                if (Model.Time == null)
-                                {
-                                    <div class="form-group">
-                                        <label for="inputEmail4">Ngày tiêm</label>
-                                        @Html.TextBoxFor(model => model.Time, "{0:dd/MM/yyyy}", new { @type = "date", @class = "form-control form-control-user" })
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="form-group">
-                                        <label for="inputEmail4">Ngày tiêm</label>
-                                        @Html.TextBoxFor(model => model.Time, "{0:dd/MM/yyyy}", new { @type = "datetime", @class = "form-control form-control-user" })
-                                    </div>
-                                }
-                                <div class="form-group">
-                                    <label for="inputEmail4">Ngày tạo lịch tiêm</label>
-                                    <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.CreateAt" />
-                                    @Html.HiddenFor(model => model.CreateAt)
-
-                                </div>
                                 <div class="row">
                                     <div class="col-md-2">
                                         <a href="/Admin/VaccineSchedule/Index" class="btn btn-primary btn-user btn-block icon">
@@ -166,7 +133,7 @@
                                     <div class="col-md-8"></div>
                                     <div class="col-md-2">
                                         <a>
-                                            <input style="background-color: #36b9cc" type="submit" value="Cập nhật" class="btn btn-primary btn-user btn-block" />
+                                            <input style="background-color: #36b9cc" type="submit" value="Thêm" class="btn btn-primary btn-user btn-block" />
                                         </a>
                                     </div>
                                 </div>
@@ -177,7 +144,63 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 }
+<script>
+    function Search() {
+        var name = $('#searchName').val();
 
+        $.ajax({
+            url: '/VaccineSchedule/Search',
+            type: 'POST',
+            data: { name: name },
+            success: function (data) {
+                var dropdownList = data;
+                var dropdown = $('#patientDropdown');
+
+                dropdown.empty();
+
+                if (dropdownList.length === 0) {
+                    dropdown.append($('<option></option>').text('Không có dữ liệu!'));
+                } else {
+                    $.each(dropdownList, function (index, item) {
+                        dropdown.append($('<option></option>').val(item.Value).text(item.Text));
+                    });
+                }
+            },
+            error: function () {
+
+            }
+        });
+    }
+</script>
+<script>
+    function SearchVaccine() {
+        var name = $('#searchNameVaccine').val();
+
+        $.ajax({
+            url: '/VaccineSchedule/SearchVaccine',
+            type: 'POST',
+            data: { name: name },
+            success: function (data) {
+                var dropdownList = data;
+                var dropdown = $('#vaccineDropdown');
+
+                dropdown.empty();
+
+                if (dropdownList.length === 0) {
+                    dropdown.append($('<option></option>').text('Không có dữ liệu!'));
+                } else {
+                    $.each(dropdownList, function (index, item) {
+                        dropdown.append($('<option></option>').val(item.Value).text(item.Text));
+                    });
+                }
+            },
+            error: function () {
+
+            }
+        });
+    }
+</script>

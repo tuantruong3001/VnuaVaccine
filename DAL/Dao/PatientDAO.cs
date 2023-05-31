@@ -23,7 +23,15 @@ namespace DAL.Dao
         {
             return db.Patients.ToList();
         }
-
+        public IEnumerable<Patient> GetAll()
+        {
+            return db.Patients.ToList();
+        }
+        public List<Patient> SearchByName(string name)
+        {
+            var patients = db.Patients.Where(p => p.Name.Contains(name)).ToList();
+            return patients;
+        }
         public bool UpdateProfile(Patient staff)
         {
             try
@@ -47,7 +55,7 @@ namespace DAL.Dao
             {
                 return false;
             }
-        }       
+        }
         public bool UpdateAllPatients(List<Patient> patients)
         {
             try
@@ -68,7 +76,7 @@ namespace DAL.Dao
                         patientUpdate.UpdateAt = patient.UpdateAt;
                     }
                 }
-               
+
                 db.SaveChanges();
                 return true;
             }
@@ -141,8 +149,8 @@ namespace DAL.Dao
         public bool DeleteByUserId(int userId)
         {
             try
-            {              
-                List<Patient> patients = db.Patients.Where(p => p.IdUserName == userId).ToList();               
+            {
+                List<Patient> patients = db.Patients.Where(p => p.IdUserName == userId).ToList();
                 db.Patients.RemoveRange(patients);
                 db.SaveChanges();
 

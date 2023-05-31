@@ -31,6 +31,12 @@ namespace DAL.Dao
             if (name == null) return true;
             return false;
         }
+        public bool CheckEmail(string emailCheck)
+        {
+            var email = db.Users.SingleOrDefault(x => x.Email == emailCheck);
+            if (email == null) return true;
+            return false;
+        }
         public User GetByEmail(string email)
         {
             return db.Users.SingleOrDefault(x => x.Email == email);

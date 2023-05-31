@@ -46,18 +46,35 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                 try
                 {
                     var userDao = new UserDAO();
-                    var user = new User
+                    bool isUserEmailAvailable;
+                   
+                    var userOld = userDao.GetById(userModel.ID);
+                    if (userModel.Email == userOld.Email)
                     {
-                        ID = userModel.ID,
-                        UserName = userModel.UserName,
-                        Email = userModel.Email,
-                        Role = userModel.Role,
-                        Password = Encryptor.MD5Hash(userModel.Password),
-                        UpdateAt = DateTime.Now,
-                    };
-                    userDao.Update(user);
-                    TempData["EditUserMessage"] = "Sửa thông tin thành công";
-                    return RedirectToAction("Index", "UserData");
+                        isUserEmailAvailable = true;
+                    }
+                    else
+                    {
+                        isUserEmailAvailable = userDao.CheckEmail(userModel.Email);
+                    }
+                    
+                    if (isUserEmailAvailable)
+                    {
+                        var user = new User
+                        {
+                            ID = userModel.ID,
+                            UserName = userModel.UserName,
+                            Email = userModel.Email,
+                            Role = userModel.Role,
+                            Password = Encryptor.MD5Hash(userModel.Password),
+                            UpdateAt = DateTime.Now,
+                        };
+                        userDao.Update(user);
+                        TempData["EditUserMessage"] = "Sửa thông tin thành công";
+                        return RedirectToAction("Index", "UserData");
+                    }
+                    ModelState.AddModelError("", "Email đã tồn tại, vui lòng nhập email khác");                  
+                    return View(userModel);
                 }
                 catch (Exception ex)
                 {

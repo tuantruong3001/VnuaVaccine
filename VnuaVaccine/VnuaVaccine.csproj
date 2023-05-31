@@ -170,6 +170,7 @@
     <Compile Include="Areas\Admin\Controllers\VaccineDataController.cs" />
     <Compile Include="Areas\Admin\Controllers\VaccineScheduleController.cs" />
     <Compile Include="Areas\Admin\Controllers\WishlistController.cs" />
+    <Compile Include="Areas\Admin\Models\CreateScheduleViewModel.cs" />
     <Compile Include="Areas\Admin\Models\DetailViewModel.cs" />
     <Compile Include="Areas\Admin\Models\InforPatientModel.cs" />
     <Compile Include="Areas\Admin\Models\InforScheduleModel.cs" />
@@ -3219,7 +3220,7 @@
     <Content Include="obj\Debug\VnuaVaccine.csproj.CopyComplete" />
     <Content Include="obj\Debug\VnuaVaccine.csproj.CoreCompileInputs.cache" />
     <Content Include="Areas\Admin\Views\UserData\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\VaccineSchedule\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\VaccineSchedule\CreatePatient.cshtml" />
     <None Include="Properties\PublishProfiles\tuantruong2001-001-site1 - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\tuantruong2001-001-site1 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />

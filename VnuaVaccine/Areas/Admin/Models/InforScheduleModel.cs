@@ -11,6 +11,7 @@ namespace VnuaVaccine.Areas.Admin.Models
         {
             
         }
+        public string Email { get; set; }
         public string NameVaccine { get; set; }
         public string NamePatient { get; set; }
         public int ID { get; set; }

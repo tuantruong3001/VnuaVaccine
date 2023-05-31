@@ -20,7 +20,7 @@ namespace DAL.Dao
             db.SaveChanges();
             return newSchedule.ID;
         }
-       
+
         public IPagedList<VaccinationSchedule> ListAllPaging(string searchString, int page, int pageSize)
         {
             IQueryable<VaccinationSchedule> model = db.VaccinationSchedules;
@@ -34,7 +34,7 @@ namespace DAL.Dao
             }
             return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
         }
-        
+
         public VaccinationSchedule GetByID(int id)
         {
             return db.VaccinationSchedules.Find(id);
@@ -42,6 +42,19 @@ namespace DAL.Dao
         public Patient GetPatientName(int patientId)
         {
             return db.Patients.FirstOrDefault(v => v.ID == patientId);
+        }
+        public string GetUserEmailByPatientId(int patientId)
+        {
+            var idUserName = db.Patients
+                .Where(p => p.ID == patientId)
+                .Select(p => p.IdUserName)
+                .FirstOrDefault();
+
+            var email = db.Users
+                .Where(u => u.ID == idUserName)
+                .Select(u => u.Email)
+                .FirstOrDefault();
+            return email;
         }
 
         public Vaccine GetVaccineName(int vaccineId)
@@ -74,12 +87,12 @@ namespace DAL.Dao
                     scheduleUpdate.Status = infor.Status;
                     scheduleUpdate.CreateAt = DateTime.Now;
                     scheduleUpdate.Time = infor.Time;
-                    
+
                 }
             }
 
             db.SaveChanges();
-        }     
+        }
 
         public bool Delete(int id)
         {
@@ -122,38 +135,32 @@ namespace DAL.Dao
         }
         public int GetUserNameId(int loggedInUserId)
         {
-            
+
             var patient = db.Patients.FirstOrDefault(p => p.IdUserName == loggedInUserId);
             if (patient != null)
             {
                 return (int)patient.ID;
             }
-            return 0; 
+            return 0;
         }
 
         public List<VaccinationSchedule> GetPatientSchedule(int patientId)
         {
-            
+
             var patientSchedule = db.VaccinationSchedules.Where(vs => vs.IdPatient == patientId).ToList();
             return patientSchedule;
         }
-        public int GetVaccinationCount(int patientId, int vaccineId)
+        public List<Patient> SearchByName(string name)
         {
-            var vaccinationCount = db.VaccinationSchedules
-                .Count(s => s.IdPatient == patientId && s.IdVaccine == vaccineId);
-            return vaccinationCount;
+            var nameMatches = db.Patients.Where(vs => vs.Name.Contains(name)).ToList();
+            return nameMatches;
+
+        }
+        public List<Vaccine> SearchByNameVaccine(string name)
+        {
+            var nameMatches = db.Vaccines.Where(vs => vs.NameVaccine.Contains(name)).ToList();
+            return nameMatches;
         }
 
-        public void Create(VaccinationSchedule schedule)
-        {
-            var newSchedule = new VaccinationSchedule();
-            {
-                schedule.IdVaccine = newSchedule.IdVaccine;
-
-            };
-
-            db.VaccinationSchedules.Add(newSchedule);
-            db.SaveChanges();
-        }
     }
 }

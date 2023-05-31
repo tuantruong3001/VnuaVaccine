@@ -88,5 +88,9 @@ namespace DAL.Dao
         {
             return db.Vaccines.Find(id);
         }
+        public IEnumerable<Vaccine> GetAll()
+        {
+            return db.Vaccines.ToList();
+        }
     }
 }
