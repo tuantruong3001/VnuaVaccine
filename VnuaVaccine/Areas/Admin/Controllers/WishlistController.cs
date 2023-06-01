@@ -23,8 +23,8 @@ namespace VnuaVaccine.Areas.Admin.Controllers
 
             foreach (var schedule in patientSchedule)
             {
-                var vaccine = _scheduleDao.GetVaccineName((int)schedule.IdVaccine);
-                var patient = _scheduleDao.GetPatientName((int)schedule.IdPatient);
+                var vaccine = _scheduleDao.GetVaccine((int)schedule.IdVaccine);
+                var patient = _scheduleDao.GetPatient((int)schedule.IdPatient);
 
                 var scheduleInfo = new InforScheduleModel
                 {

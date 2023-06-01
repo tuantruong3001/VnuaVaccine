@@ -4,10 +4,7 @@ using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Mail;
-using System.Net;
 using System.Web.Mvc;
-using System.Web.Profile;
 using VnuaVaccine.Areas.Admin.Models;
 
 namespace VnuaVaccine.Areas.Admin.Controllers
@@ -23,8 +20,8 @@ namespace VnuaVaccine.Areas.Admin.Controllers
             var model = new StaticPagedList<InforScheduleModel>(
                 pagedModel.Select(infor =>
                 {
-                    var vaccine = _scheduleDao.GetVaccineName((int)infor.IdVaccine);
-                    var patient = _scheduleDao.GetPatientName((int)infor.IdPatient);
+                    var vaccine = _scheduleDao.GetVaccine((int)infor.IdVaccine);
+                    var patient = _scheduleDao.GetPatient((int)infor.IdPatient);
 
                     return new InforScheduleModel
                     {
@@ -54,8 +51,8 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                 var allSchedules = _scheduleDao.GetAllSchedules();
 
                 foreach (var infor in allSchedules)
-                {
-                    var vaccine = _scheduleDao.GetVaccineName((int)infor.IdVaccine);
+                {                   
+                    var vaccine = _scheduleDao.GetVaccine((int)infor.IdVaccine);
                     var status = infor.Status;
 
                     if (vaccine != null)
@@ -120,8 +117,8 @@ namespace VnuaVaccine.Areas.Admin.Controllers
             var vaccineDao = new ScheduleDAO();
             var schedule = vaccineDao.GetByID(id);
 
-            var vaccine = _scheduleDao.GetVaccineName((int)schedule.IdVaccine);
-            var patient = _scheduleDao.GetPatientName((int)schedule.IdPatient);
+            var vaccine = _scheduleDao.GetVaccine((int)schedule.IdVaccine);
+            var patient = _scheduleDao.GetPatient((int)schedule.IdPatient);
 
             var user = _scheduleDao.GetUserEmailByPatientId((int)schedule.IdPatient);
 
@@ -134,7 +131,8 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                 Time = schedule.Time,
                 Times = vaccine.Times,
                 CreateAt = schedule.CreateAt,
-                Quantity = schedule.Quantity,
+                Quantity = 1, 
+                QuantityOld = schedule.Quantity,
                 NameVaccine = vaccine != null ? vaccine.NameVaccine : string.Empty,
                 NamePatient = patient != null ? patient.Name : string.Empty,
                 Email = user ?? string.Empty,
@@ -156,6 +154,19 @@ namespace VnuaVaccine.Areas.Admin.Controllers
             {
                 var vaccineDao = new ScheduleDAO();
                 var schedule = vaccineDao.GetByID(model.ID);
+
+                var existingSchedules = _scheduleDao.GetScheduleByPatientAndVaccine((int)schedule.IdPatient, (int)schedule.IdVaccine);
+                int? scheduleQuantity = model.Quantity;
+                int totalQuantity = 0;
+
+                if (existingSchedules != null && existingSchedules.Count > 0)
+                {
+                    int maxExistingQuantity = existingSchedules.Max(s => (int)s.Quantity);
+                    totalQuantity = (int)(maxExistingQuantity + scheduleQuantity);
+                }
+
+                schedule.Quantity = totalQuantity;
+
                 ViewBag.SexOptions = new List<SelectListItem>
                   {
                       new SelectListItem { Value = "0", Text = "Chưa tiêm", Selected = model.Status == 0 },
@@ -166,7 +177,6 @@ namespace VnuaVaccine.Areas.Admin.Controllers
 
                 schedule.Status = model.Status;
                 schedule.Time = model.Time;
-                schedule.Quantity = model.Quantity;
 
                 vaccineDao.Update(schedule);
                 TempData["EditUserMessage"] = "Cập nhật thông tin thành công";
@@ -175,54 +185,6 @@ namespace VnuaVaccine.Areas.Admin.Controllers
 
             return View(model);
         }
-        /* [HttpPost]
-         public ActionResult Edit(InforScheduleModel model)
-         {
-             // Retrieve the data from the model
-             string namePatient = model.NamePatient;
-             string email = model.Email;
-             string nameVaccine = model.NameVaccine;
-             int status = (int)model.Status;
-             int quantity = (int)model.Quantity;
-             int times = (int)model.Times;
-
-
-             // Prepare the email content
-             string emailContent = $"Name Patient: {namePatient}\n" +
-                                   $"Email: {email}\n" +
-                                   $"Name Vaccine: {nameVaccine}\n" +
-                                   $"Status: {status}\n" +
-                                   $"Quantity: {quantity}\n" +
-                                   $"Times: {times}\n";
-
-             try
-             {
-                 // Configure the SMTP settings
-                 SmtpClient smtpClient = new SmtpClient("smtp.example.com", 587);
-                 smtpClient.UseDefaultCredentials = false;
-                 smtpClient.Credentials = new NetworkCredential("cocaigi2018a1@gmail.com", "truongvantuan1");
-                 smtpClient.EnableSsl = true;
-
-                 // Create the email message
-                 MailMessage mail = new MailMessage();
-                 mail.From = new MailAddress("cocaigi2018a1@gmail.com");
-                 mail.To.Add(new MailAddress("tuantruongvan3001@gmail.com"));
-                 mail.Subject = "Schedule Information";
-                 mail.Body = emailContent;
-
-                 // Send the email
-                 smtpClient.Send(mail);
-
-                 // Email sent successfully
-                 return View("Success");
-             }
-             catch (Exception ex)
-             {
-                 // Error occurred while sending email
-                 ViewBag.ErrorMessage = "An error occurred while sending the email: " + ex.Message;
-                 return View("Error");
-             }
-         }*/
 
         [HttpGet]
         public ActionResult CreatePatient()
@@ -264,7 +226,22 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                     Quantity = 0,
                     CreateAt = DateTime.Now,
                     Status = 0,
+
                 };
+                var existingSchedules = vaccineDao.GetScheduleByPatientAndVaccine(viewModel.SelectedPatientId, (int)viewModel.ScheduleModel.IdVaccine);
+                var timeVaccine = vaccineDao.GetVaccine((int)viewModel.ScheduleModel.IdVaccine);
+                int totalQuantity = 0;
+
+                if (existingSchedules != null && existingSchedules.Count > 0)
+                {
+                    int maxExistingQuantity = existingSchedules.Max(s => (int)s.Quantity);                  
+                    totalQuantity = maxExistingQuantity;
+                }
+
+                if (timeVaccine.Times == totalQuantity || timeVaccine.Times < totalQuantity)
+                {
+                    TempData["NotificationMessage"] = "Đã đạt đủ số lượng vaccine.";                   
+                }
 
                 vaccineDao.Insert(schedule);
                 TempData["EditUserMessage"] = "Thêm mới lịch tiêm thành công";

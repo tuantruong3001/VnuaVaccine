@@ -133,9 +133,14 @@
                                 </div>
 
                                 <div class="form-group">
-                                    Số mũi đã tiêm
+                                    Số mũi tiêm vừa được tiêm
                                     @Html.TextBoxFor(model => model.Quantity, new { @class = "form-control form-control-user" })
 
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail4">Số mũi đã tiêm</label>
+                                    <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.QuantityOld" />
+                                 
                                 </div>
                                 <div class="form-group">
                                     <label for="inputEmail4">Số mũi phải tiêm</label>

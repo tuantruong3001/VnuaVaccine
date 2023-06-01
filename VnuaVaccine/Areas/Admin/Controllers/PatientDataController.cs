@@ -132,7 +132,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
 
                 foreach (var schedule in patientSchedule)
                 {
-                    var vaccine = _scheduleDao.GetVaccineName((int)schedule.IdVaccine);
+                    var vaccine = _scheduleDao.GetVaccine((int)schedule.IdVaccine);
                                        
                     if (vaccine != null)
                     {

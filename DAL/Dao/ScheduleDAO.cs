@@ -13,14 +13,12 @@ namespace DAL.Dao
         {
             db = new VaccineDbContext();
         }
-
         public int Insert(VaccinationSchedule newSchedule)
         {
             db.VaccinationSchedules.Add(newSchedule);
             db.SaveChanges();
             return newSchedule.ID;
         }
-
         public IPagedList<VaccinationSchedule> ListAllPaging(string searchString, int page, int pageSize)
         {
             IQueryable<VaccinationSchedule> model = db.VaccinationSchedules;
@@ -39,7 +37,7 @@ namespace DAL.Dao
         {
             return db.VaccinationSchedules.Find(id);
         }
-        public Patient GetPatientName(int patientId)
+        public Patient GetPatient(int patientId)
         {
             return db.Patients.FirstOrDefault(v => v.ID == patientId);
         }
@@ -57,7 +55,7 @@ namespace DAL.Dao
             return email;
         }
 
-        public Vaccine GetVaccineName(int vaccineId)
+        public Vaccine GetVaccine(int vaccineId)
         {
             return db.Vaccines.FirstOrDefault(v => v.ID == vaccineId);
         }
@@ -85,9 +83,7 @@ namespace DAL.Dao
                 if (scheduleUpdate != null)
                 {
                     scheduleUpdate.Status = infor.Status;
-                    scheduleUpdate.CreateAt = DateTime.Now;
-                    scheduleUpdate.Time = infor.Time;
-
+                    //scheduleUpdate.Quantity = infor.Quantity;
                 }
             }
 
@@ -162,5 +158,12 @@ namespace DAL.Dao
             return nameMatches;
         }
 
+        public List<VaccinationSchedule> GetScheduleByPatientAndVaccine(int patientId, int vaccineId)
+        {
+            var schedule = db.VaccinationSchedules
+                .Where(s => s.IdPatient == patientId && s.IdVaccine == vaccineId).ToList();
+            return schedule;
+
+        }
     }
 }
