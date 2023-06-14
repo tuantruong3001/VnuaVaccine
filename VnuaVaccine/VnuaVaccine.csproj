@@ -3223,6 +3223,7 @@
     <Content Include="obj\Debug\VnuaVaccine.csproj.CoreCompileInputs.cache" />
     <Content Include="Areas\Admin\Views\UserData\Create.cshtml" />
     <Content Include="Areas\Admin\Views\VaccineSchedule\CreatePatient.cshtml" />
+    <Content Include="Areas\Admin\Views\VaccineSchedule\Detail.cshtml" />
     <None Include="Properties\PublishProfiles\tuantruong2001-001-site1 - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\tuantruong2001-001-site1 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />

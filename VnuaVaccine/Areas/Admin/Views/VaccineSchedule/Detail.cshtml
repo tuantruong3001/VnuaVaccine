@@ -1,0 +1,199 @@
+﻿@model VnuaVaccine.Areas.Admin.Models.InforScheduleModel
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section sidebar{
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <hr class="sidebar-divider my-0">
+
+        <li class="nav-item active">
+            <a class="nav-link" href="/Home/Index">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Trang chủ</span>
+            </a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider  my-0">
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item active">
+            <a class="nav-link" href="/Admin/PatientData/Index">
+                <i class="fas fa-fw fa-user"></i>
+                <span>Danh sách bệnh nhi</span>
+            </a>
+        </li>
+        <hr class="sidebar-divider  my-0">
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item active">
+            <a class="nav-link" href="/Admin/UserData/Index">
+                <i class="fas fa-fw fa-user"></i>
+                <span>Danh sách tài khoản</span>
+            </a>
+        </li>
+        <hr class="sidebar-divider  my-0">
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item active">
+            <a class="nav-link" href="/Admin/StaffData/Index">
+                <i class="fas fa-fw fa-user"></i>
+                <span>Danh sách nhân viên</span>
+            </a>
+        </li>
+        <!-- Nav Item - Utilities Collapse Menu -->
+        <hr class="sidebar-divider  my-0">
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item active">
+            <a class="nav-link" href="/Admin/VaccineSchedule/Index">
+                <i class="fas fa-fw fa-comment"></i>
+                <span>Lịch tiêm</span>
+            </a>
+        </li>
+        <!-- Divider -->
+        <hr class="sidebar-divider  my-0">
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item active">
+            <a class="nav-link" href="/Admin/VaccineData/Index">
+                <i class="fas fa-fw fa-folder"></i>
+                <span>Danh sách vaccine</span>
+            </a>
+        </li>
+
+        <!-- Nav Item - Charts -->
+        <hr class="sidebar-divider  my-0">
+        <!-- Nav Item - Pages Collapse Menu -->
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+
+    </ul>
+}
+@{
+    var session = (VnuaVaccine.Common.UserLogin)Session[VnuaVaccine.Common.SessionConstants.USER_SESSION];
+    if (session == null || session.RoleId == 1)
+    {
+        Response.Redirect("~/Home/Index");
+    }
+}
+@section bodymain{
+
+    <div class="card-body p-0">
+        <!-- Nested Row within Card Body -->
+        <div class="row">
+            @Html.AntiForgeryToken()
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="card shadow mb-4">
+                        <div class="p-5">
+                            <div class="card-header py-3">
+                                <h2 class="m-0 font-weight-bold text-primary" style="text-align:center;">Thông tin về lịch tiêm</h2>
+                            </div>
+                            @using (Html.BeginForm("Detail", "VaccineSchedule", FormMethod.Post))
+                            {
+                                @Html.ValidationSummary(false, "", new { @class = "text-danger" });
+                                <div class="form-group">
+                                    <label for="inputEmail4">Họ tên bệnh nhân</label>
+                                    <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.NamePatient" />
+                                    @Html.HiddenFor(model => model.NamePatient)
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail4">Họ tên cha/mẹ bệnh nhân</label>
+                                    <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.NameParent" />
+                                    @Html.HiddenFor(model => model.NameParent)
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail4">Email</label>
+                                    <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.Email" />
+                                    @Html.HiddenFor(model => model.Email)
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail4">Tên vaccine</label>
+                                    <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.NameVaccine" />
+                                    @Html.HiddenFor(model => model.NameVaccine)
+
+                                </div>
+                                <style>
+                                    .Sex:hover {
+                                        cursor: pointer;
+                                    }
+                                </style>
+                                <div class="form-group">
+                                    <label for="Status">Trạng thái</label>
+                                    @if (Model.Status == 0)
+                                    {
+                                        <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="Chưa tiêm" />
+                                    }
+                                    else if (Model.Status == 1)
+                                    {
+                                        <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="Chưa tiêm đủ mũi" />
+                                    }
+                                    else if (Model.Status == 2)
+                                    {
+                                        <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="Đã tiêm đủ mũi" />
+                                    }
+                                    else if (Model.Status == 3)
+                                    {
+                                        <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="Đã tiêm liều tăng cường" />
+                                    }
+                                    else
+                                    {
+                                        <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="" />
+                                    }
+                                    @Html.HiddenFor(model => model.Status)
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="inputEmail4">Số mũi đã tiêm</label>
+                                    <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.QuantityOld" />
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail4">Số mũi phải tiêm</label>
+                                    <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.Times" />
+                                    @Html.HiddenFor(model => model.Times)
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputEmail4">Ngày tạo lịch tiêm</label>
+                                    <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.CreateAt" />
+                                    @Html.HiddenFor(model => model.CreateAt)
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail4">Ngày tiêm</label>
+                                    <input type="text" class="form-control" readonly="readonly" id="inputEmail4" value="@Model.Time" />
+                                    @Html.HiddenFor(model => model.Time)
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <a href="/Admin/VaccineSchedule/Index" class="btn btn-primary btn-user btn-block icon">
+                                            Quay lại
+                                        </a>
+                                    </div>
+                                    <div class="col-md-8"></div>
+                                    <div class="col-md-2">
+                                        <a>
+                                            <input style="background-color: #36b9cc" type="submit" value="Gửi email" class="btn btn-primary btn-user btn-block" />
+                                        </a>
+                                    </div>
+                                </div>
+                            }
+                            <hr>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+

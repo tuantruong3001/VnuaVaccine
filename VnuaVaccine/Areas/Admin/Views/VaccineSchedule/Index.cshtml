@@ -125,7 +125,14 @@
                 </button> <h5><i class="icon fas fa-check"></i> @TempData["UpdateAllMessage"]</h5>
             </div>
         }
-       
+        @if (TempData["SendEmail"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                </button> <h5><i class="icon fas fa-check"></i> @TempData["SendEmail"]</h5>
+            </div>
+        }
+
         <div class="panel panel-default">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
@@ -187,7 +194,7 @@
                                                 <td>
                                                     <a class="btn btn-success" style="text-decoration:none; " href="/Admin/VaccineSchedule/Edit/@item.ID"><i class="fa fa-edit"></i> Edit</a>
                                                     <a style="text-decoration: none;" href="@Url.Action("Delete", "VaccineSchedule", new { id = item.ID })" class="btn btn-danger" onclick="return confirm('Xác nhận xoá?')"><i class="fas fa-trash"></i> Delete</a>
-                                                    @*<a class="btn btn-info" style="text-decoration:none; " href="/Admin/VaccineSchedule/Detail/@item.ID"><i class="bi bi-info-circle"></i> Detail</a>*@
+                                                    <a class="btn btn-info" style="text-decoration:none; " href="/Admin/VaccineSchedule/Detail/@item.ID"><i class="bi bi-info-circle"></i> Detail</a>
                                                 </td>
                                             </tr>
                                         }

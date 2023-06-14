@@ -4,6 +4,8 @@ using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
+using System.Net;
 using System.Web.Mvc;
 using VnuaVaccine.Areas.Admin.Models;
 
@@ -239,14 +241,15 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                     Status = 0,
 
                 };
-                                          
+
                 vaccineDao.Insert(schedule);
                 TempData["EditUserMessage"] = "Thêm mới lịch tiêm thành công";
                 return RedirectToAction("Index");
-            }   
+            }
 
             return View(viewModel);
         }
+
         [HttpPost]
         public ActionResult CheckVaccine(CreateScheduleViewModel viewModel)
         {
@@ -295,6 +298,89 @@ namespace VnuaVaccine.Areas.Admin.Controllers
             }).ToList();
 
             return Json(dropdownList);
+        }
+        public ActionResult Detail(int id)
+        {
+
+            var vaccineDao = new ScheduleDAO();
+            var schedule = vaccineDao.GetByID(id);
+
+            var vaccine = _scheduleDao.GetVaccine((int)schedule.IdVaccine);
+            var patient = _scheduleDao.GetPatient((int)schedule.IdPatient);
+
+            var user = _scheduleDao.GetUserEmailByPatientId((int)schedule.IdPatient);
+
+            var vaccineModel = new InforScheduleModel
+            {
+                ID = id,
+                IdPatient = schedule.IdPatient,
+                IdVaccine = schedule.IdVaccine,
+                Status = schedule.Status,
+                Time = schedule.Time,
+                Times = vaccine.Times,
+                CreateAt = schedule.CreateAt,
+                Quantity = 1,
+                QuantityOld = schedule.Quantity,
+                NameVaccine = vaccine != null ? vaccine.NameVaccine : string.Empty,
+                NamePatient = patient != null ? patient.Name : string.Empty,
+                NameParent = patient != null ? patient.NameParent : string.Empty,
+                Email = user ?? string.Empty,
+            };
+            ViewBag.SexOptions = new List<SelectListItem>
+            {
+                    new SelectListItem { Value = "0", Text = "Chưa tiêm", Selected = vaccineModel?.Status == 0 },
+                    new SelectListItem { Value = "1", Text = "Chưa tiêm đủ số mũi", Selected = vaccineModel?.Status == 1 },
+                    new SelectListItem { Value = "2", Text = "Đã tiêm đủ số mũi", Selected = vaccineModel?.Status == 2 },
+                    new SelectListItem { Value = "3", Text = "Đã tiêm liều tăng cường", Selected = vaccineModel?.Status == 3 },
+            };
+            return View(vaccineModel);
+        }
+        [HttpPost]
+        public ActionResult Detail(InforScheduleModel model)
+        {
+
+            string email = model.Email;
+            if (string.IsNullOrEmpty(email))
+            {
+
+                return RedirectToAction("Index", "VaccineSchedule");
+            }
+            try
+            {
+                ViewBag.SexOptions = new List<SelectListItem>
+                {
+                      new SelectListItem { Value = "0", Text = "Chưa tiêm", Selected = model.Status == 0 },
+                      new SelectListItem { Value = "1", Text = "Chưa tiêm đủ số mũi", Selected = model.Status == 1 },
+                      new SelectListItem { Value = "2", Text = "Đã tiêm đủ số mũi", Selected = model.Status == 2 },
+                      new SelectListItem { Value = "3", Text = "Đã tiêm liều tăng cường", Selected = model.Status == 3 },
+                };
+                MailMessage message = new MailMessage();
+                message.From = new MailAddress("tuantruongvan3001@gmail.com");
+                message.To.Add(email);
+                message.Subject = "Thông tin lịch tiêm chủng";
+                message.Body = $"Tôi gửi thư này để cung cấp thông tin về lịch trình tiêm chủng của con bạn. Dưới đây là chi tiết về lịch trình tiêm chủng: \n\n" +
+                               $"ID: {model.ID} \n" +
+                               $"Họ tên bệnh nhân: {model.NamePatient} \n" +
+                               $"Tên cha/mẹ bệnh nhân: {model.NameParent} \n" +
+                               $"Vắc-xin: {model.NameVaccine} \n" +
+                               $"Thời gian tạo lịch tiêm: {model.CreateAt} \n" +
+                               $"Thời gian tiêm: {model.Time} \n" +
+                               $"Trạng thái: {model.Status} \n\n" +
+                               $"Thông tin trên đã được xác nhận và đặt lịch trình tiêm chủng cho con bạn. Vui lòng đến địa điểm tiêm chủng vào thời gian đã được chỉ định. \nNếu có bất kỳ thay đổi nào về lịch trình, chúng tôi sẽ thông báo cho bạn kịp thời. ";
+
+                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+                smtpClient.UseDefaultCredentials = false;
+                smtpClient.Credentials = new NetworkCredential("tuantruongvan3001@gmail.com", "kjpjpfbvzovvlhnd");
+                smtpClient.EnableSsl = true;
+                smtpClient.Send(message);
+
+                TempData["SendEmail"] = "Gửi email thành công!";
+                return RedirectToAction("Index", "VaccineSchedule");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "VaccineSchedule");
+            }
         }
     }
 }
