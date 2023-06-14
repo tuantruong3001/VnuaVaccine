@@ -51,7 +51,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                 var allSchedules = _scheduleDao.GetAllSchedules();
 
                 foreach (var infor in allSchedules)
-                {                   
+                {
                     var vaccine = _scheduleDao.GetVaccine((int)infor.IdVaccine);
                     var status = infor.Status;
 
@@ -131,7 +131,7 @@ namespace VnuaVaccine.Areas.Admin.Controllers
                 Time = schedule.Time,
                 Times = vaccine.Times,
                 CreateAt = schedule.CreateAt,
-                Quantity = 1, 
+                Quantity = 1,
                 QuantityOld = schedule.Quantity,
                 NameVaccine = vaccine != null ? vaccine.NameVaccine : string.Empty,
                 NamePatient = patient != null ? patient.Name : string.Empty,
@@ -218,37 +218,56 @@ namespace VnuaVaccine.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var vaccineDao = new ScheduleDAO();
-                var schedule = new VaccinationSchedule
-                {
-                    IdPatient = viewModel.SelectedPatientId,
-                    IdVaccine = viewModel.ScheduleModel.IdVaccine,
-                    Time = viewModel.ScheduleModel.Time,
-                    Quantity = 0,
-                    CreateAt = DateTime.Now,
-                    Status = 0,
 
-                };
                 var existingSchedules = vaccineDao.GetScheduleByPatientAndVaccine(viewModel.SelectedPatientId, (int)viewModel.ScheduleModel.IdVaccine);
                 var timeVaccine = vaccineDao.GetVaccine((int)viewModel.ScheduleModel.IdVaccine);
                 int totalQuantity = 0;
 
                 if (existingSchedules != null && existingSchedules.Count > 0)
                 {
-                    int maxExistingQuantity = existingSchedules.Max(s => (int)s.Quantity);                  
+                    int maxExistingQuantity = existingSchedules.Max(s => (int)s.Quantity);
                     totalQuantity = maxExistingQuantity;
                 }
 
-                if (timeVaccine.Times == totalQuantity || timeVaccine.Times < totalQuantity)
+                var schedule = new VaccinationSchedule
                 {
-                    TempData["NotificationMessage"] = "Đã đạt đủ số lượng vaccine.";                   
-                }
+                    IdPatient = viewModel.SelectedPatientId,
+                    IdVaccine = viewModel.ScheduleModel.IdVaccine,
+                    Time = viewModel.ScheduleModel.Time,
+                    CreateAt = DateTime.Now,
+                    Quantity = totalQuantity,
+                    Status = 0,
 
+                };
+                                          
                 vaccineDao.Insert(schedule);
                 TempData["EditUserMessage"] = "Thêm mới lịch tiêm thành công";
                 return RedirectToAction("Index");
-            }
+            }   
 
             return View(viewModel);
+        }
+        [HttpPost]
+        public ActionResult CheckVaccine(CreateScheduleViewModel viewModel)
+        {
+            var vaccineDao = new ScheduleDAO();
+
+            var existingSchedules = vaccineDao.GetScheduleByPatientAndVaccine(viewModel.SelectedPatientId, (int)viewModel.ScheduleModel.IdVaccine);
+            var timeVaccine = vaccineDao.GetVaccine((int)viewModel.ScheduleModel.IdVaccine);
+            int totalQuantity = 0;
+
+            if (existingSchedules != null && existingSchedules.Count > 0)
+            {
+                int maxExistingQuantity = existingSchedules.Max(s => (int)s.Quantity);
+                totalQuantity = maxExistingQuantity;
+            }
+
+            if (timeVaccine.Times == totalQuantity || timeVaccine.Times < totalQuantity)
+            {
+                TempData["ConfirmationMessage"] = "Người này đã tiêm đủ liều vắc xin!";
+            }
+
+            return Json(new { confirmationMessage = TempData["ConfirmationMessage"] });
         }
 
         [HttpPost]
@@ -277,6 +296,5 @@ namespace VnuaVaccine.Areas.Admin.Controllers
 
             return Json(dropdownList);
         }
-
     }
 }

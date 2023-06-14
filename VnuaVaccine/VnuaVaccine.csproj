@@ -2738,6 +2738,7 @@
     <Content Include="Assets\css\normalize.css" />
     <Content Include="Assets\css\owl.carousel.min.css" />
     <Content Include="Assets\css\responsive.css" />
+    <Content Include="Assets\css\select2.min.css" />
     <Content Include="Assets\css\slick.css" />
     <Content Include="Assets\css\style.css" />
     <Content Include="Assets\images\bg-doctor3.jpg" />
@@ -2755,6 +2756,7 @@
     <Content Include="Assets\js\modernizer.js" />
     <Content Include="Assets\js\plugin.js" />
     <Content Include="Assets\js\popper.min.js" />
+    <Content Include="Assets\js\select2.min.js" />
     <Content Include="Assets\js\slider-setting.js" />
     <Content Include="bin\Antlr3.Runtime.dll" />
     <Content Include="bin\Antlr3.Runtime.pdb" />
