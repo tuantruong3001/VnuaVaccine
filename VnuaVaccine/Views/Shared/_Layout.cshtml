@@ -27,7 +27,7 @@
         }
 
         .subhead {
-            font-size: 20px;
+            font-size: 22px;
         }
 
         .container-fluid {
@@ -110,14 +110,14 @@
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                                    aria-haspopup="true" aria-expanded="false">
                                     <span class="mr-2 d-none d-lg-inline text-gray-600 small login">
-                                        Hello! @session.Email
+                                        Xin chào! @session.Email
                                     </span>
 
                                 </a>
                                 <!-- Dropdown - User Information -->
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                    <a class="dropdown-item" href="/Admin/HomeAdmin">My Profile</a>
-                                    <a class="dropdown-item" href="@Url.Action("Logout", "Login", new { area = "Admin" })">Logout</a>
+                                    <a class="dropdown-item" href="/Admin/HomeAdmin">Trang quản lý</a>
+                                    <a class="dropdown-item" href="@Url.Action("Logout", "Login", new { area = "Admin" })">Đăng xuất</a>
                                 </div>
 
                             }
@@ -126,14 +126,14 @@
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                                    aria-haspopup="true" aria-expanded="false">
                                     <span class="mr-2 d-none d-lg-inline text-gray-600 small login">
-                                        Hello! @session.Email
+                                        Xin chào! @session.Email
                                     </span>
 
                                 </a>
                                 <!-- Dropdown - User Information -->
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                    <a class="dropdown-item" href="/Admin/HomeUser">My Profile</a>
-                                    <a class="dropdown-item" href="@Url.Action("Logout", "Login", new { area = "Admin" })">Logout</a>
+                                    <a class="dropdown-item" href="/Admin/HomeUser">Trang quản lý</a>
+                                    <a class="dropdown-item" href="@Url.Action("Logout", "Login", new { area = "Admin" })">Đăng xuất</a>
                                 </div>
                             }
                         </li>
@@ -154,39 +154,36 @@
         <div class="container">
             <div class="row px-md-3">
                 <div class="col-sm-6 col-lg-3 py-3">
-                    <h5>Company</h5>
+                    <h5>Trạm xá</h5>
                     <ul class="footer-menu">
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Career</a></li>
-                        <li><a href="#">Editorial Team</a></li>
-                        <li><a href="#">Protection</a></li>
+                        <li><a href="#">Về chúng tôi</a></li>
+                        <li><a href="#">Hướng dẫn</a></li>
+                       
                     </ul>
                 </div>
                 <div class="col-sm-6 col-lg-3 py-3">
-                    <h5>More</h5>
+                    <h5>Điều khoản</h5>
                     <ul class="footer-menu">
-                        <li><a href="#">Terms & Condition</a></li>
-                        <li><a href="#">Privacy</a></li>
-                        <li><a href="#">Advertise</a></li>
-                        <li><a href="#">Join as Doctors</a></li>
+                        <li><a href="#">Điều khoản</a></li>
+                        <li><a href="#">Bảo mật</a></li>
+
                     </ul>
                 </div>
                 <div class="col-sm-6 col-lg-3 py-3">
-                    <h5>About us</h5>
+                    <h5>Điều khoản</h5>
                     <ul class="footer-menu">
-                        <li><a href="#">Terms & Condition</a></li>
-                        <li><a href="#">Privacy</a></li>
-                        <li><a href="#">Advertise</a></li>
-                        <li><a href="#">Join as Doctors</a></li>
+                        <li><a href="#">Điều khoản</a></li>
+                        <li><a href="#">Bảo mật</a></li>
+
                     </ul>
                 </div>
                 <div class="col-sm-6 col-lg-3 py-3">
-                    <h5>Contact</h5>
-                    <p class="footer-link mt-2">Gia Lam, Ha Noi</p>
+                    <h5>Liên hệ</h5>
+                    <p class="footer-link mt-2">Gia Lâm, Hà Nội</p>
                     <a href="#" class="footer-link">123-456-7890</a>
                     <a href="#" class="footer-link">cskh@vnua.com</a>
 
-                    <h5 class="mt-3">Social Media</h5>
+                    <h5 class="mt-3">Mạng xã hội</h5>
                     <div class="footer-sosmed mt-3">
                         <a href="#" target="_blank"><span class="mai-logo-facebook-f"></span></a>
                         <a href="#" target="_blank"><span class="mai-logo-twitter"></span></a>

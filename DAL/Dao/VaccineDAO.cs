@@ -47,14 +47,12 @@ namespace DAL.Dao
             {
                 using (var db = new VaccineDbContext())
                 {
-                    // Tìm Vaccine có ID tương ứng trong cơ sở dữ liệu
+                    // Tìm Vaccine có ID tương ứng
                     Vaccine vaccine = db.Vaccines.Find(id);
-                    // Nếu không tìm thấy, trả về false
                     if (vaccine == null)
                     {
                         return false;
                     }
-                    // Xóa Vaccine khỏi cơ sở dữ liệu
                     db.Vaccines.Remove(vaccine);
                     db.SaveChanges();
                     return true;
@@ -76,7 +74,7 @@ namespace DAL.Dao
             IQueryable<Vaccine> model = db.Vaccines;
             if (!string.IsNullOrEmpty(searchString))
             {
-                model = model.Where(x => x.NameVaccine.Contains(searchString) || x.Description.Contains(searchString) || x.Munafacturer.Contains(searchString));
+                model = model.Where(x => x.NameVaccine.Contains(searchString) || x.Munafacturer.Contains(searchString));
                 if (model == null)
                 {
                     return null;

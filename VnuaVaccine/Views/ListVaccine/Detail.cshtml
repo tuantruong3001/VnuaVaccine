@@ -3,6 +3,9 @@
     ViewBag.Title = "Detail";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@{
+    var session = (VnuaVaccine.Common.UserLogin)Session[VnuaVaccine.Common.SessionConstants.USER_SESSION];
+}
 @section navlink {
     <li class="nav-item">
         <a class="nav-link " href="~/Home/Index" onclick="changeColor(this)">Trang chủ</a>
@@ -14,7 +17,19 @@
         <a class="nav-link active" href="~/ListVaccine/Index" onclick="changeColor(this)">Vaccine</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#" onclick="changeColor(this)">Tin tức</a>
+        @if (session == null)
+        {
+            <a class="nav-link" href="#" onclick="changeColor(this)">Lịch tiêm</a>
+        }
+        else if (session.RoleId == 0)
+        {
+            <a class="nav-link" href="#" onclick="changeColor(this)">Lịch tiêm</a>
+
+        }
+        else if (session.RoleId == 1)
+        {
+            <a class="nav-link" href="/Admin/Wishlist/Index" onclick="changeColor(this)">Lịch tiêm</a>
+        }
     </li>
     <li class="nav-item">
         <a class="nav-link" href="#section-form" onclick="changeColor(this)">Liên hệ</a>

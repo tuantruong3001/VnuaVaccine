@@ -102,14 +102,14 @@
         <div class="panel panel-default">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h2 class="m-0 font-weight-bold text-primary" style="text-align:center;">Danh sách Vaccines</h2>
+                    <h2 class="m-0 font-weight-bold text-primary" style="text-align:center;">Danh sách vắc xin</h2>
                 </div>
                 <div class="card-body">
                     @using (Html.BeginForm("Index", "VaccineData", FormMethod.Get))
                     {
                         <div class="form-group">
-                            @Html.Label("Search:", new { @class = "control-label" })
-                            @Html.TextBox("searchString", null, new { @class = "form-control", @autofocus = "autofocus", @placeholder = "Search for..." })
+                            @Html.Label("Tìm kiếm:", new { @class = "control-label" })
+                            @Html.TextBox("searchString", null, new { @class = "form-control", @autofocus = "autofocus", @placeholder = "Nhập từ khoá..." })
                         </div>
 
                         <button type="submit" class="btn btn-primary"><i class="bi-funnel-fill"></i> Tìm kiếm</button>
