@@ -340,33 +340,42 @@ namespace VnuaVaccine.Areas.Admin.Controllers
         {
 
             string email = model.Email;
+            string statusText = string.Empty;
+            switch (model.Status)
+            {
+                case 0:
+                    statusText = "Chưa tiêm";
+                    break;
+                case 1:
+                    statusText = "Chưa tiêm đủ số mũi";
+                    break;
+                case 2:
+                    statusText = "Đã tiêm đủ số mũi";
+                    break;
+                case 3:
+                    statusText = "Đã tiêm liều tăng cường";
+                    break;
+            }
             if (string.IsNullOrEmpty(email))
             {
 
                 return RedirectToAction("Index", "VaccineSchedule");
             }
             try
-            {
-                ViewBag.SexOptions = new List<SelectListItem>
-                {
-                      new SelectListItem { Value = "0", Text = "Chưa tiêm", Selected = model.Status == 0 },
-                      new SelectListItem { Value = "1", Text = "Chưa tiêm đủ số mũi", Selected = model.Status == 1 },
-                      new SelectListItem { Value = "2", Text = "Đã tiêm đủ số mũi", Selected = model.Status == 2 },
-                      new SelectListItem { Value = "3", Text = "Đã tiêm liều tăng cường", Selected = model.Status == 3 },
-                };
+            {              
                 MailMessage message = new MailMessage();
                 message.From = new MailAddress("tuantruongvan3001@gmail.com");
                 message.To.Add(email);
                 message.Subject = "Thông tin lịch tiêm chủng";
-                message.Body = $"Tôi gửi thư này để cung cấp thông tin về lịch trình tiêm chủng của con bạn. Dưới đây là chi tiết về lịch trình tiêm chủng: \n\n" +
+                message.Body = $"Chúng tôi gửi thư này để cung cấp thông tin về lịch trình tiêm chủng của con bạn. Dưới đây là chi tiết về lịch trình tiêm chủng: \n\n" +
                                $"ID: {model.ID} \n" +
                                $"Họ tên bệnh nhân: {model.NamePatient} \n" +
                                $"Tên cha/mẹ bệnh nhân: {model.NameParent} \n" +
                                $"Vắc-xin: {model.NameVaccine} \n" +
                                $"Thời gian tạo lịch tiêm: {model.CreateAt} \n" +
                                $"Thời gian tiêm: {model.Time} \n" +
-                               $"Trạng thái: {model.Status} \n\n" +
-                               $"Thông tin trên đã được xác nhận và đặt lịch trình tiêm chủng cho con bạn. Vui lòng đến địa điểm tiêm chủng vào thời gian đã được chỉ định. \nNếu có bất kỳ thay đổi nào về lịch trình, chúng tôi sẽ thông báo cho bạn kịp thời. ";
+                               $"Trạng thái: {statusText} \n\n" +
+                               $"Thông tin trên đã được xác nhận và đặt lịch trình tiêm chủng cho con bạn. Vui lòng đến địa điểm tiêm chủng vào thời gian đã được chỉ định. \nNếu có bất kỳ thay đổi nào về lịch trình, chúng tôi sẽ thông báo cho bạn kịp thời.";
 
                 SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
                 smtpClient.UseDefaultCredentials = false;

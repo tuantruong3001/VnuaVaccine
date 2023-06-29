@@ -192,9 +192,9 @@
                                                 <td>@(item.CreateAt == null ? "" : item.CreateAt.Value.ToString("dd/MM/yyyy"))</td>
 
                                                 <td>
-                                                    <a class="btn btn-success" style="text-decoration:none; " href="/Admin/VaccineSchedule/Edit/@item.ID"><i class="fa fa-edit"></i> Edit</a>
-                                                    <a style="text-decoration: none;" href="@Url.Action("Delete", "VaccineSchedule", new { id = item.ID })" class="btn btn-danger" onclick="return confirm('Xác nhận xoá?')"><i class="fas fa-trash"></i> Delete</a>
-                                                    <a class="btn btn-info" style="text-decoration:none; " href="/Admin/VaccineSchedule/Detail/@item.ID"><i class="bi bi-info-circle"></i> Detail</a>
+                                                    <a class="btn btn-success" style="text-decoration:none; " href="/Admin/VaccineSchedule/Edit/@item.ID"><i class="fa fa-edit"></i> Sửa</a>
+                                                    <a style="text-decoration: none;" href="@Url.Action("Delete", "VaccineSchedule", new { id = item.ID })" class="btn btn-danger" onclick="return confirm('Xác nhận xoá?')"><i class="fas fa-trash"></i> Xoá</a>
+                                                    <a class="btn btn-info" style="text-decoration:none; " href="/Admin/VaccineSchedule/Detail/@item.ID"><i class="bi bi-info-circle"></i> Chi tiết</a>
                                                 </td>
                                             </tr>
                                         }

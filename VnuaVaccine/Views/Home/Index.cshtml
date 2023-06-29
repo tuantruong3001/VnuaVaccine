@@ -3,6 +3,9 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@{
+    var session = (VnuaVaccine.Common.UserLogin)Session[VnuaVaccine.Common.SessionConstants.USER_SESSION];
+}
 @section navlink {
     <li class="nav-item">
         <a class="nav-link active" href="~/Home/Index" onclick="changeColor(this)">Trang chủ</a>
@@ -11,10 +14,22 @@
         <a class="nav-link" href="~/Home/About" onclick="changeColor(this)">Về chúng tôi</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="~/ListVaccine/Index" onclick="changeColor(this)">Vaccine</a>
+        <a class="nav-link" href="~/ListVaccine/Index" onclick="changeColor(this)">Vắc xin</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#" onclick="changeColor(this)">Tin tức</a>
+        @if (session == null)
+        {
+            <a class="nav-link" href="#" onclick="changeColor(this)">Lịch tiêm</a>
+        }
+        else if (session.RoleId == 0)
+        {
+            <a class="nav-link" href="#" onclick="changeColor(this)">Lịch tiêm</a>
+
+        }
+        else if (session.RoleId == 1)
+        {
+            <a class="nav-link" href="/Admin/Wishlist/Index" onclick="changeColor(this)">Lịch tiêm</a>          
+        }
     </li>
     <li class="nav-item">
         <a class="nav-link" href="#section-form" onclick="changeColor(this)">Liên hệ</a>
@@ -33,26 +48,24 @@
     </script>
 }
 @section body{
-    @{
-        var session = (VnuaVaccine.Common.UserLogin)Session[VnuaVaccine.Common.SessionConstants.USER_SESSION];
-    }
+
     <div class="page-hero bg-image overlay-dark" style="background-image: url(/Assets/images/bg_image_2.jpg); background-size: cover; ">
         <div class="hero-section">
             <div class="container text-center wow zoomIn">
                 <span class="subhead">Hệ thống thông tin tiêm chủng</span>
-                <h1 class="display-4">Vaccine</h1>
+                <h1 class="display-4">Vắc xin</h1>
                 @if (session == null)
                 {
                     <a href="/Admin/Register" class="btn btn-primary">Đăng ký ngay</a>
                 }
                 else if (session.RoleId == 0)
                 {
-                    <a class="btn btn-primary" href="/Admin/HomeAdmin/Index">My Profile</a>
+                    <a class="btn btn-primary" href="/Admin/HomeAdmin/Index">Thông tin cá nhân</a>
 
                 }
                 else if (session.RoleId == 1)
                 {
-                    <a class="btn btn-primary" href="/Admin/HomeUser/Index">My Profile</a>
+                    <a class="btn btn-primary" href="/Admin/HomeUser/Index">Thông tin cá nhân</a>
                 }
             </div>
         </div>
@@ -93,8 +106,8 @@
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-6 py-3 wow fadeInUp">
-                        <h1>Chào mừng bạn đến với <br> Vaccine</h1>
-                        <p class="text-grey mb-4">Phần mềm cung cấp thông tin về các loại vaccine và lịch tiêm chủng tốt nhất cho từng trường hợp cụ thể, giúp cho bạn lựa chọn đúng loại vaccine phù hợp với sức khỏe và nhu cầu của mỗi cá nhân. Bạn cũng có thể xem lịch tiêm chủng trực quan dưới dạng biểu đồ hoặc bảng, giúp bạn dễ dàng theo dõi và phân tích sự thay đổi của lịch tiêm chủng.</p>
+                        <h1>Chào mừng bạn đến với <br> Vắc xin</h1>
+                        <p class="text-grey mb-4">Phần mềm cung cấp thông tin về các loại vắc xin và lịch tiêm chủng tốt nhất cho từng trường hợp cụ thể, giúp cho bạn lựa chọn đúng loại vaccine phù hợp với sức khỏe và nhu cầu của mỗi cá nhân. Bạn cũng có thể xem lịch tiêm chủng trực quan dưới dạng biểu đồ hoặc bảng, giúp bạn dễ dàng theo dõi và phân tích sự thay đổi của lịch tiêm chủng.</p>
                         <a href="about.html" class="btn btn-primary">Đọc thêm</a>
                     </div>
                     <div class="col-lg-6 wow fadeInRight" data-wow-delay="400ms">
